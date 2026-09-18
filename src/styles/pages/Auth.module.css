@@ -1,0 +1,332 @@
+.page {
+  --evergreen: #153d32;
+  --evergreen-deep: #0d2a22;
+  --ink: #17352d;
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  overflow: hidden;
+  color: var(--ink);
+}
+
+.backdrop,
+.tint {
+  inset: 0;
+  position: absolute;
+}
+
+.backdrop {
+  z-index: -2;
+  background: url("/images/primekey-login-estate.png") center / cover no-repeat;
+  transform: scale(1.02);
+}
+
+.tint {
+  z-index: -1;
+  background:
+    linear-gradient(115deg, rgba(6, 29, 23, 0.46) 0%, rgba(8, 31, 25, 0.18) 42%, rgba(3, 16, 13, 0.34) 100%),
+    radial-gradient(circle at 50% 45%, rgba(212, 230, 220, 0.12), transparent 44%);
+}
+
+.shell {
+  min-height: 100svh;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.brand {
+  color: #fffdf8;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+.brandMark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+}
+
+.brand i {
+  margin-left: 0.1rem;
+  padding-left: 0.65rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.55);
+  font-size: 0.67rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.card {
+  width: min(100%, 26rem);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 1.5rem;
+  padding: clamp(1.65rem, 4vw, 2.35rem);
+  background: rgba(250, 250, 244, 0.85);
+  box-shadow: 0 1.5rem 4.5rem rgba(3, 17, 12, 0.33), inset 0 1px rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+.cardHeader {
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #537269;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card h1 {
+  color: var(--evergreen-deep);
+  font-size: clamp(1.8rem, 5vw, 2.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+}
+
+.cardHeader p {
+  margin-top: 0.6rem;
+  color: #5c7069;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.42rem;
+  color: #315047;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.field input {
+  width: 100%;
+  border: 1px solid rgba(42, 76, 65, 0.22);
+  border-radius: 0.72rem;
+  outline: none;
+  padding: 0.8rem 0.9rem;
+  background: rgba(255, 255, 255, 0.62);
+  color: #133d31;
+  font: inherit;
+  font-size: 0.92rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.field input::placeholder {
+  color: #91a49d;
+}
+
+.field input:focus {
+  border-color: #27634f;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0 3px rgba(38, 98, 78, 0.13);
+}
+
+.passwordControl {
+  position: relative;
+}
+
+.passwordControl input {
+  padding-right: 3rem;
+}
+
+.visibilityButton {
+  position: absolute;
+  top: 50%;
+  right: 0.3rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 0.55rem;
+  background: transparent;
+  color: #58766c;
+  cursor: pointer;
+}
+
+.visibilityButton:hover {
+  background: rgba(25, 74, 59, 0.08);
+  color: var(--evergreen);
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: -0.15rem;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 0.48rem;
+  color: #567167;
+  font-size: 0.77rem;
+  cursor: pointer;
+}
+
+.remember input {
+  width: 0.94rem;
+  height: 0.94rem;
+  accent-color: var(--evergreen);
+}
+
+.textButton {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #1b5c47;
+  font: inherit;
+  font-size: 0.77rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.textButton:hover,
+.switchMode a:hover {
+  text-decoration: underline;
+}
+
+.error,
+.success {
+  margin: -0.1rem 0;
+  border-radius: 0.65rem;
+  padding: 0.66rem 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.error {
+  border: 1px solid rgba(158, 49, 42, 0.2);
+  background: rgba(173, 57, 46, 0.09);
+  color: #923b32;
+}
+
+.success {
+  border: 1px solid rgba(34, 104, 74, 0.2);
+  background: rgba(34, 104, 74, 0.09);
+  color: #216246;
+}
+
+.submit {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: var(--evergreen);
+  color: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 0.7rem 1.1rem rgba(16, 61, 46, 0.22);
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: #0d3127;
+  box-shadow: 0 0.85rem 1.4rem rgba(16, 61, 46, 0.28);
+  transform: translateY(-1px);
+}
+
+.submit:disabled {
+  cursor: wait;
+  opacity: 0.74;
+}
+
+.loader {
+  animation: spin 800ms linear infinite;
+}
+
+.switchMode {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1.45rem;
+  color: #60756d;
+  font-size: 0.78rem;
+}
+
+.switchMode a {
+  color: #16543f;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.assurance {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.83);
+  font-size: 0.68rem;
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+  .shell {
+    align-content: end;
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+
+  .brand {
+    justify-self: start;
+    margin-left: 0.55rem;
+  }
+
+  .card {
+    width: 100%;
+    border-radius: 1.25rem;
+  }
+}
+
+@media (max-height: 700px) and (min-width: 601px) {
+  .shell {
+    padding-block: 1rem;
+  }
+
+  .card {
+    padding-block: 1.4rem;
+  }
+
+  .cardHeader {
+    margin-bottom: 1rem;
+  }
+
+  .form {
+    gap: 0.72rem;
+  }
+}

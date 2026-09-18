@@ -1,0 +1,45 @@
+/* [project]/src/styles/sections/ActiveDeals.module.css [app-client] (css) */
+.ActiveDeals-module__pshG5a__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.ActiveDeals-module__pshG5a__title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.ActiveDeals-module__pshG5a__dealsList {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  display: grid;
+}
+
+.ActiveDeals-module__pshG5a__card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: background .3s;
+  box-shadow: 0 2px 5px #00000014;
+}
+
+.ActiveDeals-module__pshG5a__card:hover {
+  background: #f0f0f0;
+}
+
+.ActiveDeals-module__pshG5a__property {
+  margin-bottom: .5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.ActiveDeals-module__pshG5a__status {
+  color: #0070f3;
+  margin-top: .5rem;
+  font-weight: 500;
+}
+
+/*# sourceMappingURL=src_styles_sections_ActiveDeals_module_css_f9ee138c._.single.css.map*/

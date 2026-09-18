@@ -1,0 +1,269 @@
+/* [project]/src/styles/sections/HeroSection.module.css [app-client] (css) */
+.HeroSection-module__YcV8AW__hero {
+  background-color: #f9fafb;
+  padding: 4rem 2rem;
+}
+
+.HeroSection-module__YcV8AW__hero__inner {
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.HeroSection-module__YcV8AW__title {
+  color: #111827;
+  margin-bottom: 2.5rem;
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.HeroSection-module__YcV8AW__actions {
+  flex-direction: column;
+  gap: 1.5rem;
+  display: flex;
+}
+
+@media (width >= 640px) {
+  .HeroSection-module__YcV8AW__actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.HeroSection-module__YcV8AW__card {
+  color: #1f2937;
+  background-color: #fff;
+  border-radius: 12px;
+  flex: 1;
+  padding: 2rem;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 4px 8px #0000000d;
+}
+
+.HeroSection-module__YcV8AW__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px #0000001a;
+}
+
+.HeroSection-module__YcV8AW__card h2 {
+  margin-bottom: .5rem;
+  font-size: 1.5rem;
+}
+
+.HeroSection-module__YcV8AW__card p {
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+
+/* [project]/src/styles/sections/WhyChooseUs.module.css [app-client] (css) */
+.WhyChooseUs-module__VA2xBG__why {
+  background-color: #fff;
+  border-top: 1px solid #e5e7eb;
+  padding: 4rem 2rem;
+}
+
+.WhyChooseUs-module__VA2xBG__why__inner {
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.WhyChooseUs-module__VA2xBG__title {
+  color: #111827;
+  margin-bottom: 2.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.WhyChooseUs-module__VA2xBG__features {
+  flex-direction: column;
+  gap: 2rem;
+  display: flex;
+}
+
+@media (width >= 768px) {
+  .WhyChooseUs-module__VA2xBG__features {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.WhyChooseUs-module__VA2xBG__feature {
+  background-color: #f9fafb;
+  border-radius: 12px;
+  flex: 1;
+  padding: 2rem;
+  transition: transform .2s;
+  box-shadow: 0 4px 12px #0000000a;
+}
+
+.WhyChooseUs-module__VA2xBG__feature:hover {
+  transform: translateY(-4px);
+}
+
+.WhyChooseUs-module__VA2xBG__icon {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  display: block;
+}
+
+.WhyChooseUs-module__VA2xBG__feature h3 {
+  color: #1f2937;
+  margin-bottom: .5rem;
+  font-size: 1.25rem;
+}
+
+.WhyChooseUs-module__VA2xBG__feature p {
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+
+/* [project]/src/styles/sections/RecentProperties.module.css [app-client] (css) */
+.RecentProperties-module__3-2seG__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.RecentProperties-module__3-2seG__title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.RecentProperties-module__3-2seG__grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  display: grid;
+}
+
+.RecentProperties-module__3-2seG__card {
+  background: #fff;
+  border-radius: 8px;
+  transition: transform .2s;
+  overflow: hidden;
+  box-shadow: 0 3px 6px #0000001a;
+}
+
+.RecentProperties-module__3-2seG__card:hover {
+  transform: translateY(-5px);
+}
+
+.RecentProperties-module__3-2seG__image {
+  object-fit: cover;
+  width: 100%;
+  height: 180px;
+}
+
+.RecentProperties-module__3-2seG__info {
+  padding: 1rem;
+}
+
+.RecentProperties-module__3-2seG__name {
+  margin: 0 0 .5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.RecentProperties-module__3-2seG__address {
+  color: #555;
+  margin-bottom: .5rem;
+  font-size: .9rem;
+}
+
+.RecentProperties-module__3-2seG__meta {
+  color: #666;
+  gap: 1rem;
+  margin-bottom: .5rem;
+  font-size: .85rem;
+  display: flex;
+}
+
+.RecentProperties-module__3-2seG__price {
+  color: #0070f3;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+
+/* [project]/src/styles/sections/ActiveDeals.module.css [app-client] (css) */
+.ActiveDeals-module__pshG5a__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.ActiveDeals-module__pshG5a__title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.ActiveDeals-module__pshG5a__dealsList {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  display: grid;
+}
+
+.ActiveDeals-module__pshG5a__card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: background .3s;
+  box-shadow: 0 2px 5px #00000014;
+}
+
+.ActiveDeals-module__pshG5a__card:hover {
+  background: #f0f0f0;
+}
+
+.ActiveDeals-module__pshG5a__property {
+  margin-bottom: .5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.ActiveDeals-module__pshG5a__status {
+  color: #0070f3;
+  margin-top: .5rem;
+  font-weight: 500;
+}
+
+
+/* [project]/src/styles/sections/EmployeeShowcase.module.css [app-client] (css) */
+.EmployeeShowcase-module__uIyLAW__section {
+  background-color: #f5f5f5;
+  padding: 2rem;
+}
+
+.EmployeeShowcase-module__uIyLAW__title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.EmployeeShowcase-module__uIyLAW__grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  display: grid;
+}
+
+.EmployeeShowcase-module__uIyLAW__card {
+  background-color: #fff;
+  border-radius: .75rem;
+  padding: 1.5rem;
+  transition: transform .2s;
+  box-shadow: 0 4px 12px #00000014;
+}
+
+.EmployeeShowcase-module__uIyLAW__card:hover {
+  transform: translateY(-5px);
+}
+
+
+/*# sourceMappingURL=src_styles_sections_36f319c6._.css.map*/

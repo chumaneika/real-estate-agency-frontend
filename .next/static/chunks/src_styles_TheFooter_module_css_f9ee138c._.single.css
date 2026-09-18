@@ -1,0 +1,34 @@
+/* [project]/src/styles/TheFooter.module.css [app-client] (css) */
+.TheFooter-module__2nZ0Mq__footer {
+  background-color: #fff;
+  border-top: 1px solid #e5e5e5;
+  padding: 1rem 2rem;
+  box-shadow: 0 -1px 4px #00000008;
+}
+
+.TheFooter-module__2nZ0Mq__footer__inner {
+  color: #666;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: .9rem;
+  display: flex;
+}
+
+.TheFooter-module__2nZ0Mq__links {
+  gap: 1.5rem;
+  display: flex;
+}
+
+.TheFooter-module__2nZ0Mq__link {
+  color: #666;
+  text-decoration: none;
+  transition: color .3s;
+}
+
+.TheFooter-module__2nZ0Mq__link:hover {
+  color: #0070f3;
+}
+
+/*# sourceMappingURL=src_styles_TheFooter_module_css_f9ee138c._.single.css.map*/

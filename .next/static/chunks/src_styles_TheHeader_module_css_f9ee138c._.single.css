@@ -1,0 +1,73 @@
+/* [project]/src/styles/TheHeader.module.css [app-client] (css) */
+.TheHeader-module__qrsTIG__header {
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 6px #0000000d;
+}
+
+.TheHeader-module__qrsTIG__header__inner {
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__logo {
+  color: #0070f3;
+  align-items: center;
+  gap: .5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__nav {
+  gap: 2rem;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__nav__link {
+  color: #1a1a1a;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .3s;
+  position: relative;
+}
+
+.TheHeader-module__qrsTIG__nav__link:after {
+  content: "";
+  background-color: #0070f3;
+  width: 0;
+  height: 2px;
+  transition: width .3s;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+
+.TheHeader-module__qrsTIG__nav__link:hover {
+  color: #0070f3;
+}
+
+.TheHeader-module__qrsTIG__nav__link:hover:after {
+  width: 100%;
+}
+
+@media (width <= 768px) {
+  .TheHeader-module__qrsTIG__nav {
+    gap: 1rem;
+  }
+
+  .TheHeader-module__qrsTIG__logo {
+    font-size: 1.4rem;
+  }
+}
+
+/*# sourceMappingURL=src_styles_TheHeader_module_css_f9ee138c._.single.css.map*/
