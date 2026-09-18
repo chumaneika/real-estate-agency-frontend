@@ -54,3 +54,6 @@
   font-size: 1rem;
   color: #4b5563;
 }
+
+.unavailable { opacity: .65; }
+.unavailable:hover { transform: none; box-shadow: 0 4px 8px rgba(0, 0, 0, .05); }

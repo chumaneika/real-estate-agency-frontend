@@ -1,53 +1,21 @@
-import styles from "@/styles/sections/RecentProperties.module.css"
+"use client";
 
-const RecentProperties = () => {
-    // Future logic to fetch recent properties from the backend
-  // const [properties, setProperties] = useState([]);
-  // useEffect(() => { fetchRecentProperties().then(setProperties); }, []);
+import Link from "next/link";
+import PropertyCard from "@/components/PropertyCard";
+import usePropertyData from "@/hooks/usePropertyData";
+import styles from "@/styles/sections/RecentProperties.module.css";
 
-  // Temporary plugs
-  const mockProperties = [
-    {
-      id: 1,
-      title: "Modern Apartment in Downtown",
-      location: "City Center",
-      price: "$120,000",
-    },
-    {
-      id: 2,
-      title: "Cozy House in the Suburbs",
-      location: "Green Valley",
-      price: "$210,000",
-    },
-    {
-      id: 3,
-      title: "Luxury Penthouse with Sea View",
-      location: "Coastal Area",
-      price: "$950,000",
-    },
-  ];
-
+export default function RecentProperties() {
+  const { status, data, retry } = usePropertyData("get-all");
+  const properties = data ? [...data].sort((a, b) => b.id - a.id).slice(0, 3) : [];
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>Recent Properties</h2>
-      <div className={styles.grid}>
-        {mockProperties.map((property) => (
-          <div key={property.id} className={styles.card}>
-            <img src={property.image} alt={property.title} className={styles.image} />
-            <div className={styles.info}>
-              <h3 className={styles.name}>{property.title}</h3>
-              <p className={styles.address}>{property.address}</p>
-              <div className={styles.meta}>
-                <span>{property.area} м²</span>
-                <span>{property.rooms} комн.</span>
-              </div>
-              <p className={styles.price}>{property.price}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      {status === "loading" ? <p role="status">Loading properties…</p>
+        : status === "error" ? <div><p role="alert">Properties are temporarily unavailable.</p><button className={styles.retry} onClick={retry}>Try again</button></div>
+        : properties.length ? <div className={styles.grid}>{properties.map(property => <PropertyCard key={property.id} property={property} />)}</div>
+        : <p className={styles.empty}>New properties will appear here when they’re added to the collection.</p>}
+      <Link href="/properties" className={styles.browse}>Explore all properties →</Link>
     </section>
   );
 }
-
-export default RecentProperties;

@@ -1,0 +1,13 @@
+.wrapper { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 2.6rem; padding: .6rem 1rem; border: 1px solid #153d32; border-radius: .75rem; background: #153d32; color: #fff; font: inherit; font-size: .85rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+.button:hover { background: #0d2a22; }
+.button:focus-visible { outline: 3px solid #a6c6b8; outline-offset: 3px; }
+.button:disabled { opacity: .7; cursor: wait; }
+.error { max-width: 18rem; color: #a52d25; font-size: .8rem; }
+.menu { width: 100%; }
+.menu .button { justify-content: flex-start; width: 100%; min-height: 44px; padding: .65rem .75rem; border: 0; border-radius: .6rem; color: #61766d; background: transparent; font-weight: 500; }
+.menu .button:hover { background: #f5eeea; color: #793d31; }
+.menu .error { padding: 0 .75rem .5rem; }
+.spinner { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }

@@ -1,0 +1,76 @@
+.page { padding: clamp(1.5rem, 4vw, 3.5rem) 1.25rem; background: radial-gradient(ellipse at top left, #e1ece5, transparent 55%), #f6f7f2; color: #17352d; }
+.container { max-width: 1200px; margin: 0 auto; }
+.heading { margin-bottom: 2.5rem; }
+.eyebrow { color: #61766d; font-size: .68rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.heading h1 { margin: .5rem 0 .8rem; font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.15; letter-spacing: -.045em; overflow-wrap: anywhere; }
+.heading > p:last-child { max-width: 640px; color: #61766d; font-size: .93rem; }
+.catalogLayout { display: grid; grid-template-columns: 250px minmax(0, 1fr); align-items: start; gap: 2rem; }
+.filters, .detailCard { padding: 1.5rem; border: 1px solid #ffffff; border-radius: 1.25rem; background: #fffffbdd; box-shadow: 0 8px 28px #153d3207; }
+.filters { position: sticky; top: 96px; display: grid; gap: 1.2rem; }
+.filterHeading { display: flex; justify-content: space-between; align-items: center; }
+.filterHeading h2 { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
+.textButton { min-height: 44px; border: 0; padding: .4rem .3rem; background: none; color: #61766d; font: inherit; font-size: .75rem; cursor: pointer; }
+.textButton:hover { color: #153d32; }
+.field { display: grid; gap: .5rem; color: #527267; font-size: .75rem; font-weight: 600; }
+.field input, .field select, .sort select { width: 100%; min-width: 0; min-height: 44px; padding: .65rem .7rem; border: 1px solid #153d3220; border-radius: .65rem; color: #17352d; background: #fffefa; font: inherit; font-size: .8rem; }
+.searchControl { position: relative; display: flex; align-items: center; }
+.searchControl svg { position: absolute; left: .7rem; pointer-events: none; }
+.searchControl input { padding-left: 2.1rem; }
+.priceFields { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
+.filterNote { color: #61766d; font-size: .72rem; line-height: 1.6; }
+.toolbar { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; font-size: .83rem; color: #61766d; }
+.sort { display: flex; align-items: center; gap: .65rem; font-size: .75rem; white-space: nowrap; }
+.sort select { width: auto; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.propertyCard { min-width: 0; display: block; overflow: hidden; border: 1px solid #fff; border-radius: 1.25rem; background: #fffffb; color: #17352d; text-decoration: none; box-shadow: 0 8px 25px #153d3208; transition: transform .2s, box-shadow .2s; }
+.propertyCard:hover { transform: translateY(-3px); box-shadow: 0 12px 30px #153d3212; }
+.propertyCard:focus-visible { outline: 2px solid #527b65; outline-offset: 3px; }
+.visual { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem; aspect-ratio: 16 / 10; background: linear-gradient(135deg, #e4ece1, #eef1e7); color: #6a8978; }
+.typeBadge { position: absolute; top: 1rem; left: 1rem; padding: .25rem .6rem; border-radius: .4rem; color: #315743; background: #fffffbcc; font-size: .64rem; }
+.photoNote { font-size: .67rem; }
+.cardArrow { position: absolute; bottom: .8rem; right: .8rem; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: #fffffbcc; color: #153d32; }
+.cardBody { padding: 1.25rem; }
+.price { margin-bottom: .4rem; color: #153d32; font-size: 1.2rem; font-weight: 700; }
+.cardBody h3 { font-size: 1rem; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+.address { display: flex; align-items: flex-start; gap: .4rem; margin-top: .5rem; color: #61766d; font-size: .75rem; overflow-wrap: anywhere; }
+.address svg { flex-shrink: 0; margin-top: .15rem; }
+.cardMeta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #153d3210; color: #61766d; font-size: .73rem; }
+.cardMeta span { display: flex; gap: .4rem; align-items: center; }
+.state { display: flex; flex-direction: column; align-items: center; gap: .8rem; padding: 3.5rem 1.5rem; border: 1px solid #ffffff; border-radius: 1.25rem; background: #fffffbcc; text-align: center; }
+.state h1, .state h2 { font-size: 1.4rem; letter-spacing: -.02em; }
+.state p { max-width: 440px; color: #61766d; font-size: .85rem; }
+.button, .outlineButton { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: .5rem; padding: .65rem 1rem; border: 1px solid #153d32; border-radius: .7rem; background: #153d32; color: white; font: inherit; font-size: .8rem; font-weight: 600; text-decoration: none; cursor: pointer; }
+.button:hover { background: #0d2a22; }
+.outlineButton { width: 100%; color: #153d32; background: transparent; }
+.outlineButton:hover { background: #e7f0e9; }
+.error { color: #a52d25; font-size: .75rem; }
+.page input[aria-invalid="true"] { border-color: #a52d25; }
+.pagination { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 2rem; color: #61766d; font-size: .8rem; }
+.pagination button { display: grid; place-items: center; width: 44px; height: 44px; background: #fffffb; border: 1px solid #153d3220; border-radius: .65rem; color: #153d32; cursor: pointer; }
+.pagination button:disabled { opacity: .35; cursor: default; }
+.cardSkeleton { min-height: 330px; padding: 1rem; border-radius: 1.25rem; background: #fffffb; }
+.cardSkeleton div, .cardSkeleton span { display: block; background: #e4ece1; border-radius: .5rem; animation: pulse 1.5s ease-in-out infinite; }
+.cardSkeleton div { height: 180px; }
+.cardSkeleton span { height: 15px; margin-top: 1.3rem; width: 70%; }
+.cardSkeleton span:last-child { width: 45%; }
+.back { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-bottom: 1.5rem; color: #61766d; font-size: .8rem; text-decoration: none; }
+.back:hover { color: #153d32; }
+.detailLayout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 2rem; align-items: start; }
+.detailVisual { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .75rem; min-height: 300px; aspect-ratio: 16 / 10; padding: 2rem; border-radius: 1.25rem; background: linear-gradient(135deg, #e4ece1, #eef1e7); color: #6a8978; text-align: center; }
+.detailVisual p { color: #527267; font-weight: 600; }
+.detailVisual span { font-size: .75rem; }
+.detailLayout > div > .detailCard { margin-top: 1.5rem; }
+.detailCard h2 { font-size: 1.15rem; }
+.description { margin-top: 1rem; color: #61766d; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .9rem; }
+.summary { position: sticky; top: 96px; }
+.detailPrice { margin: .5rem 0 1.5rem; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; overflow-wrap: anywhere; }
+.specifications { margin-bottom: 1.5rem; }
+.specifications > div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 0; border-bottom: 1px solid #153d3210; font-size: .85rem; }
+.specifications dt { display: flex; gap: .5rem; align-items: center; color: #61766d; }
+.specifications dd { text-align: right; }
+.page a:focus-visible, .page button:focus-visible, .page input:focus-visible, .page select:focus-visible { outline: 2px solid #527b65; outline-offset: 3px; }
+@keyframes pulse { 50% { opacity: .5; } }
+@media (max-width: 950px) { .catalogLayout { grid-template-columns: 220px minmax(0, 1fr); gap: 1.25rem; } .cards { grid-template-columns: 1fr; } .toolbar { flex-wrap: wrap; } }
+@media (max-width: 760px) { .catalogLayout, .detailLayout { grid-template-columns: 1fr; gap: 1.25rem; } .filters, .summary { position: static; } .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } .filterHeading, .priceFields, .filterNote, .filters > .error { grid-column: 1 / -1; } .heading { margin-bottom: 1.5rem; } .heading > p:last-child { font-size: .85rem; } .toolbar { gap: .5rem; } .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .detailVisual { min-height: 230px; } }
+@media (max-width: 540px) { .cards { grid-template-columns: 1fr; } .filters { padding: 1.1rem; } .sort { width: 100%; justify-content: space-between; } .sort select { flex: 1; max-width: 190px; } }
+@media (prefers-reduced-motion: reduce) { .propertyCard { transition: none; } .propertyCard:hover { transform: none; } .cardSkeleton div, .cardSkeleton span { animation: none; } }

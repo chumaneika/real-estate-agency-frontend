@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint --ext .js,.jsx src",
+    "test": "node --test tests/properties.test.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.525.0",

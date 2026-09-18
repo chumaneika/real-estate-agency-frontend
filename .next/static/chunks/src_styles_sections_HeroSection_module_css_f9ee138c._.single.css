@@ -56,4 +56,13 @@
   font-size: 1rem;
 }
 
+.HeroSection-module__YcV8AW__unavailable {
+  opacity: .65;
+}
+
+.HeroSection-module__YcV8AW__unavailable:hover {
+  transform: none;
+  box-shadow: 0 4px 8px #0000000d;
+}
+
 /*# sourceMappingURL=src_styles_sections_HeroSection_module_css_f9ee138c._.single.css.map*/
