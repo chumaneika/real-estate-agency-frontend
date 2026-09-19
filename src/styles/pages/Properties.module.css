@@ -68,6 +68,34 @@
 .detailVisual { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .75rem; min-height: 300px; aspect-ratio: 16 / 10; padding: 2rem; border-radius: 1.25rem; background: linear-gradient(135deg, #e4ece1, #eef1e7); color: #6a8978; text-align: center; }
 .detailVisual p { color: #527267; font-weight: 600; }
 .detailVisual span { font-size: .75rem; }
+.gallery { min-width: 0; }
+.galleryMain { position: relative; width: 100%; overflow: hidden; display: block; aspect-ratio: 16 / 10; border: 0; border-radius: 1.25rem; background: #e4ece1; color: white; cursor: zoom-in; }
+.galleryImage { object-fit: cover; opacity: 0; transition: opacity .28s ease; }
+.galleryImageLoaded { opacity: 1; }
+.gallerySkeleton { position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, #e2e9df 20%, #f1f4ed 40%, #e2e9df 60%); background-size: 220% 100%; animation: galleryShimmer 1.45s ease-in-out infinite; }
+.galleryFallback { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .65rem; padding: 2rem; background: linear-gradient(135deg, #e4ece1, #eef1e7); color: #6a8978; text-align: center; }
+.galleryFallback p { color: #527267; font-size: .9rem; font-weight: 650; }
+.galleryFallback span { color: #6f827a; font-size: .73rem; }
+.expandLabel, .imageCounter { position: absolute; z-index: 2; bottom: 1rem; display: inline-flex; align-items: center; min-height: 38px; padding: .45rem .7rem; border: 1px solid #ffffff40; border-radius: .65rem; background: #102c25cc; color: white; font-size: .72rem; font-weight: 600; backdrop-filter: blur(10px); }
+.expandLabel { left: 1rem; gap: .45rem; }
+.imageCounter { right: 1rem; }
+.thumbnails { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(82px, 118px); gap: .75rem; margin-top: .8rem; padding: .15rem .15rem .35rem; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: thin; }
+.thumbnail { position: relative; overflow: hidden; aspect-ratio: 4 / 3; border: 2px solid transparent; border-radius: .7rem; background: #e4ece1; opacity: .72; cursor: pointer; transition: border-color .2s, opacity .2s, transform .2s; }
+.thumbnail:hover { opacity: 1; transform: translateY(-1px); }
+.thumbnailActive { border-color: #153d32; opacity: 1; }
+.thumbnail .galleryFallback { padding: .35rem; }
+.thumbnail .galleryFallback svg { width: 24px; }
+.thumbnail .galleryFallback p, .thumbnail .galleryFallback span { display: none; }
+.lightbox { position: fixed; z-index: 1000; inset: 0; display: grid; place-items: center; padding: clamp(1rem, 4vw, 3rem); background: #08130feb; backdrop-filter: blur(16px); }
+.lightboxImage { position: relative; width: min(1200px, calc(100vw - 7rem)); height: min(82vh, 820px); overflow: hidden; border-radius: 1rem; background: #13231e; box-shadow: 0 24px 90px #0008; }
+.lightboxImage .galleryImage { object-fit: contain; }
+.lightboxClose, .lightboxArrow { position: absolute; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff3d; border-radius: 50%; background: #12241ecf; color: white; cursor: pointer; backdrop-filter: blur(10px); }
+.lightboxClose { top: 1.25rem; right: 1.25rem; }
+.lightboxArrow { top: 50%; transform: translateY(-50%); }
+.lightboxPrevious { left: 1.25rem; }
+.lightboxNext { right: 1.25rem; }
+.lightboxClose:hover, .lightboxArrow:hover { background: #285447; }
+.lightboxCounter { position: absolute; bottom: 1.25rem; left: 50%; transform: translateX(-50%); padding: .4rem .7rem; border-radius: 1rem; background: #12241ecf; color: white; font-size: .72rem; }
 .detailLayout > div > .detailCard { margin-top: 1.5rem; }
 .detailCard h2 { font-size: 1.15rem; }
 .description { margin-top: 1rem; color: #61766d; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .9rem; }
@@ -110,7 +138,8 @@
 .page a:focus-visible, .page button:focus-visible, .page input:focus-visible, .page select:focus-visible { outline: 2px solid #527b65; outline-offset: 3px; }
 @keyframes pulse { 50% { opacity: .5; } }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes galleryShimmer { to { background-position: -120% 0; } }
 @media (max-width: 950px) { .catalogLayout { grid-template-columns: 220px minmax(0, 1fr); gap: 1.25rem; } .cards { grid-template-columns: 1fr; } .toolbar { flex-wrap: wrap; } }
 @media (max-width: 760px) { .catalogLayout, .detailLayout { grid-template-columns: 1fr; gap: 1.25rem; } .filters, .summary { position: static; } .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } .filterHeading, .priceFields, .filterNote, .filters > .error { grid-column: 1 / -1; } .heading { margin-bottom: 1.5rem; } .heading > p:last-child { font-size: .85rem; } .toolbar { gap: .5rem; } .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .detailVisual { min-height: 230px; } }
-@media (max-width: 540px) { .cards { grid-template-columns: 1fr; } .filters { padding: 1.1rem; } .sort { width: 100%; justify-content: space-between; } .sort select { flex: 1; max-width: 190px; } .viewingFields { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { .propertyCard { transition: none; } .propertyCard:hover { transform: none; } .cardSkeleton div, .cardSkeleton span, .spinner { animation: none; } }
+@media (max-width: 540px) { .cards { grid-template-columns: 1fr; } .filters { padding: 1.1rem; } .sort { width: 100%; justify-content: space-between; } .sort select { flex: 1; max-width: 190px; } .viewingFields { grid-template-columns: 1fr; } .galleryMain { border-radius: 1rem; } .thumbnails { grid-auto-columns: 76px; gap: .55rem; } .expandLabel { left: .7rem; bottom: .7rem; } .imageCounter { right: .7rem; bottom: .7rem; } .lightbox { padding: .75rem; } .lightboxImage { width: 100%; height: 76vh; border-radius: .8rem; } .lightboxClose { top: .8rem; right: .8rem; } .lightboxPrevious { left: .8rem; } .lightboxNext { right: .8rem; } .lightboxCounter { bottom: .8rem; } }
+@media (prefers-reduced-motion: reduce) { .propertyCard, .galleryImage, .thumbnail { transition: none; } .propertyCard:hover, .thumbnail:hover { transform: none; } .cardSkeleton div, .cardSkeleton span, .spinner, .gallerySkeleton { animation: none; } }

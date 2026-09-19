@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { filterProperties, formatPrice, propertyTitle } from "../src/lib/properties.js";
 import { parseFavoriteIds, toggleFavoriteId } from "../src/lib/favorites.js";
 import { localDateValue, validateViewing, VIEWING_TIMES } from "../src/lib/viewings.js";
+import { propertyImages } from "../src/lib/propertyImages.js";
 
 const filters = { search: "", type: "", rooms: "", minPrice: "", maxPrice: "", sort: "newest" };
 const data = [
@@ -56,4 +57,17 @@ test("viewing validation requires a future supported time", () => {
 });
 test("local date values do not depend on UTC conversion", () => {
   assert.equal(localDateValue(new Date(2026, 8, 19, 0, 30)), "2026-09-19");
+});
+test("property gallery keeps unique safe image urls in display order", () => {
+  assert.deepEqual(propertyImages({ imageUrls: [
+    " https://images.example/home.jpg ",
+    "/images/room.jpg",
+    "https://images.example/home.jpg",
+    "javascript:alert(1)",
+    null,
+  ] }), ["https://images.example/home.jpg", "/images/room.jpg"]);
+});
+test("property gallery accepts object images and handles missing data", () => {
+  assert.deepEqual(propertyImages({ images: [{ url: "/one.jpg" }, { source: "/ignored.jpg" }] }), ["/one.jpg"]);
+  assert.deepEqual(propertyImages({}), []);
 });

@@ -6,6 +6,7 @@ import usePropertyData from "@/hooks/usePropertyData";
 import { formatPrice, propertyTitle, propertyTypes } from "@/lib/properties";
 import FavoriteButton from "@/components/FavoriteButton";
 import ViewingRequestForm from "@/components/ViewingRequestForm";
+import PropertyGallery from "@/components/PropertyGallery";
 import styles from "@/styles/pages/Properties.module.css";
 
 export default function PropertyDetails({ id }) {
@@ -22,7 +23,7 @@ export default function PropertyDetails({ id }) {
             <div className={styles.heading}><p className={styles.eyebrow}>{propertyTypes[property.type] || "PRIMEKEY PROPERTY"}</p><h1>{propertyTitle(property)}</h1><p className={styles.address}><MapPin size={17} aria-hidden="true" />{property.address || "Address not provided"}</p></div>
             <div className={styles.detailLayout}>
               <div>
-                <div className={styles.detailVisual}><Building2 size={90} strokeWidth={.9} aria-hidden="true" /><p>Photography coming soon</p><span>Photos haven’t been added for this property yet.</span></div>
+                <PropertyGallery property={property} />
                 <section className={styles.detailCard}><h2>About this property</h2><p className={styles.description}>{property.description?.trim() || "A description hasn’t been added for this property yet."}</p></section>
                 <ViewingRequestForm property={property} />
               </div>
