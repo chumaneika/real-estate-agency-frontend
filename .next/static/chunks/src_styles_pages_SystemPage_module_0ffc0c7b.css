@@ -1,0 +1,113 @@
+/* [project]/src/styles/pages/SystemPage.module.css [app-client] (css) */
+.SystemPage-module__--PmZW__page {
+  color: #17352d;
+  background: radial-gradient(circle at 20% 15%, #dcebe1, #0000 38%), #f6f7f2;
+  place-items: center;
+  min-height: calc(100svh - 150px);
+  padding: clamp(2rem, 8vw, 6rem) 1.25rem;
+  display: grid;
+}
+
+.SystemPage-module__--PmZW__card {
+  text-align: center;
+  background: #fffffbe8;
+  border: 1px solid #fff;
+  border-radius: 1.5rem;
+  width: min(620px, 100%);
+  padding: clamp(2rem, 7vw, 4rem);
+  box-shadow: 0 22px 70px #153d3210;
+}
+
+.SystemPage-module__--PmZW__icon {
+  color: #245740;
+  background: #e5efe7;
+  border-radius: 1rem;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.25rem;
+  display: grid;
+}
+
+.SystemPage-module__--PmZW__errorIcon {
+  color: #9b4339;
+  background: #f8eae6;
+}
+
+.SystemPage-module__--PmZW__eyebrow {
+  color: #61766d;
+  letter-spacing: .13em;
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+.SystemPage-module__--PmZW__card h1 {
+  letter-spacing: -.05em;
+  margin: .6rem 0 .8rem;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.SystemPage-module__--PmZW__card > p:last-of-type {
+  color: #61766d;
+  max-width: 440px;
+  margin: 0 auto;
+  font-size: .9rem;
+}
+
+.SystemPage-module__--PmZW__actions {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .7rem;
+  margin-top: 1.8rem;
+  display: flex;
+}
+
+.SystemPage-module__--PmZW__primary, .SystemPage-module__--PmZW__secondary {
+  min-height: 44px;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid #153d32;
+  border-radius: .7rem;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem 1rem;
+  font-size: .8rem;
+  font-weight: 650;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.SystemPage-module__--PmZW__primary {
+  color: #fff;
+  background: #153d32;
+}
+
+.SystemPage-module__--PmZW__secondary {
+  color: #153d32;
+  background: none;
+}
+
+[data-theme="dark"] .SystemPage-module__--PmZW__page {
+  color: #edf4ef;
+  background: radial-gradient(circle at 20% 15%, #1b342a, #0000 38%), #0d1814;
+}
+
+[data-theme="dark"] .SystemPage-module__--PmZW__card {
+  background: #15251ff0;
+  border-color: #cde2d31a;
+  box-shadow: 0 22px 70px #0005;
+}
+
+[data-theme="dark"] .SystemPage-module__--PmZW__card > p:last-of-type, [data-theme="dark"] .SystemPage-module__--PmZW__eyebrow {
+  color: #9bb0a6;
+}
+
+[data-theme="dark"] .SystemPage-module__--PmZW__secondary {
+  color: #dce9e1;
+  border-color: #87a897;
+}
+
+
+/*# sourceMappingURL=src_styles_pages_SystemPage_module_0ffc0c7b.css.map*/

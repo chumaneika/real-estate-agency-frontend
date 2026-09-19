@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/styles/TheFooter.module.css"],"sourcesContent":[".footer {\n  background-color: #ffffff;\n  border-top: 1px solid #e5e5e5;\n  padding: 1rem 2rem;\n  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.03);\n}\n\n.footer__inner {\n  max-width: 1200px;\n  margin: 0 auto;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 0.9rem;\n  color: #666;\n}\n\n.links {\n  display: flex;\n  gap: 1.5rem;\n}\n\n.link {\n  text-decoration: none;\n  color: #666;\n  transition: color 0.3s ease;\n}\n\n.link:hover {\n  color: #153d32;\n}\n\n:global([data-theme=\"dark\"]) .footer { background: #101e19; border-top-color: #d8eadf12; box-shadow: none; }\n:global([data-theme=\"dark\"]) .footer__inner, :global([data-theme=\"dark\"]) .link { color: #9bb0a6; }\n:global([data-theme=\"dark\"]) .link:hover { color: #dce9e1; }\n"],"names":[],"mappings":"AAAA;;;;;;;AAOA;;;;;;;;;;AAUA;;;;;AAKA;;;;;;AAMA;;;;AAIA;;;;;;AACA;;;;AACA"}}]
+}

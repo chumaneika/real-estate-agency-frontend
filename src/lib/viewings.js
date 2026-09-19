@@ -23,8 +23,8 @@ export function validateViewing(values, now = new Date()) {
   return "";
 }
 
-export function formatViewingDate(date, time) {
-  return new Intl.DateTimeFormat("en-US", {
+export function formatViewingDate(date, time, locale = "en") {
+  return new Intl.DateTimeFormat(locale === "ru" ? "ru-RU" : "en-US", {
     weekday: "long", month: "long", day: "numeric", year: "numeric",
     hour: "numeric", minute: "2-digit",
   }).format(new Date(`${date}T${time}:00`));

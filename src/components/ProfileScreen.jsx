@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Mail, ShieldCheck, UserRound } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import styles from "@/styles/pages/Profile.module.css";
+import { usePreferences } from "@/components/AppProviders";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
@@ -14,6 +15,7 @@ export default function ProfileScreen() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
+  const { t } = usePreferences();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -44,42 +46,42 @@ export default function ProfileScreen() {
   return (
     <main className={styles.page}>
       <div className={styles.container}>
-        <Link href="/home" className={styles.back}><ArrowLeft size={16} aria-hidden="true" /> Back to dashboard</Link>
+        <Link href="/home" className={styles.back}><ArrowLeft size={16} aria-hidden="true" /> {t("profile.back")}</Link>
         <div className={styles.heading}>
-          <p className={styles.eyebrow}>YOUR PRIMEKEY ACCOUNT</p>
-          <h1>My profile</h1>
-          <p>Your personal details, all in one place.</p>
+          <p className={styles.eyebrow}>{t("profile.eyebrow")}</p>
+          <h1>{t("profile.title")}</h1>
+          <p>{t("profile.subtitle")}</p>
         </div>
 
         {error ? (
           <section className={styles.card}>
             <p role="alert" className={styles.error}>{error}</p>
-            <button className={styles.retry} onClick={() => setAttempt(value => value + 1)}>Try again</button>
+            <button className={styles.retry} onClick={() => setAttempt(value => value + 1)}>{t("catalog.tryAgain")}</button>
           </section>
         ) : !user ? (
-          <section className={styles.card} role="status" aria-live="polite">Loading your profile…</section>
+          <section className={styles.card} role="status" aria-live="polite">{t("profile.loading")}</section>
         ) : (
           <div className={styles.grid}>
-            <section className={`${styles.card} ${styles.identity}`} aria-label="Account overview">
+            <section className={`${styles.card} ${styles.identity}`} aria-label={t("profile.overview")}>
               <div className={styles.avatar} aria-hidden="true">{user.username.slice(0, 2).toUpperCase()}</div>
               <h2>{user.username}</h2>
               <p className={styles.email}>{user.email}</p>
-              <span className={styles.badge}><ShieldCheck size={15} aria-hidden="true" />{isAdmin ? "Administrator" : "Member"}</span>
-              <p className={styles.caption}>A place for your next chapter.</p>
+              <span className={styles.badge}><ShieldCheck size={15} aria-hidden="true" />{t(isAdmin ? "account.admin" : "account.member")}</span>
+              <p className={styles.caption}>{t("profile.caption")}</p>
             </section>
 
             <div className={styles.details}>
               <section className={styles.card} aria-labelledby="personal-details">
-                <h2 id="personal-details">Personal information</h2>
-                <p className={styles.description}>The details connected to your account.</p>
+                <h2 id="personal-details">{t("profile.personal")}</h2>
+                <p className={styles.description}>{t("profile.details")}</p>
                 <dl className={styles.fields}>
-                  <div><dt><UserRound size={17} aria-hidden="true" />Username</dt><dd>{user.username}</dd></div>
-                  <div><dt><Mail size={17} aria-hidden="true" />Email address</dt><dd>{user.email || "Not provided"}</dd></div>
+                  <div><dt><UserRound size={17} aria-hidden="true" />{t("profile.username")}</dt><dd>{user.username}</dd></div>
+                  <div><dt><Mail size={17} aria-hidden="true" />{t("profile.email")}</dt><dd>{user.email || t("profile.missing")}</dd></div>
                 </dl>
-                <p className={styles.note}>Your username and email are separate. Your username is used to sign in.</p>
+                <p className={styles.note}>{t("profile.note")}</p>
               </section>
               <section className={`${styles.card} ${styles.session}`} aria-labelledby="session-title">
-                <div><h2 id="session-title">Account session</h2><p className={styles.description}>Finished for now? Sign out securely on this browser.</p></div>
+                <div><h2 id="session-title">{t("profile.session")}</h2><p className={styles.description}>{t("profile.sessionText")}</p></div>
                 <LogoutButton />
               </section>
             </div>

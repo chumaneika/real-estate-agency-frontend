@@ -59,3 +59,7 @@
   font-size: 1rem;
   color: #4b5563;
 }
+:global([data-theme="dark"]) .why { background: #101e19; border-top-color: #d8eadf12; }
+:global([data-theme="dark"]) .title, :global([data-theme="dark"]) .feature h3 { color: #edf4ef; }
+:global([data-theme="dark"]) .feature { background: #15251f; box-shadow: 0 4px 14px #0003; }
+:global([data-theme="dark"]) .feature p { color: #9bb0a6; }

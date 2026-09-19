@@ -5,8 +5,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Building2, ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 import { propertyImages } from "@/lib/propertyImages";
 import styles from "@/styles/pages/Properties.module.css";
+import { usePreferences } from "@/components/AppProviders";
 
 function GalleryImage({ src, alt, priority = false, fullscreen = false, onError }) {
+  const { t } = usePreferences();
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -17,10 +19,10 @@ function GalleryImage({ src, alt, priority = false, fullscreen = false, onError 
 
   if (failed) {
     return (
-      <div className={styles.galleryFallback} role="img" aria-label={`${alt}. Image unavailable.`}>
+      <div className={styles.galleryFallback} role="img" aria-label={`${alt}. ${t("gallery.unavailable")}.`}>
         <Building2 size={fullscreen ? 76 : 64} strokeWidth={1} aria-hidden="true" />
-        <p>Image unavailable</p>
-        <span>Try another photo or come back later.</span>
+        <p>{t("gallery.unavailable")}</p>
+        <span>{t("gallery.unavailableText")}</span>
       </div>
     );
   }
@@ -53,6 +55,7 @@ export default function PropertyGallery({ property }) {
   const closeButtonRef = useRef(null);
   const openerRef = useRef(null);
   const title = property?.title?.trim() || property?.address?.trim() || "Property";
+  const { t } = usePreferences();
 
   useEffect(() => {
     setSelected(0);
@@ -84,10 +87,10 @@ export default function PropertyGallery({ property }) {
 
   if (!images.length) {
     return (
-      <div className={styles.detailVisual} role="img" aria-label="Property photography is not available">
+      <div className={styles.detailVisual} role="img" aria-label={t("property.noPhotos")}>
         <Building2 size={90} strokeWidth={.9} aria-hidden="true" />
-        <p>Photography coming soon</p>
-        <span>Photos haven’t been added for this property yet.</span>
+        <p>{t("property.photoSoon")}</p>
+        <span>{t("property.noPhotos")}</span>
       </div>
     );
   }
@@ -99,22 +102,22 @@ export default function PropertyGallery({ property }) {
         type="button"
         className={styles.galleryMain}
         onClick={() => setFullscreen(true)}
-        aria-label={`Open photo ${selected + 1} of ${images.length} in full screen`}
+        aria-label={t("gallery.open", { current: selected + 1, total: images.length })}
       >
         <GalleryImage src={images[selected]} alt={`${title}, photo ${selected + 1}`} priority />
-        <span className={styles.expandLabel}><Expand size={17} aria-hidden="true" />Full screen</span>
+        <span className={styles.expandLabel}><Expand size={17} aria-hidden="true" />{t("gallery.fullscreen")}</span>
         <span className={styles.imageCounter}>{selected + 1} / {images.length}</span>
       </button>
 
       {images.length > 1 && (
-        <div className={styles.thumbnails} aria-label="Choose property photo">
+        <div className={styles.thumbnails} aria-label={t("gallery.choose")}>
           {images.map((image, index) => (
             <button
               key={image}
               type="button"
               className={`${styles.thumbnail} ${index === selected ? styles.thumbnailActive : ""}`}
               onClick={() => setSelected(index)}
-              aria-label={`Show photo ${index + 1}`}
+              aria-label={t("gallery.show", { number: index + 1 })}
               aria-pressed={index === selected}
             >
               <GalleryImage src={image} alt="" />
@@ -133,15 +136,15 @@ export default function PropertyGallery({ property }) {
             if (event.target === event.currentTarget) setFullscreen(false);
           }}
         >
-          <button ref={closeButtonRef} type="button" className={styles.lightboxClose} onClick={() => setFullscreen(false)} aria-label="Close full-screen gallery"><X aria-hidden="true" /></button>
+          <button ref={closeButtonRef} type="button" className={styles.lightboxClose} onClick={() => setFullscreen(false)} aria-label={t("gallery.close")}><X aria-hidden="true" /></button>
           <div className={styles.lightboxImage}>
             <GalleryImage src={images[selected]} alt={`${title}, photo ${selected + 1} of ${images.length}`} fullscreen />
           </div>
           {images.length > 1 && <>
-            <button type="button" className={`${styles.lightboxArrow} ${styles.lightboxPrevious}`} onClick={choosePrevious} aria-label="Previous photo"><ChevronLeft aria-hidden="true" /></button>
-            <button type="button" className={`${styles.lightboxArrow} ${styles.lightboxNext}`} onClick={chooseNext} aria-label="Next photo"><ChevronRight aria-hidden="true" /></button>
+            <button type="button" className={`${styles.lightboxArrow} ${styles.lightboxPrevious}`} onClick={choosePrevious} aria-label={t("gallery.previous")}><ChevronLeft aria-hidden="true" /></button>
+            <button type="button" className={`${styles.lightboxArrow} ${styles.lightboxNext}`} onClick={chooseNext} aria-label={t("gallery.next")}><ChevronRight aria-hidden="true" /></button>
           </>}
-          <p className={styles.lightboxCounter} aria-live="polite">{selected + 1} of {images.length}</p>
+          <p className={styles.lightboxCounter} aria-live="polite">{t("gallery.count", { current: selected + 1, total: images.length })}</p>
         </div>
       )}
     </section>

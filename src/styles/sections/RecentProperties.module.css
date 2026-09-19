@@ -70,3 +70,6 @@
 .empty { text-align: center; color: #61766d; }
 .retry { min-height: 44px; margin-top: .75rem; padding: .6rem 1rem; border: 1px solid #153d32; border-radius: .7rem; background: transparent; color: #153d32; font: inherit; cursor: pointer; }
 .browse:focus-visible, .retry:focus-visible { outline: 2px solid #527b65; outline-offset: 3px; }
+:global([data-theme="dark"]) .card { background: #15251f; box-shadow: 0 4px 14px #0004; }
+:global([data-theme="dark"]) .address, :global([data-theme="dark"]) .meta, :global([data-theme="dark"]) .empty { color: #9bb0a6; }
+:global([data-theme="dark"]) .browse, :global([data-theme="dark"]) .retry { color: #dce9e1; border-color: #88a897; }

@@ -1,0 +1,766 @@
+/* [project]/src/styles/TheFooter.module.css [app-client] (css) */
+.TheFooter-module__2nZ0Mq__footer {
+  background-color: #fff;
+  border-top: 1px solid #e5e5e5;
+  padding: 1rem 2rem;
+  box-shadow: 0 -1px 4px #00000008;
+}
+
+.TheFooter-module__2nZ0Mq__footer__inner {
+  color: #666;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: .9rem;
+  display: flex;
+}
+
+.TheFooter-module__2nZ0Mq__links {
+  gap: 1.5rem;
+  display: flex;
+}
+
+.TheFooter-module__2nZ0Mq__link {
+  color: #666;
+  text-decoration: none;
+  transition: color .3s;
+}
+
+.TheFooter-module__2nZ0Mq__link:hover {
+  color: #153d32;
+}
+
+[data-theme="dark"] .TheFooter-module__2nZ0Mq__footer {
+  box-shadow: none;
+  background: #101e19;
+  border-top-color: #d8eadf12;
+}
+
+[data-theme="dark"] .TheFooter-module__2nZ0Mq__footer__inner, [data-theme="dark"] .TheFooter-module__2nZ0Mq__link {
+  color: #9bb0a6;
+}
+
+[data-theme="dark"] .TheFooter-module__2nZ0Mq__link:hover {
+  color: #dce9e1;
+}
+
+
+/* [project]/src/styles/LogoutButton.module.css [app-client] (css) */
+.LogoutButton-module__NpaP3W__wrapper {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .5rem;
+  display: flex;
+}
+
+.LogoutButton-module__NpaP3W__button {
+  color: #fff;
+  min-height: 2.6rem;
+  font: inherit;
+  cursor: pointer;
+  background: #153d32;
+  border: 1px solid #153d32;
+  border-radius: .75rem;
+  justify-content: center;
+  align-items: center;
+  gap: .55rem;
+  padding: .6rem 1rem;
+  font-size: .85rem;
+  font-weight: 600;
+  transition: background .2s;
+  display: inline-flex;
+}
+
+.LogoutButton-module__NpaP3W__button:hover {
+  background: #0d2a22;
+}
+
+.LogoutButton-module__NpaP3W__button:focus-visible {
+  outline-offset: 3px;
+  outline: 3px solid #a6c6b8;
+}
+
+.LogoutButton-module__NpaP3W__button:disabled {
+  opacity: .7;
+  cursor: wait;
+}
+
+.LogoutButton-module__NpaP3W__error {
+  color: #a52d25;
+  max-width: 18rem;
+  font-size: .8rem;
+}
+
+.LogoutButton-module__NpaP3W__menu {
+  width: 100%;
+}
+
+.LogoutButton-module__NpaP3W__menu .LogoutButton-module__NpaP3W__button {
+  color: #61766d;
+  background: none;
+  border: 0;
+  border-radius: .6rem;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 44px;
+  padding: .65rem .75rem;
+  font-weight: 500;
+}
+
+.LogoutButton-module__NpaP3W__menu .LogoutButton-module__NpaP3W__button:hover {
+  color: #793d31;
+  background: #f5eeea;
+}
+
+.LogoutButton-module__NpaP3W__menu .LogoutButton-module__NpaP3W__error {
+  padding: 0 .75rem .5rem;
+}
+
+.LogoutButton-module__NpaP3W__spinner {
+  animation: 1s linear infinite LogoutButton-module__NpaP3W__spin;
+}
+
+@keyframes LogoutButton-module__NpaP3W__spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .LogoutButton-module__NpaP3W__spinner {
+    animation: none;
+  }
+}
+
+
+/* [project]/src/styles/TheHeader.module.css [app-client] (css) */
+.TheHeader-module__qrsTIG__header {
+  z-index: 1000;
+  color: #17352d;
+  backdrop-filter: blur(12px);
+  background: #fffffbf7;
+  border-bottom: 1px solid #153d3212;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 3px 14px #153d3205;
+}
+
+.TheHeader-module__qrsTIG__inner {
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1280px;
+  height: 71px;
+  margin: 0 auto;
+  display: grid;
+  position: relative;
+}
+
+.TheHeader-module__qrsTIG__brand {
+  color: #153d32;
+  white-space: nowrap;
+  border-radius: .4rem;
+  justify-self: start;
+  align-items: center;
+  gap: .6rem;
+  min-height: 44px;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.TheHeader-module__qrsTIG__brandName {
+  letter-spacing: -.045em;
+  font-size: 1.4rem;
+  font-weight: 750;
+}
+
+.TheHeader-module__qrsTIG__brandCaption {
+  letter-spacing: .13em;
+  color: #61766d;
+  border-left: 1px solid #153d3220;
+  margin-left: .3rem;
+  padding-left: .8rem;
+  font-size: .58rem;
+  font-weight: 600;
+}
+
+.TheHeader-module__qrsTIG__nav {
+  align-items: center;
+  gap: 1.5rem;
+  height: 100%;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__navLink {
+  min-height: 44px;
+  font: inherit;
+  color: #61766d;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: .3rem;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem .3rem;
+  font-size: .86rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  position: relative;
+}
+
+.TheHeader-module__qrsTIG__navLink:hover, .TheHeader-module__qrsTIG__navLink[aria-expanded="true"], .TheHeader-module__qrsTIG__active {
+  color: #153d32;
+}
+
+.TheHeader-module__qrsTIG__active:after {
+  content: "";
+  background: #153d32;
+  border-radius: 2px;
+  width: 18px;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.TheHeader-module__qrsTIG__actions {
+  justify-self: end;
+  align-items: center;
+  gap: .5rem;
+  min-width: 0;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__preferencesSlot {
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__mobilePreferences {
+  padding: .5rem .75rem;
+  display: none;
+}
+
+.TheHeader-module__qrsTIG__accountSlot {
+  justify-content: flex-end;
+  align-items: center;
+  width: 180px;
+  min-height: 44px;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__accountControl {
+  color: #17352d;
+  width: 180px;
+  min-height: 44px;
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  border: 1px solid #0000;
+  border-radius: 2rem;
+  align-items: center;
+  gap: .6rem;
+  padding: .25rem .5rem;
+  font-size: .85rem;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__accountControl:hover, .TheHeader-module__qrsTIG__accountActive {
+  background: #e7f0e980;
+  border-color: #153d3212;
+}
+
+.TheHeader-module__qrsTIG__avatar {
+  color: #153d32;
+  background: #e7f0e9;
+  border-radius: 50%;
+  flex-shrink: 0;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  font-size: .72rem;
+  font-weight: 700;
+  display: grid;
+}
+
+.TheHeader-module__qrsTIG__username {
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  overflow: hidden;
+}
+
+.TheHeader-module__qrsTIG__chevron {
+  flex-shrink: 0;
+}
+
+.TheHeader-module__qrsTIG__rotated {
+  transform: rotate(180deg);
+}
+
+.TheHeader-module__qrsTIG__signIn, .TheHeader-module__qrsTIG__retry {
+  color: #153d32;
+  min-height: 44px;
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  border: 1px solid #153d3225;
+  border-radius: .7rem;
+  justify-content: center;
+  align-items: center;
+  padding: .5rem 1rem;
+  font-size: .85rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.TheHeader-module__qrsTIG__signIn:hover, .TheHeader-module__qrsTIG__retry:hover {
+  background: #e7f0e9;
+}
+
+.TheHeader-module__qrsTIG__exploreWrap {
+  position: relative;
+}
+
+.TheHeader-module__qrsTIG__panel {
+  background: #fffffb;
+  border: 1px solid #153d3217;
+  border-radius: 1rem;
+  padding: .55rem;
+  box-shadow: 0 12px 40px #153d3214;
+}
+
+.TheHeader-module__qrsTIG__accountPanel {
+  width: 272px;
+  max-width: calc(100vw - 2rem);
+  position: absolute;
+  top: calc(100% + .5rem);
+  right: 0;
+}
+
+.TheHeader-module__qrsTIG__explorePanel {
+  width: 260px;
+  position: absolute;
+  top: calc(100% + .9rem);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.TheHeader-module__qrsTIG__accountDetails {
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem .6rem;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__accountDetails > div {
+  min-width: 0;
+}
+
+.TheHeader-module__qrsTIG__accountName {
+  color: #17352d;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: .85rem;
+  font-weight: 650;
+  overflow: hidden;
+}
+
+.TheHeader-module__qrsTIG__role {
+  color: #61766d;
+  font-size: .73rem;
+}
+
+.TheHeader-module__qrsTIG__panelLink {
+  color: #17352d;
+  width: 100%;
+  min-height: 44px;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: .6rem;
+  align-items: center;
+  gap: .65rem;
+  padding: .65rem .75rem;
+  font-size: .85rem;
+  text-decoration: none;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__panelLink:hover, .TheHeader-module__qrsTIG__panelLink[aria-current="page"] {
+  color: #153d32;
+  background: #e7f0e980;
+}
+
+.TheHeader-module__qrsTIG__count {
+  color: #153d32;
+  text-align: center;
+  background: #e7f0e9;
+  border-radius: 1rem;
+  min-width: 22px;
+  margin-left: auto;
+  padding: .1rem .4rem;
+  font-size: .65rem;
+}
+
+.TheHeader-module__qrsTIG__divider {
+  background: #153d3212;
+  height: 1px;
+  margin: .4rem .6rem;
+}
+
+.TheHeader-module__qrsTIG__panelEyebrow {
+  color: #61766d;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .6rem .75rem .3rem;
+  font-size: .64rem;
+  font-weight: 650;
+}
+
+.TheHeader-module__qrsTIG__upcoming {
+  list-style: none;
+}
+
+.TheHeader-module__qrsTIG__upcoming li {
+  color: #61766d;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 44px;
+  padding: .6rem .75rem;
+  font-size: .82rem;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__soon {
+  white-space: nowrap;
+  background: #f1f4ed;
+  border-radius: .35rem;
+  padding: .15rem .45rem;
+  font-size: .6rem;
+}
+
+.TheHeader-module__qrsTIG__mobileToggle, .TheHeader-module__qrsTIG__mobilePanel {
+  display: none;
+}
+
+.TheHeader-module__qrsTIG__skeleton {
+  align-items: center;
+  gap: .6rem;
+  width: 180px;
+  padding: .25rem .5rem;
+  display: flex;
+}
+
+.TheHeader-module__qrsTIG__skeleton span {
+  background: #e7ece5;
+  animation: 1.5s ease-in-out infinite TheHeader-module__qrsTIG__pulse;
+}
+
+.TheHeader-module__qrsTIG__skeleton span:first-child {
+  border-radius: 50%;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+}
+
+.TheHeader-module__qrsTIG__skeleton span:last-child {
+  border-radius: 5px;
+  width: 105px;
+  height: 12px;
+}
+
+.TheHeader-module__qrsTIG__header a:focus-visible, .TheHeader-module__qrsTIG__header button:focus-visible {
+  outline-offset: 3px;
+  outline: 2px solid #527b65;
+}
+
+@keyframes TheHeader-module__qrsTIG__pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+@media (width <= 1100px) {
+  .TheHeader-module__qrsTIG__brandCaption {
+    display: none;
+  }
+
+  .TheHeader-module__qrsTIG__inner {
+    gap: 1.5rem;
+  }
+}
+
+@media (width <= 760px) {
+  .TheHeader-module__qrsTIG__header {
+    padding: 0 1rem;
+  }
+
+  .TheHeader-module__qrsTIG__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .5rem;
+    height: 67px;
+  }
+
+  .TheHeader-module__qrsTIG__brandName {
+    font-size: 1.3rem;
+  }
+
+  .TheHeader-module__qrsTIG__brand {
+    gap: .45rem;
+  }
+
+  .TheHeader-module__qrsTIG__nav, .TheHeader-module__qrsTIG__preferencesSlot {
+    display: none;
+  }
+
+  .TheHeader-module__qrsTIG__accountSlot, .TheHeader-module__qrsTIG__accountControl {
+    width: 44px;
+  }
+
+  .TheHeader-module__qrsTIG__accountControl {
+    justify-content: center;
+    padding: 4px;
+  }
+
+  .TheHeader-module__qrsTIG__username, .TheHeader-module__qrsTIG__chevron {
+    display: none;
+  }
+
+  .TheHeader-module__qrsTIG__accountSlot:has(.TheHeader-module__qrsTIG__signIn), .TheHeader-module__qrsTIG__accountSlot:has(.TheHeader-module__qrsTIG__retry) {
+    width: auto;
+  }
+
+  .TheHeader-module__qrsTIG__signIn, .TheHeader-module__qrsTIG__retry {
+    padding: .5rem .7rem;
+    font-size: .78rem;
+  }
+
+  .TheHeader-module__qrsTIG__skeleton {
+    width: 44px;
+    padding: 5px;
+  }
+
+  .TheHeader-module__qrsTIG__skeleton span:last-child {
+    display: none;
+  }
+
+  .TheHeader-module__qrsTIG__mobileToggle {
+    color: #153d32;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-radius: .7rem;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    display: grid;
+  }
+
+  .TheHeader-module__qrsTIG__mobileToggle:hover, .TheHeader-module__qrsTIG__mobileToggle[aria-expanded="true"] {
+    background: #e7f0e9;
+  }
+
+  .TheHeader-module__qrsTIG__mobilePanel {
+    max-height: calc(100svh - 85px);
+    display: block;
+    position: absolute;
+    top: calc(100% + .5rem);
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+  }
+
+  .TheHeader-module__qrsTIG__mobilePreferences {
+    display: flex;
+  }
+}
+
+@media (width <= 380px) {
+  .TheHeader-module__qrsTIG__brand > svg {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .TheHeader-module__qrsTIG__skeleton span {
+    animation: none;
+  }
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__header {
+  color: #edf4ef;
+  background: #101e19f2;
+  border-bottom-color: #d8eadf12;
+  box-shadow: 0 3px 18px #0003;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__brand, [data-theme="dark"] .TheHeader-module__qrsTIG__navLink, [data-theme="dark"] .TheHeader-module__qrsTIG__accountControl, [data-theme="dark"] .TheHeader-module__qrsTIG__panelLink, [data-theme="dark"] .TheHeader-module__qrsTIG__mobileToggle {
+  color: #dce9e1;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__navLink:not(.TheHeader-module__qrsTIG__active) {
+  color: #9bb0a6;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__active:after {
+  background: #8bbba3;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__panel {
+  background: #16251f;
+  border-color: #d8eadf17;
+  box-shadow: 0 14px 44px #0006;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__accountName {
+  color: #edf4ef;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__role, [data-theme="dark"] .TheHeader-module__qrsTIG__panelEyebrow, [data-theme="dark"] .TheHeader-module__qrsTIG__upcoming li {
+  color: #9bb0a6;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__avatar, [data-theme="dark"] .TheHeader-module__qrsTIG__count, [data-theme="dark"] .TheHeader-module__qrsTIG__soon {
+  color: #dce9e1;
+  background: #244036;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__signIn, [data-theme="dark"] .TheHeader-module__qrsTIG__retry {
+  color: #dce9e1;
+  border-color: #d6e8dd22;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__signIn:hover, [data-theme="dark"] .TheHeader-module__qrsTIG__retry:hover, [data-theme="dark"] .TheHeader-module__qrsTIG__panelLink:hover {
+  background: #d9eee010;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__divider {
+  background: #d8eadf12;
+}
+
+
+/* [project]/src/styles/pages/SystemPage.module.css [app-client] (css) */
+.SystemPage-module__--PmZW__page {
+  color: #17352d;
+  background: radial-gradient(circle at 20% 15%, #dcebe1, #0000 38%), #f6f7f2;
+  place-items: center;
+  min-height: calc(100svh - 150px);
+  padding: clamp(2rem, 8vw, 6rem) 1.25rem;
+  display: grid;
+}
+
+.SystemPage-module__--PmZW__card {
+  text-align: center;
+  background: #fffffbe8;
+  border: 1px solid #fff;
+  border-radius: 1.5rem;
+  width: min(620px, 100%);
+  padding: clamp(2rem, 7vw, 4rem);
+  box-shadow: 0 22px 70px #153d3210;
+}
+
+.SystemPage-module__--PmZW__icon {
+  color: #245740;
+  background: #e5efe7;
+  border-radius: 1rem;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.25rem;
+  display: grid;
+}
+
+.SystemPage-module__--PmZW__errorIcon {
+  color: #9b4339;
+  background: #f8eae6;
+}
+
+.SystemPage-module__--PmZW__eyebrow {
+  color: #61766d;
+  letter-spacing: .13em;
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+.SystemPage-module__--PmZW__card h1 {
+  letter-spacing: -.05em;
+  margin: .6rem 0 .8rem;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.SystemPage-module__--PmZW__card > p:last-of-type {
+  color: #61766d;
+  max-width: 440px;
+  margin: 0 auto;
+  font-size: .9rem;
+}
+
+.SystemPage-module__--PmZW__actions {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .7rem;
+  margin-top: 1.8rem;
+  display: flex;
+}
+
+.SystemPage-module__--PmZW__primary, .SystemPage-module__--PmZW__secondary {
+  min-height: 44px;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid #153d32;
+  border-radius: .7rem;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem 1rem;
+  font-size: .8rem;
+  font-weight: 650;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.SystemPage-module__--PmZW__primary {
+  color: #fff;
+  background: #153d32;
+}
+
+.SystemPage-module__--PmZW__secondary {
+  color: #153d32;
+  background: none;
+}
+
+[data-theme="dark"] .SystemPage-module__--PmZW__page {
+  color: #edf4ef;
+  background: radial-gradient(circle at 20% 15%, #1b342a, #0000 38%), #0d1814;
+}
+
+[data-theme="dark"] .SystemPage-module__--PmZW__card {
+  background: #15251ff0;
+  border-color: #cde2d31a;
+  box-shadow: 0 22px 70px #0005;
+}
+
+[data-theme="dark"] .SystemPage-module__--PmZW__card > p:last-of-type, [data-theme="dark"] .SystemPage-module__--PmZW__eyebrow {
+  color: #9bb0a6;
+}
+
+[data-theme="dark"] .SystemPage-module__--PmZW__secondary {
+  color: #dce9e1;
+  border-color: #87a897;
+}
+
+
+/*# sourceMappingURL=src_styles_2e4da661._.css.map*/

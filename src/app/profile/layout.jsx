@@ -1,6 +1,5 @@
-import TheFooter from "@/components/TheFooter";
-import TheHeader from "@/components/TheHeader";
+import SiteLayout from "@/components/SiteLayout";
 
 export default function ProfileLayout({ children }) {
-  return <><TheHeader />{children}<TheFooter /></>;
+  return <SiteLayout>{children}</SiteLayout>;
 }

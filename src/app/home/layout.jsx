@@ -1,12 +1,7 @@
-import TheFooter from "@/components/TheFooter";
-import TheHeader from "@/components/TheHeader";
+import SiteLayout from "@/components/SiteLayout";
 
 export default function HomeLayout({ children }) {
   return (
-    <>
-      <TheHeader />
-      {children}
-      <TheFooter />
-    </>
+    <SiteLayout>{children}</SiteLayout>
   );
 }

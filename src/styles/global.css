@@ -19,6 +19,12 @@ html, body {
   line-height: 1.6;
 }
 
+html { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="dark"] body { background-color: #0d1814; color: #edf4ef; }
+
+body, header, footer, main { transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+
 /* Основной layout */
 body {
   display: flex;
@@ -27,7 +33,7 @@ body {
 }
 
 main {
-  flex: 1;
+  flex: 1 0 auto;
   padding: 2rem;
 }
 

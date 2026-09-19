@@ -26,3 +26,5 @@
 .card:hover {
   transform: translateY(-5px);
 }
+:global([data-theme="dark"]) .section { background: #0d1814; }
+:global([data-theme="dark"]) .card { background: #15251f; box-shadow: 0 4px 14px #0004; }

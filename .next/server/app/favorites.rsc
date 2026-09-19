@@ -1,22 +1,27 @@
 1:"$Sreact.fragment"
-2:I[7555,[],""]
-3:I[1295,[],""]
-4:I[9533,["95","static/chunks/95-78841ca2eac8e3f0.js","366","static/chunks/366-a94b25142446f072.js","835","static/chunks/app/favorites/layout-926a0a2856c4bb2e.js"],"default"]
-5:I[1722,["95","static/chunks/95-78841ca2eac8e3f0.js","916","static/chunks/916-4f61bf4ad6b1a433.js","40","static/chunks/app/favorites/page-7a64cf4f1f990afe.js"],"default"]
-6:I[9665,[],"OutletBoundary"]
-9:I[4911,[],"AsyncMetadataOutlet"]
-b:I[9665,[],"ViewportBoundary"]
-d:I[9665,[],"MetadataBoundary"]
-f:I[6614,[],""]
-:HL["/_next/static/css/16d272ee22960c32.css","style"]
-:HL["/_next/static/css/508e2ae6368514cc.css","style"]
-:HL["/_next/static/css/add6406263a2d5a5.css","style"]
-0:{"P":null,"b":"Ooljx1oS5zs9GSz1y9QIR","p":"","c":["","favorites"],"i":false,"f":[[["",{"children":["favorites",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/16d272ee22960c32.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]]}],{"children":["favorites",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/508e2ae6368514cc.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],[["$","$L4",null,{}],["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}],["$","footer",null,{"className":"TheFooter_footer__4gJVP","children":["$","div",null,{"className":"TheFooter_footer__inner__292ZU","children":[["$","p",null,{"children":["© ",2026," RealEstatePro. All rights reserved."]}],["$","div",null,{"className":"TheFooter_links__P2suG","children":[["$","a",null,{"href":"#","className":"TheFooter_link__NVisV","children":"Privacy Policy"}],["$","a",null,{"href":"#","className":"TheFooter_link__NVisV","children":"Terms of Service"}]]}]]}]}]]]}],{"children":["__PAGE__",["$","$1","c",{"children":[["$","$L5",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/add6406263a2d5a5.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","$L6",null,{"children":["$L7","$L8",["$","$L9",null,{"promise":"$@a"}]]}]]}],{},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","b2PLQ2H-K3s0RlxabPE08v",{"children":[["$","$Lb",null,{"children":"$Lc"}],null]}],["$","$Ld",null,{"children":"$Le"}]]}],false]],"m":"$undefined","G":["$f","$undefined"],"s":false,"S":true}
-10:"$Sreact.suspense"
-11:I[4911,[],"AsyncMetadata"]
-e:["$","div",null,{"hidden":true,"children":["$","$10",null,{"fallback":null,"children":["$","$L11",null,{"promise":"$@12"}]}]}]
-8:null
-c:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
-7:null
-a:{"metadata":[["$","title","0",{"children":"Favorites | PrimeKey"}],["$","meta","1",{"name":"description","content":"A considered way to find your next address."}]],"error":null,"digest":"$undefined"}
-12:{"metadata":"$a:metadata","error":null,"digest":"$undefined"}
+2:I[6917,["917","static/chunks/917-64b175099c62612f.js","177","static/chunks/app/layout-5be0c82725df3eed.js"],"default"]
+3:I[7555,[],""]
+4:I[4064,["84","static/chunks/84-0c609cfcd1af8a12.js","917","static/chunks/917-64b175099c62612f.js","39","static/chunks/app/error-bcf3c39e7cae4deb.js"],"default"]
+5:I[1295,[],""]
+6:I[627,["84","static/chunks/84-0c609cfcd1af8a12.js","917","static/chunks/917-64b175099c62612f.js","216","static/chunks/216-fe49bc1b2b394d98.js","345","static/chunks/app/not-found-eb15a8f67c69b6ef.js"],"default"]
+7:I[5013,["84","static/chunks/84-0c609cfcd1af8a12.js","917","static/chunks/917-64b175099c62612f.js","216","static/chunks/216-fe49bc1b2b394d98.js","835","static/chunks/app/favorites/layout-b2d013cb7a099af3.js"],"default"]
+8:I[3916,["84","static/chunks/84-0c609cfcd1af8a12.js","917","static/chunks/917-64b175099c62612f.js","216","static/chunks/216-fe49bc1b2b394d98.js","835","static/chunks/app/favorites/layout-b2d013cb7a099af3.js"],"default"]
+9:I[1558,["84","static/chunks/84-0c609cfcd1af8a12.js","917","static/chunks/917-64b175099c62612f.js","216","static/chunks/216-fe49bc1b2b394d98.js","835","static/chunks/app/favorites/layout-b2d013cb7a099af3.js"],"default"]
+a:I[1722,["84","static/chunks/84-0c609cfcd1af8a12.js","917","static/chunks/917-64b175099c62612f.js","916","static/chunks/916-66bc4765467688a9.js","40","static/chunks/app/favorites/page-a77930aedf2a5218.js"],"default"]
+b:I[9665,[],"OutletBoundary"]
+e:I[4911,[],"AsyncMetadataOutlet"]
+10:I[9665,[],"ViewportBoundary"]
+12:I[9665,[],"MetadataBoundary"]
+14:I[7075,["219","static/chunks/app/global-error-9305d9b96ac2975b.js"],"default"]
+:HL["/_next/static/css/daf925f605f60a22.css","style"]
+:HL["/_next/static/css/cf70c65d6f37acf0.css","style"]
+:HL["/_next/static/css/ac0cf6f06d15b048.css","style"]
+0:{"P":null,"b":"v7GJ4YxdCWDAm8GEJMbYh","p":"","c":["","favorites"],"i":false,"f":[[["",{"children":["favorites",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/daf925f605f60a22.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/css/cf70c65d6f37acf0.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$4","errorStyles":[],"errorScripts":[],"template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$L6",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["favorites",["$","$1","c",{"children":[null,[["$","$L7",null,{}],["$","$L8",null,{}],["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L9",null,{}]]]}],{"children":["__PAGE__",["$","$1","c",{"children":[["$","$La",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/ac0cf6f06d15b048.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","$Lb",null,{"children":["$Lc","$Ld",["$","$Le",null,{"promise":"$@f"}]]}]]}],{},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","q29Fdaam7VQFrWFWyUhaIv",{"children":[["$","$L10",null,{"children":"$L11"}],null]}],["$","$L12",null,{"children":"$L13"}]]}],false]],"m":"$undefined","G":["$14",[]],"s":false,"S":true}
+15:"$Sreact.suspense"
+16:I[4911,[],"AsyncMetadata"]
+13:["$","div",null,{"hidden":true,"children":["$","$15",null,{"fallback":null,"children":["$","$L16",null,{"promise":"$@17"}]}]}]
+d:null
+11:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+c:null
+f:{"metadata":[["$","title","0",{"children":"Favorites | PrimeKey"}],["$","meta","1",{"name":"description","content":"A considered way to find your next address."}]],"error":null,"digest":"$undefined"}
+17:{"metadata":"$f:metadata","error":null,"digest":"$undefined"}

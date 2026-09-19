@@ -57,3 +57,7 @@
 
 .unavailable { opacity: .65; }
 .unavailable:hover { transform: none; box-shadow: 0 4px 8px rgba(0, 0, 0, .05); }
+:global([data-theme="dark"]) .hero { background: #0d1814; }
+:global([data-theme="dark"]) .title { color: #edf4ef; }
+:global([data-theme="dark"]) .card { background: #15251f; color: #edf4ef; box-shadow: 0 4px 14px #0004; }
+:global([data-theme="dark"]) .card p { color: #9bb0a6; }

@@ -8,6 +8,11 @@
   overflow: hidden;
   color: var(--ink);
 }
+:global([data-theme="dark"]) .card { border-color: #dbeadf22; background: #13231eea; color: #edf4ef; box-shadow: 0 1.5rem 4.5rem #0008; }
+:global([data-theme="dark"]) .card h1 { color: #edf4ef; }
+:global([data-theme="dark"]) .cardHeader p, :global([data-theme="dark"]) .eyebrow, :global([data-theme="dark"]) .remember, :global([data-theme="dark"]) .switchMode { color: #a9bbb2; }
+:global([data-theme="dark"]) .field { color: #c5d7ce; }
+:global([data-theme="dark"]) .field input { border-color: #d8eadf1f; background: #0c1814b8; color: #edf4ef; }
 
 .backdrop,
 .tint {

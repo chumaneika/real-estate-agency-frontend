@@ -4,6 +4,7 @@ import { filterProperties, formatPrice, propertyTitle } from "../src/lib/propert
 import { parseFavoriteIds, toggleFavoriteId } from "../src/lib/favorites.js";
 import { localDateValue, validateViewing, VIEWING_TIMES } from "../src/lib/viewings.js";
 import { propertyImages } from "../src/lib/propertyImages.js";
+import { catalogParams, catalogStateFromParams, DEFAULT_CATALOG_FILTERS } from "../src/lib/catalogFilters.js";
 
 const filters = { search: "", type: "", rooms: "", minPrice: "", maxPrice: "", sort: "newest" };
 const data = [
@@ -70,4 +71,13 @@ test("property gallery keeps unique safe image urls in display order", () => {
 test("property gallery accepts object images and handles missing data", () => {
   assert.deepEqual(propertyImages({ images: [{ url: "/one.jpg" }, { source: "/ignored.jpg" }] }), ["/one.jpg"]);
   assert.deepEqual(propertyImages({}), []);
+});
+test("catalog state is restored from safe URL parameters", () => {
+  const state = catalogStateFromParams(new URLSearchParams("q=garden&type=RESIDENTIAL&rooms=3&min=100&max=500&sort=priceAsc&page=2"));
+  assert.deepEqual(state, { filters: { search: "garden", type: "RESIDENTIAL", rooms: "3", minPrice: "100", maxPrice: "500", sort: "priceAsc" }, page: 2 });
+});
+test("catalog URL omits defaults and rejects invalid values", () => {
+  assert.equal(catalogParams(DEFAULT_CATALOG_FILTERS, 1), "");
+  assert.deepEqual(catalogStateFromParams(new URLSearchParams("type=OTHER&rooms=9&min=-2&sort=random&page=-4")), { filters: DEFAULT_CATALOG_FILTERS, page: 1 });
+  assert.equal(catalogParams({ ...DEFAULT_CATALOG_FILTERS, search: " city ", rooms: "2" }, 3), "q=city&rooms=2&page=3");
 });

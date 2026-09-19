@@ -18,6 +18,8 @@
 .navLink:hover, .navLink[aria-expanded="true"], .active { color: #153d32; }
 .active::after { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 18px; height: 2px; border-radius: 2px; background: #153d32; }
 .actions { display: flex; justify-self: end; align-items: center; gap: .5rem; min-width: 0; }
+.preferencesSlot { display: flex; }
+.mobilePreferences { display: none; padding: .5rem .75rem; }
 .accountSlot { display: flex; justify-content: flex-end; align-items: center; width: 180px; min-height: 44px; }
 .accountControl { width: 180px; display: flex; align-items: center; gap: .6rem; min-height: 44px; padding: .25rem .5rem; border: 1px solid transparent; border-radius: 2rem; background: transparent; color: #17352d; font: inherit; font-size: .85rem; cursor: pointer; }
 .accountControl:hover, .accountActive { background: #e7f0e980; border-color: #153d3212; }
@@ -57,6 +59,7 @@
   .brandName { font-size: 1.3rem; }
   .brand { gap: .45rem; }
   .nav { display: none; }
+  .preferencesSlot { display: none; }
   .accountSlot, .accountControl { width: 44px; }
   .accountControl { padding: 4px; justify-content: center; }
   .username, .chevron { display: none; }
@@ -67,6 +70,18 @@
   .mobileToggle { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: .7rem; background: transparent; color: #153d32; cursor: pointer; }
   .mobileToggle:hover, .mobileToggle[aria-expanded="true"] { background: #e7f0e9; }
   .mobilePanel { display: block; position: absolute; top: calc(100% + .5rem); left: 0; right: 0; max-height: calc(100svh - 85px); overflow-y: auto; }
+  .mobilePreferences { display: flex; }
 }
 @media (max-width: 380px) { .brand > svg { display: none; } }
 @media (prefers-reduced-motion: reduce) { .skeleton span { animation: none; } }
+:global([data-theme="dark"]) .header { background: #101e19f2; border-bottom-color: #d8eadf12; color: #edf4ef; box-shadow: 0 3px 18px #0003; }
+:global([data-theme="dark"]) .brand, :global([data-theme="dark"]) .navLink, :global([data-theme="dark"]) .accountControl, :global([data-theme="dark"]) .panelLink, :global([data-theme="dark"]) .mobileToggle { color: #dce9e1; }
+:global([data-theme="dark"]) .navLink:not(.active) { color: #9bb0a6; }
+:global([data-theme="dark"]) .active::after { background: #8bbba3; }
+:global([data-theme="dark"]) .panel { border-color: #d8eadf17; background: #16251f; box-shadow: 0 14px 44px #0006; }
+:global([data-theme="dark"]) .accountName { color: #edf4ef; }
+:global([data-theme="dark"]) .role, :global([data-theme="dark"]) .panelEyebrow, :global([data-theme="dark"]) .upcoming li { color: #9bb0a6; }
+:global([data-theme="dark"]) .avatar, :global([data-theme="dark"]) .count, :global([data-theme="dark"]) .soon { background: #244036; color: #dce9e1; }
+:global([data-theme="dark"]) .signIn, :global([data-theme="dark"]) .retry { border-color: #d6e8dd22; color: #dce9e1; }
+:global([data-theme="dark"]) .signIn:hover, :global([data-theme="dark"]) .retry:hover, :global([data-theme="dark"]) .panelLink:hover { background: #d9eee010; }
+:global([data-theme="dark"]) .divider { background: #d8eadf12; }

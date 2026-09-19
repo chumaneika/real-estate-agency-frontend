@@ -27,5 +27,9 @@
 }
 
 .link:hover {
-  color: #0070f3;
+  color: #153d32;
 }
+
+:global([data-theme="dark"]) .footer { background: #101e19; border-top-color: #d8eadf12; box-shadow: none; }
+:global([data-theme="dark"]) .footer__inner, :global([data-theme="dark"]) .link { color: #9bb0a6; }
+:global([data-theme="dark"]) .link:hover { color: #dce9e1; }

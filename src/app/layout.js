@@ -1,4 +1,5 @@
 import "@/styles/global.css"
+import AppProviders from "@/components/AppProviders";
 
 export const metadata = {
   title: "PrimeKey | Real Estate",
@@ -7,9 +8,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        {children}
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

@@ -40,3 +40,4 @@
   color: #0070f3;
   font-weight: 500;
 }
+:global([data-theme="dark"]) .card, :global([data-theme="dark"]) .card:hover { background: #15251f; box-shadow: 0 4px 14px #0004; }

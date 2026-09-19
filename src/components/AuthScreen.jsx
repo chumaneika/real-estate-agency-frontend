@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowRight, Eye, EyeOff, KeyRound, LoaderCircle, LockKeyhole } from "lucide-react";
 import styles from "@/styles/pages/Auth.module.css";
+import PreferencesControls from "@/components/PreferencesControls";
+import { usePreferences } from "@/components/AppProviders";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
@@ -19,6 +21,7 @@ const AuthScreen = ({ mode = "login" }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { t } = usePreferences();
 
   useEffect(() => {
     if (!isRegistration) {
@@ -103,6 +106,7 @@ const AuthScreen = ({ mode = "login" }) => {
 
   return (
     <main className={`authPage ${styles.page}`}>
+      <PreferencesControls compact />
       <div className={styles.backdrop} aria-hidden="true" />
       <div className={styles.tint} aria-hidden="true" />
 
@@ -115,14 +119,14 @@ const AuthScreen = ({ mode = "login" }) => {
 
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <span className={styles.eyebrow}>{isRegistration ? "Your next chapter" : "Private client access"}</span>
-            <h1 id="auth-title">{isRegistration ? "Create your account" : "Welcome back"}</h1>
-            <p>{isRegistration ? "Save the homes that feel like yours." : "Sign in to manage your property journey."}</p>
+            <span className={styles.eyebrow}>{t(isRegistration ? "auth.registerEyebrow" : "auth.loginEyebrow")}</span>
+            <h1 id="auth-title">{t(isRegistration ? "auth.createTitle" : "auth.welcome")}</h1>
+            <p>{t(isRegistration ? "auth.registerSubtitle" : "auth.loginSubtitle")}</p>
           </div>
 
           <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <label className={styles.field}>
-              <span>{isRegistration ? "Username (optional)" : "Username or email"}</span>
+              <span>{t(isRegistration ? "auth.usernameOptional" : "auth.username")}</span>
               <input
                 autoComplete="username"
                 value={username}
@@ -134,7 +138,7 @@ const AuthScreen = ({ mode = "login" }) => {
 
             {isRegistration && (
               <label className={styles.field}>
-                <span>Email</span>
+                <span>{t("auth.email")}</span>
                 <input
                   autoComplete="email"
                   inputMode="email"
@@ -147,21 +151,21 @@ const AuthScreen = ({ mode = "login" }) => {
             )}
 
             <label className={styles.field}>
-              <span>Password</span>
+              <span>{t("auth.password")}</span>
               <span className={styles.passwordControl}>
                 <input
                   autoComplete={isRegistration ? "new-password" : "current-password"}
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  placeholder="Enter your password"
+                  placeholder={t("auth.passwordPlaceholder")}
                   aria-invalid={Boolean(error)}
                 />
                 <button
                   className={styles.visibilityButton}
                   type="button"
                   onClick={() => setShowPassword((isVisible) => !isVisible)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-label={t(showPassword ? "auth.hidePassword" : "auth.showPassword")}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -176,10 +180,10 @@ const AuthScreen = ({ mode = "login" }) => {
                     checked={rememberMe}
                     onChange={(event) => setRememberMe(event.target.checked)}
                   />
-                  <span>Remember me</span>
+                  <span>{t("auth.remember")}</span>
                 </label>
-                <button type="button" className={styles.textButton} onClick={() => setError("Password recovery will be available soon.")}>
-                  Forgot password?
+                <button type="button" className={styles.textButton} onClick={() => setError(t("auth.recovery"))}>
+                  {t("auth.forgot")}
                 </button>
               </div>
             )}
@@ -191,17 +195,17 @@ const AuthScreen = ({ mode = "login" }) => {
             )}
 
             <button className={styles.submit} type="submit" disabled={isLoading}>
-              {isLoading ? <LoaderCircle className={styles.loader} size={19} /> : <>{isRegistration ? "Create account" : "Sign in"}<ArrowRight size={18} /></>}
+              {isLoading ? <LoaderCircle className={styles.loader} size={19} /> : <>{t(isRegistration ? "auth.create" : "auth.signIn")}<ArrowRight size={18} /></>}
             </button>
           </form>
 
           <p className={styles.switchMode}>
-            {isRegistration ? "Already have an account?" : "New to PrimeKey?"}
-            <Link href={isRegistration ? "/login" : "/register"}>{isRegistration ? "Sign in" : "Create account"}</Link>
+            {t(isRegistration ? "auth.hasAccount" : "auth.new")}
+            <Link href={isRegistration ? "/login" : "/register"}>{t(isRegistration ? "auth.signIn" : "auth.create")}</Link>
           </p>
         </div>
 
-        <p className={styles.assurance}><LockKeyhole size={14} /> Your information is protected with bank-level encryption.</p>
+        <p className={styles.assurance}><LockKeyhole size={14} /> {t("auth.assurance")}</p>
       </section>
     </main>
   );
