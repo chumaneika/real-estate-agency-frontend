@@ -3,8 +3,9 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Home, Menu, UserRound, X } from "lucide-react";
+import { ChevronDown, Heart, Home, Menu, UserRound, X } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
+import useFavorites from "@/hooks/useFavorites";
 import styles from "@/styles/TheHeader.module.css";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
@@ -27,6 +28,7 @@ export default function TheHeader() {
   const [user, setUser] = useState(null);
   const [status, setStatus] = useState("loading");
   const [attempt, setAttempt] = useState(0);
+  const favorites = useFavorites();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -129,6 +131,10 @@ export default function TheHeader() {
     <Link href="/profile" className={styles.panelLink} aria-current={pathname === "/profile" ? "page" : undefined} onClick={() => setMenu(null)}>
       <UserRound size={17} aria-hidden="true" />My profile
     </Link>
+    <Link href="/favorites" className={styles.panelLink} aria-current={pathname === "/favorites" ? "page" : undefined} onClick={() => setMenu(null)}>
+      <Heart size={17} aria-hidden="true" />Favorites
+      {favorites.ready && favorites.ids.length > 0 && <span className={styles.count}>{favorites.ids.length}</span>}
+    </Link>
     <div className={styles.divider} />
     <LogoutButton variant="menu" />
   </>;
@@ -159,7 +165,7 @@ export default function TheHeader() {
           <div className={styles.accountSlot}>
             {status === "loading" ? <div className={styles.skeleton} role="status" aria-label="Loading account"><span /><span /></div>
               : status === "error" ? <button className={styles.retry} onClick={() => setAttempt(value => value + 1)} aria-label="Account unavailable. Retry loading">Retry account</button>
-              : user ? <button type="button" className={`${styles.accountControl} ${menu === "account" || pathname === "/profile" ? styles.accountActive : ""}`} aria-label={`Account: ${user.username}`} aria-expanded={menu === "account"} aria-controls={`${id}-account`} onClick={event => toggleMenu("account", event)} onKeyDown={event => onTriggerKeyDown("account", event)}>
+              : user ? <button type="button" className={`${styles.accountControl} ${menu === "account" || pathname === "/profile" || pathname === "/favorites" ? styles.accountActive : ""}`} aria-label={`Account: ${user.username}`} aria-expanded={menu === "account"} aria-controls={`${id}-account`} onClick={event => toggleMenu("account", event)} onKeyDown={event => onTriggerKeyDown("account", event)}>
                 <span className={styles.avatar} aria-hidden="true">{initials}</span>
                 <span className={styles.username}>{user.username}</span>
                 <ChevronDown size={15} className={`${styles.chevron} ${menu === "account" ? styles.rotated : ""}`} aria-hidden="true" />

@@ -37,6 +37,7 @@
 .role { color: #61766d; font-size: .73rem; }
 .panelLink { display: flex; align-items: center; gap: .65rem; min-height: 44px; width: 100%; padding: .65rem .75rem; border: 0; border-radius: .6rem; background: transparent; color: #17352d; font: inherit; font-size: .85rem; text-decoration: none; cursor: pointer; text-align: left; }
 .panelLink:hover, .panelLink[aria-current="page"] { background: #e7f0e980; color: #153d32; }
+.count { margin-left: auto; min-width: 22px; padding: .1rem .4rem; border-radius: 1rem; background: #e7f0e9; color: #153d32; font-size: .65rem; text-align: center; }
 .divider { height: 1px; margin: .4rem .6rem; background: #153d3212; }
 .panelEyebrow { color: #61766d; padding: .6rem .75rem .3rem; font-size: .64rem; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
 .upcoming { list-style: none; }

@@ -37,6 +37,12 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/favorites",
+      "regex": "^/favorites(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favorites(?:/)?$"
+    },
+    {
       "page": "/home",
       "regex": "^/home(?:/)?$",
       "routeKeys": {},

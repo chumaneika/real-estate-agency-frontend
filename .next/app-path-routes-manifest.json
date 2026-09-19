@@ -4,8 +4,9 @@
   "/login/page": "/login",
   "/register/page": "/register",
   "/properties/buy/page": "/properties/buy",
+  "/home/page": "/home",
   "/profile/page": "/profile",
-  "/properties/[id]/page": "/properties/[id]",
   "/properties/page": "/properties",
-  "/home/page": "/home"
+  "/favorites/page": "/favorites",
+  "/properties/[id]/page": "/properties/[id]"
 }

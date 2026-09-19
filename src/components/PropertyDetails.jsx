@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ArrowLeft, Building2, MapPin, Ruler, DoorOpen } from "lucide-react";
 import usePropertyData from "@/hooks/usePropertyData";
 import { formatPrice, propertyTitle, propertyTypes } from "@/lib/properties";
+import FavoriteButton from "@/components/FavoriteButton";
+import ViewingRequestForm from "@/components/ViewingRequestForm";
 import styles from "@/styles/pages/Properties.module.css";
 
 export default function PropertyDetails({ id }) {
@@ -22,6 +24,7 @@ export default function PropertyDetails({ id }) {
               <div>
                 <div className={styles.detailVisual}><Building2 size={90} strokeWidth={.9} aria-hidden="true" /><p>Photography coming soon</p><span>Photos haven’t been added for this property yet.</span></div>
                 <section className={styles.detailCard}><h2>About this property</h2><p className={styles.description}>{property.description?.trim() || "A description hasn’t been added for this property yet."}</p></section>
+                <ViewingRequestForm property={property} />
               </div>
               <aside className={`${styles.detailCard} ${styles.summary}`} aria-label="Property information">
                 <p className={styles.eyebrow}>ASKING PRICE</p><p className={styles.detailPrice}>{formatPrice(property.price)}</p>
@@ -31,6 +34,7 @@ export default function PropertyDetails({ id }) {
                   <div><dt><Building2 size={16} aria-hidden="true" />Type</dt><dd>{propertyTypes[property.type] || "Not provided"}</dd></div>
                 </dl>
                 <p className={styles.filterNote}>Property reference: #{property.id}</p>
+                <FavoriteButton propertyId={property.id} propertyName={propertyTitle(property)} variant="detail" />
                 <Link href="/properties" className={styles.outlineButton}>Continue exploring</Link>
               </aside>
             </div>
