@@ -49,8 +49,6 @@ const AuthScreen = ({ mode = "login" }) => {
     return "";
   };
 
-  const resolveUsername = (value) => value.trim().split("@", 1)[0];
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
@@ -63,7 +61,7 @@ const AuthScreen = ({ mode = "login" }) => {
     }
 
     setIsLoading(true);
-    const resolvedUsername = resolveUsername(username);
+    const loginIdentifier = username.trim();
 
     try {
       const response = await fetch(`${API_URL}/api/v1/auth/${isRegistration ? "register" : "login"}`, {
@@ -73,7 +71,7 @@ const AuthScreen = ({ mode = "login" }) => {
         body: JSON.stringify(
           isRegistration
             ? { username: username.trim(), email: email.trim(), password }
-            : { username: resolvedUsername, password }
+            : { username: loginIdentifier, password }
         ),
       });
       const payload = await response.json().catch(() => ({}));
@@ -87,7 +85,7 @@ const AuthScreen = ({ mode = "login" }) => {
 
       if (!isRegistration) {
         if (rememberMe) {
-          window.localStorage.setItem("primekey-username", resolvedUsername);
+          window.localStorage.setItem("primekey-username", loginIdentifier);
         } else {
           window.localStorage.removeItem("primekey-username");
         }
@@ -131,7 +129,7 @@ const AuthScreen = ({ mode = "login" }) => {
                 autoComplete="username"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
-                placeholder={isRegistration ? "Created from your email if blank" : "malik9 or malik9@primekey.local"}
+                placeholder={isRegistration ? "Created from your email if blank" : t("auth.usernamePlaceholder")}
                 aria-invalid={Boolean(error)}
               />
             </label>

@@ -3,11 +3,11 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import RecentProperties from "@/components/RecentProperties";
 import ActiveDeals from "@/components/ActiveDeals";
 import EmployeesShowcase from "@/components/EmployeesShowcase";
-// import styles from "@/styles/pages/Home.module.css"
+import styles from "@/styles/pages/Home.module.css";
 
 const Home = () => {
     return (
-        <main>
+        <main className={styles.page}>
             <HeroSection />
             <WhyChooseUs />
             <RecentProperties />

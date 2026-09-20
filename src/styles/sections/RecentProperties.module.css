@@ -1,14 +1,17 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2rem);
+  color: #17352d;
 }
 
 .title {
-  font-size: 2rem;
+  color: #17352d;
+  font-size: clamp(1.65rem, 5vw, 2.25rem);
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
   text-align: center;
+  line-height: 1.2;
 }
 
 .grid {
@@ -71,5 +74,12 @@
 .retry { min-height: 44px; margin-top: .75rem; padding: .6rem 1rem; border: 1px solid #153d32; border-radius: .7rem; background: transparent; color: #153d32; font: inherit; cursor: pointer; }
 .browse:focus-visible, .retry:focus-visible { outline: 2px solid #527b65; outline-offset: 3px; }
 :global([data-theme="dark"]) .card { background: #15251f; box-shadow: 0 4px 14px #0004; }
+:global([data-theme="dark"]) .container, :global([data-theme="dark"]) .title { color: #edf4ef; }
 :global([data-theme="dark"]) .address, :global([data-theme="dark"]) .meta, :global([data-theme="dark"]) .empty { color: #9bb0a6; }
 :global([data-theme="dark"]) .browse, :global([data-theme="dark"]) .retry { color: #dce9e1; border-color: #88a897; }
+
+@media (max-width: 540px) {
+  .container { padding-block: 2.25rem; }
+  .grid { gap: 1rem; }
+  .browse { margin-top: 1rem; }
+}

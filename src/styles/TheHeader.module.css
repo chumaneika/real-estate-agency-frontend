@@ -53,7 +53,7 @@
 .header a:focus-visible, .header button:focus-visible { outline: 2px solid #527b65; outline-offset: 3px; }
 @keyframes pulse { 50% { opacity: .5; } }
 @media (max-width: 1100px) { .brandCaption { display: none; } .inner { gap: 1.5rem; } }
-@media (max-width: 760px) {
+@media (max-width: 920px) {
   .header { padding: 0 1rem; }
   .inner { height: 67px; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; }
   .brandName { font-size: 1.3rem; }
@@ -84,4 +84,5 @@
 :global([data-theme="dark"]) .avatar, :global([data-theme="dark"]) .count, :global([data-theme="dark"]) .soon { background: #244036; color: #dce9e1; }
 :global([data-theme="dark"]) .signIn, :global([data-theme="dark"]) .retry { border-color: #d6e8dd22; color: #dce9e1; }
 :global([data-theme="dark"]) .signIn:hover, :global([data-theme="dark"]) .retry:hover, :global([data-theme="dark"]) .panelLink:hover { background: #d9eee010; }
+:global([data-theme="dark"]) .mobileToggle:hover, :global([data-theme="dark"]) .mobileToggle[aria-expanded="true"], :global([data-theme="dark"]) .accountControl:hover, :global([data-theme="dark"]) .accountActive { background: #d9eee012; border-color: #d8eadf17; }
 :global([data-theme="dark"]) .divider { background: #d8eadf12; }

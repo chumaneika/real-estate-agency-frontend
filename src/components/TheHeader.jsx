@@ -63,7 +63,7 @@ export default function TheHeader() {
   useEffect(() => { setMenu(null); }, [pathname]);
 
   useEffect(() => {
-    const breakpoint = window.matchMedia("(max-width: 760px)");
+    const breakpoint = window.matchMedia("(max-width: 920px)");
     const closeMenu = () => setMenu(null);
     breakpoint.addEventListener("change", closeMenu);
     return () => breakpoint.removeEventListener("change", closeMenu);

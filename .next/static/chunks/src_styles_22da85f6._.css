@@ -373,8 +373,14 @@
   position: relative;
 }
 
+.Properties-module__QaNtRq__cardImage {
+  object-fit: cover;
+}
+
 .Properties-module__QaNtRq__typeBadge {
+  z-index: 1;
   color: #315743;
+  backdrop-filter: blur(8px);
   background: #fffffbcc;
   border-radius: .4rem;
   padding: .25rem .6rem;
@@ -389,7 +395,9 @@
 }
 
 .Properties-module__QaNtRq__cardArrow {
+  z-index: 1;
   color: #153d32;
+  backdrop-filter: blur(8px);
   background: #fffffbcc;
   border-radius: 50%;
   place-items: center;

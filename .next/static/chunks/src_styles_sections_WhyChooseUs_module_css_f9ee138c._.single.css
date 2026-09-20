@@ -2,7 +2,7 @@
 .WhyChooseUs-module__VA2xBG__why {
   background-color: #fff;
   border-top: 1px solid #e5e7eb;
-  padding: 4rem 2rem;
+  padding: clamp(2.75rem, 7vw, 4.5rem) clamp(1rem, 5vw, 2rem);
 }
 
 .WhyChooseUs-module__VA2xBG__why__inner {
@@ -14,7 +14,7 @@
 .WhyChooseUs-module__VA2xBG__title {
   color: #111827;
   margin-bottom: 2.5rem;
-  font-size: 2rem;
+  font-size: clamp(1.65rem, 5vw, 2.15rem);
   font-weight: bold;
 }
 
@@ -59,6 +59,20 @@
 .WhyChooseUs-module__VA2xBG__feature p {
   color: #4b5563;
   font-size: 1rem;
+}
+
+@media (width <= 767px) {
+  .WhyChooseUs-module__VA2xBG__title {
+    margin-bottom: 1.75rem;
+  }
+
+  .WhyChooseUs-module__VA2xBG__features {
+    gap: 1rem;
+  }
+
+  .WhyChooseUs-module__VA2xBG__feature {
+    padding: 1.4rem;
+  }
 }
 
 [data-theme="dark"] .WhyChooseUs-module__VA2xBG__why {

@@ -1,15 +1,18 @@
 /* [project]/src/styles/sections/RecentProperties.module.css [app-client] (css) */
 .RecentProperties-module__3-2seG__container {
+  color: #17352d;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2rem);
 }
 
 .RecentProperties-module__3-2seG__title {
+  color: #17352d;
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  font-size: clamp(1.65rem, 5vw, 2.25rem);
   font-weight: 700;
+  line-height: 1.2;
 }
 
 .RecentProperties-module__3-2seG__grid {
@@ -107,6 +110,10 @@
   box-shadow: 0 4px 14px #0004;
 }
 
+[data-theme="dark"] .RecentProperties-module__3-2seG__container, [data-theme="dark"] .RecentProperties-module__3-2seG__title {
+  color: #edf4ef;
+}
+
 [data-theme="dark"] .RecentProperties-module__3-2seG__address, [data-theme="dark"] .RecentProperties-module__3-2seG__meta, [data-theme="dark"] .RecentProperties-module__3-2seG__empty {
   color: #9bb0a6;
 }
@@ -114,6 +121,20 @@
 [data-theme="dark"] .RecentProperties-module__3-2seG__browse, [data-theme="dark"] .RecentProperties-module__3-2seG__retry {
   color: #dce9e1;
   border-color: #88a897;
+}
+
+@media (width <= 540px) {
+  .RecentProperties-module__3-2seG__container {
+    padding-block: 2.25rem;
+  }
+
+  .RecentProperties-module__3-2seG__grid {
+    gap: 1rem;
+  }
+
+  .RecentProperties-module__3-2seG__browse {
+    margin-top: 1rem;
+  }
 }
 
 /*# sourceMappingURL=src_styles_sections_RecentProperties_module_css_f9ee138c._.single.css.map*/

@@ -1,0 +1,15 @@
+/* [project]/src/styles/pages/Home.module.css [app-client] (css) */
+.Home-module__BYa4tW__page {
+  color: #17352d;
+  background: #f6f7f2;
+  min-width: 0;
+  padding: 0;
+  overflow-x: clip;
+}
+
+[data-theme="dark"] .Home-module__BYa4tW__page {
+  color: #edf4ef;
+  background: #0d1814;
+}
+
+/*# sourceMappingURL=src_styles_pages_Home_module_css_f9ee138c._.single.css.map*/

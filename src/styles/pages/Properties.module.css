@@ -27,9 +27,10 @@
 .cardLink { display: block; color: inherit; text-decoration: none; }
 .cardLink:focus-visible { outline: 2px solid #527b65; outline-offset: -3px; }
 .visual { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem; aspect-ratio: 16 / 10; background: linear-gradient(135deg, #e4ece1, #eef1e7); color: #6a8978; }
-.typeBadge { position: absolute; top: 1rem; left: 1rem; padding: .25rem .6rem; border-radius: .4rem; color: #315743; background: #fffffbcc; font-size: .64rem; }
+.cardImage { object-fit: cover; }
+.typeBadge { position: absolute; z-index: 1; top: 1rem; left: 1rem; padding: .25rem .6rem; border-radius: .4rem; color: #315743; background: #fffffbcc; font-size: .64rem; backdrop-filter: blur(8px); }
 .photoNote { font-size: .67rem; }
-.cardArrow { position: absolute; bottom: .8rem; right: .8rem; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: #fffffbcc; color: #153d32; }
+.cardArrow { position: absolute; z-index: 1; bottom: .8rem; right: .8rem; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: #fffffbcc; color: #153d32; backdrop-filter: blur(8px); }
 .favoriteButton { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; min-width: 44px; border: 1px solid #153d3220; color: #315743; background: #fffffbdd; font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; transition: background .2s, color .2s, transform .2s; }
 .favoriteButton:hover { color: #8a393f; background: #fff; }
 .favoriteButton:focus-visible { outline: 2px solid #527b65; outline-offset: 3px; }
@@ -142,6 +143,7 @@
 @media (max-width: 950px) { .catalogLayout { grid-template-columns: 220px minmax(0, 1fr); gap: 1.25rem; } .cards { grid-template-columns: 1fr; } .toolbar { flex-wrap: wrap; } }
 @media (max-width: 760px) { .catalogLayout, .detailLayout { grid-template-columns: 1fr; gap: 1.25rem; } .filters, .summary { position: static; } .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } .filterHeading, .priceFields, .filterNote, .filters > .error { grid-column: 1 / -1; } .heading { margin-bottom: 1.5rem; } .heading > p:last-child { font-size: .85rem; } .toolbar { gap: .5rem; } .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .detailVisual { min-height: 230px; } }
 @media (max-width: 540px) { .cards { grid-template-columns: 1fr; } .filters { padding: 1.1rem; } .sort { width: 100%; justify-content: space-between; } .sort select { flex: 1; max-width: 190px; } .viewingFields { grid-template-columns: 1fr; } .galleryMain { border-radius: 1rem; } .thumbnails { grid-auto-columns: 76px; gap: .55rem; } .expandLabel { left: .7rem; bottom: .7rem; } .imageCounter { right: .7rem; bottom: .7rem; } .lightbox { padding: .75rem; } .lightboxImage { width: 100%; height: 76vh; border-radius: .8rem; } .lightboxClose { top: .8rem; right: .8rem; } .lightboxPrevious { left: .8rem; } .lightboxNext { right: .8rem; } .lightboxCounter { bottom: .8rem; } }
+@media (max-width: 420px) { .page { padding-inline: .85rem; } .filters { grid-template-columns: 1fr; } .filterHeading, .priceFields, .filterNote, .filters > .error { grid-column: 1; } .priceFields { grid-template-columns: 1fr; } .cardBody { padding: 1rem; } .visual, .galleryMain { aspect-ratio: 4 / 3; } .expandLabel { max-width: calc(100% - 5.5rem); } }
 @media (prefers-reduced-motion: reduce) { .propertyCard, .galleryImage, .thumbnail { transition: none; } .propertyCard:hover, .thumbnail:hover { transform: none; } .cardSkeleton div, .cardSkeleton span, .spinner, .gallerySkeleton { animation: none; } }
 :global([data-theme="dark"]) .page { background: radial-gradient(ellipse at top left, #1b342a, transparent 55%), #0d1814; color: #edf4ef; }
 :global([data-theme="dark"]) .filters, :global([data-theme="dark"]) .detailCard, :global([data-theme="dark"]) .propertyCard, :global([data-theme="dark"]) .state, :global([data-theme="dark"]) .cardSkeleton { border-color: #d8eadf14; background: #15251fe8; box-shadow: 0 12px 35px #0003; color: #edf4ef; }

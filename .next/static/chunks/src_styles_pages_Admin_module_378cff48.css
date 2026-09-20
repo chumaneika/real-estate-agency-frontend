@@ -119,6 +119,13 @@
   display: grid;
 }
 
+.Admin-module__r_12Ka__analyticsGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  display: grid;
+}
+
 .Admin-module__r_12Ka__panel {
   padding: clamp(1.25rem, 3vw, 1.65rem);
 }
@@ -165,6 +172,159 @@
 
 .Admin-module__r_12Ka__dealDot, .Admin-module__r_12Ka__dealBar {
   background: #a6b99e;
+}
+
+.Admin-module__r_12Ka__performance .Admin-module__r_12Ka__panelHeading > svg, .Admin-module__r_12Ka__analyticsGrid .Admin-module__r_12Ka__panelHeading > svg {
+  color: #527267;
+}
+
+.Admin-module__r_12Ka__metricList {
+  display: grid;
+}
+
+.Admin-module__r_12Ka__metricList > div {
+  border-top: 1px solid #153d3210;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 48px;
+  display: flex;
+}
+
+.Admin-module__r_12Ka__metricList span {
+  color: #61766d;
+  font-size: .7rem;
+}
+
+.Admin-module__r_12Ka__metricList strong {
+  letter-spacing: -.025em;
+  font-size: .95rem;
+}
+
+.Admin-module__r_12Ka__donutLayout {
+  grid-template-columns: 132px 1fr;
+  align-items: center;
+  gap: 1.15rem;
+  min-height: 154px;
+  display: grid;
+}
+
+.Admin-module__r_12Ka__donut {
+  aspect-ratio: 1;
+  background: conic-gradient(#3d815f 0 var(--confirmed-end), #d6aa50 var(--confirmed-end) var(--pending-end), #c16a62 var(--pending-end) 100%);
+  border-radius: 50%;
+  place-items: center;
+  width: 128px;
+  display: grid;
+  position: relative;
+}
+
+.Admin-module__r_12Ka__donut:after {
+  content: "";
+  background: #fffffb;
+  border-radius: 50%;
+  position: absolute;
+  inset: 15px;
+}
+
+.Admin-module__r_12Ka__donut > span {
+  z-index: 1;
+  text-align: center;
+  display: grid;
+}
+
+.Admin-module__r_12Ka__donut strong {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.Admin-module__r_12Ka__donut small {
+  color: #75877f;
+  margin-top: .25rem;
+  font-size: .6rem;
+}
+
+.Admin-module__r_12Ka__breakdownLegend {
+  gap: .8rem;
+  display: grid;
+}
+
+.Admin-module__r_12Ka__breakdownLegend > div {
+  color: #61766d;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  font-size: .68rem;
+  display: flex;
+}
+
+.Admin-module__r_12Ka__breakdownLegend span {
+  align-items: center;
+  gap: .4rem;
+  min-width: 0;
+  display: inline-flex;
+}
+
+.Admin-module__r_12Ka__breakdownLegend i {
+  border-radius: 50%;
+  flex: none;
+  width: 8px;
+  height: 8px;
+}
+
+.Admin-module__r_12Ka__breakdownLegend strong {
+  color: #17352d;
+  font-size: .78rem;
+}
+
+.Admin-module__r_12Ka__dotCONFIRMED {
+  background: #3d815f;
+}
+
+.Admin-module__r_12Ka__dotPENDING {
+  background: #d6aa50;
+}
+
+.Admin-module__r_12Ka__dotCANCELLED {
+  background: #c16a62;
+}
+
+.Admin-module__r_12Ka__typeChart {
+  gap: 1rem;
+  display: grid;
+}
+
+.Admin-module__r_12Ka__typeRow {
+  gap: .45rem;
+  display: grid;
+}
+
+.Admin-module__r_12Ka__typeRow > div:first-child {
+  color: #61766d;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: .68rem;
+  display: flex;
+}
+
+.Admin-module__r_12Ka__typeRow strong {
+  color: #17352d;
+}
+
+.Admin-module__r_12Ka__track {
+  background: #e4ebe5;
+  border-radius: 1rem;
+  height: 7px;
+  overflow: hidden;
+}
+
+.Admin-module__r_12Ka__track span {
+  width: var(--progress);
+  border-radius: inherit;
+  background: linear-gradient(90deg, #245740, #76a187);
+  height: 100%;
+  transition: width .3s;
+  display: block;
 }
 
 .Admin-module__r_12Ka__chart {
@@ -379,6 +539,16 @@
   }
 }
 
+@media (width <= 1000px) {
+  .Admin-module__r_12Ka__analyticsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .Admin-module__r_12Ka__analyticsGrid > article:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (width <= 900px) {
   .Admin-module__r_12Ka__stats {
     grid-template-columns: repeat(2, 1fr);
@@ -436,8 +606,49 @@
   }
 }
 
+@media (width <= 620px) {
+  .Admin-module__r_12Ka__analyticsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .Admin-module__r_12Ka__analyticsGrid > article:first-child {
+    grid-column: auto;
+  }
+
+  .Admin-module__r_12Ka__donutLayout {
+    grid-template-columns: 118px 1fr;
+  }
+
+  .Admin-module__r_12Ka__donut {
+    width: 114px;
+  }
+}
+
+@media (width <= 420px) {
+  .Admin-module__r_12Ka__page {
+    padding-inline: .85rem;
+  }
+
+  .Admin-module__r_12Ka__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .Admin-module__r_12Ka__donutLayout {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .Admin-module__r_12Ka__breakdownLegend {
+    width: 100%;
+  }
+
+  .Admin-module__r_12Ka__chart {
+    overflow-x: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .Admin-module__r_12Ka__bars > span {
+  .Admin-module__r_12Ka__bars > span, .Admin-module__r_12Ka__track span {
     transition: none;
   }
 
@@ -482,6 +693,26 @@
 
 [data-theme="dark"] .Admin-module__r_12Ka__chart, [data-theme="dark"] .Admin-module__r_12Ka__request {
   border-color: #d8eadf12;
+}
+
+[data-theme="dark"] .Admin-module__r_12Ka__metricList > div {
+  border-color: #d8eadf12;
+}
+
+[data-theme="dark"] .Admin-module__r_12Ka__metricList span, [data-theme="dark"] .Admin-module__r_12Ka__breakdownLegend > div, [data-theme="dark"] .Admin-module__r_12Ka__typeRow > div:first-child {
+  color: #9bb0a6;
+}
+
+[data-theme="dark"] .Admin-module__r_12Ka__breakdownLegend strong, [data-theme="dark"] .Admin-module__r_12Ka__typeRow strong {
+  color: #edf4ef;
+}
+
+[data-theme="dark"] .Admin-module__r_12Ka__donut:after {
+  background: #15251f;
+}
+
+[data-theme="dark"] .Admin-module__r_12Ka__track {
+  background: #294037;
 }
 
 [data-theme="dark"] .Admin-module__r_12Ka__headingSkeleton, [data-theme="dark"] .Admin-module__r_12Ka__statSkeleton, [data-theme="dark"] .Admin-module__r_12Ka__panelSkeleton {

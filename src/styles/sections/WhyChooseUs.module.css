@@ -1,6 +1,6 @@
 .why {
   background-color: #ffffff;
-  padding: 4rem 2rem;
+  padding: clamp(2.75rem, 7vw, 4.5rem) clamp(1rem, 5vw, 2rem);
   border-top: 1px solid #e5e7eb;
 }
 
@@ -11,7 +11,7 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: clamp(1.65rem, 5vw, 2.15rem);
   font-weight: bold;
   margin-bottom: 2.5rem;
   color: #111827;
@@ -58,6 +58,12 @@
 .feature p {
   font-size: 1rem;
   color: #4b5563;
+}
+
+@media (max-width: 767px) {
+  .title { margin-bottom: 1.75rem; }
+  .features { gap: 1rem; }
+  .feature { padding: 1.4rem; }
 }
 :global([data-theme="dark"]) .why { background: #101e19; border-top-color: #d8eadf12; }
 :global([data-theme="dark"]) .title, :global([data-theme="dark"]) .feature h3 { color: #edf4ef; }

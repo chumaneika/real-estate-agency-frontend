@@ -184,7 +184,6 @@ const AuthScreen = ({ mode = "login" })=>{
         }
         return "";
     };
-    const resolveUsername = (value)=>value.trim().split("@", 1)[0];
     const handleSubmit = async (event)=>{
         event.preventDefault();
         setError("");
@@ -195,7 +194,7 @@ const AuthScreen = ({ mode = "login" })=>{
             return;
         }
         setIsLoading(true);
-        const resolvedUsername = resolveUsername(username);
+        const loginIdentifier = username.trim();
         try {
             const response = await fetch(`${API_URL}/api/v1/auth/${isRegistration ? "register" : "login"}`, {
                 method: "POST",
@@ -208,7 +207,7 @@ const AuthScreen = ({ mode = "login" })=>{
                     email: email.trim(),
                     password
                 } : {
-                    username: resolvedUsername,
+                    username: loginIdentifier,
                     password
                 })
             });
@@ -219,7 +218,7 @@ const AuthScreen = ({ mode = "login" })=>{
             }
             if (!isRegistration) {
                 if (rememberMe) {
-                    window.localStorage.setItem("primekey-username", resolvedUsername);
+                    window.localStorage.setItem("primekey-username", loginIdentifier);
                 } else {
                     window.localStorage.removeItem("primekey-username");
                 }
@@ -242,7 +241,7 @@ const AuthScreen = ({ mode = "login" })=>{
                 compact: true
             }, void 0, false, {
                 fileName: "[project]/src/components/AuthScreen.jsx",
-                lineNumber: 109,
+                lineNumber: 107,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -250,7 +249,7 @@ const AuthScreen = ({ mode = "login" })=>{
                 "aria-hidden": "true"
             }, void 0, false, {
                 fileName: "[project]/src/components/AuthScreen.jsx",
-                lineNumber: 110,
+                lineNumber: 108,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -258,7 +257,7 @@ const AuthScreen = ({ mode = "login" })=>{
                 "aria-hidden": "true"
             }, void 0, false, {
                 fileName: "[project]/src/components/AuthScreen.jsx",
-                lineNumber: 111,
+                lineNumber: 109,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -275,32 +274,32 @@ const AuthScreen = ({ mode = "login" })=>{
                                     strokeWidth: 2.2
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/AuthScreen.jsx",
-                                    lineNumber: 115,
+                                    lineNumber: 113,
                                     columnNumber: 46
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                lineNumber: 115,
+                                lineNumber: 113,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: "PrimeKey"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                lineNumber: 116,
+                                lineNumber: 114,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
                                 children: "Real Estate"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                lineNumber: 117,
+                                lineNumber: 115,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/AuthScreen.jsx",
-                        lineNumber: 114,
+                        lineNumber: 112,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -314,7 +313,7 @@ const AuthScreen = ({ mode = "login" })=>{
                                         children: t(isRegistration ? "auth.registerEyebrow" : "auth.loginEyebrow")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 122,
+                                        lineNumber: 120,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -322,20 +321,20 @@ const AuthScreen = ({ mode = "login" })=>{
                                         children: t(isRegistration ? "auth.createTitle" : "auth.welcome")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 123,
+                                        lineNumber: 121,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: t(isRegistration ? "auth.registerSubtitle" : "auth.loginSubtitle")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 124,
+                                        lineNumber: 122,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                lineNumber: 121,
+                                lineNumber: 119,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -350,24 +349,24 @@ const AuthScreen = ({ mode = "login" })=>{
                                                 children: t(isRegistration ? "auth.usernameOptional" : "auth.username")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                                lineNumber: 129,
+                                                lineNumber: 127,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                 autoComplete: "username",
                                                 value: username,
                                                 onChange: (event)=>setUsername(event.target.value),
-                                                placeholder: isRegistration ? "Created from your email if blank" : "malik9 or malik9@primekey.local",
+                                                placeholder: isRegistration ? "Created from your email if blank" : t("auth.usernamePlaceholder"),
                                                 "aria-invalid": Boolean(error)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                                lineNumber: 130,
+                                                lineNumber: 128,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 128,
+                                        lineNumber: 126,
                                         columnNumber: 13
                                     }, this),
                                     isRegistration && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -377,7 +376,7 @@ const AuthScreen = ({ mode = "login" })=>{
                                                 children: t("auth.email")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                                lineNumber: 141,
+                                                lineNumber: 139,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -389,13 +388,13 @@ const AuthScreen = ({ mode = "login" })=>{
                                                 placeholder: "you@example.com"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                                lineNumber: 142,
+                                                lineNumber: 140,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 140,
+                                        lineNumber: 138,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -405,7 +404,7 @@ const AuthScreen = ({ mode = "login" })=>{
                                                 children: t("auth.password")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                                lineNumber: 154,
+                                                lineNumber: 152,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -420,7 +419,7 @@ const AuthScreen = ({ mode = "login" })=>{
                                                         "aria-invalid": Boolean(error)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                                        lineNumber: 156,
+                                                        lineNumber: 154,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -432,30 +431,30 @@ const AuthScreen = ({ mode = "login" })=>{
                                                             size: 18
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/AuthScreen.jsx",
-                                                            lineNumber: 170,
+                                                            lineNumber: 168,
                                                             columnNumber: 35
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__["Eye"], {
                                                             size: 18
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/AuthScreen.jsx",
-                                                            lineNumber: 170,
+                                                            lineNumber: 168,
                                                             columnNumber: 58
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                                        lineNumber: 164,
+                                                        lineNumber: 162,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                                lineNumber: 155,
+                                                lineNumber: 153,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 153,
+                                        lineNumber: 151,
                                         columnNumber: 13
                                     }, this),
                                     !isRegistration && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -470,20 +469,20 @@ const AuthScreen = ({ mode = "login" })=>{
                                                         onChange: (event)=>setRememberMe(event.target.checked)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                                        lineNumber: 178,
+                                                        lineNumber: 176,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: t("auth.remember")
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                                        lineNumber: 183,
+                                                        lineNumber: 181,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                                lineNumber: 177,
+                                                lineNumber: 175,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -493,13 +492,13 @@ const AuthScreen = ({ mode = "login" })=>{
                                                 children: t("auth.forgot")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                                lineNumber: 185,
+                                                lineNumber: 183,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 176,
+                                        lineNumber: 174,
                                         columnNumber: 15
                                     }, this),
                                     (error || success) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -508,7 +507,7 @@ const AuthScreen = ({ mode = "login" })=>{
                                         children: error || success
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 192,
+                                        lineNumber: 190,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -520,7 +519,7 @@ const AuthScreen = ({ mode = "login" })=>{
                                             size: 19
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/AuthScreen.jsx",
-                                            lineNumber: 198,
+                                            lineNumber: 196,
                                             columnNumber: 28
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                                             children: [
@@ -529,20 +528,20 @@ const AuthScreen = ({ mode = "login" })=>{
                                                     size: 18
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/AuthScreen.jsx",
-                                                    lineNumber: 198,
+                                                    lineNumber: 196,
                                                     columnNumber: 136
                                                 }, this)
                                             ]
                                         }, void 0, true)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 197,
+                                        lineNumber: 195,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                lineNumber: 127,
+                                lineNumber: 125,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -554,19 +553,19 @@ const AuthScreen = ({ mode = "login" })=>{
                                         children: t(isRegistration ? "auth.signIn" : "auth.create")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/AuthScreen.jsx",
-                                        lineNumber: 204,
+                                        lineNumber: 202,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                lineNumber: 202,
+                                lineNumber: 200,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/AuthScreen.jsx",
-                        lineNumber: 120,
+                        lineNumber: 118,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -576,7 +575,7 @@ const AuthScreen = ({ mode = "login" })=>{
                                 size: 14
                             }, void 0, false, {
                                 fileName: "[project]/src/components/AuthScreen.jsx",
-                                lineNumber: 208,
+                                lineNumber: 206,
                                 columnNumber: 41
                             }, this),
                             " ",
@@ -584,19 +583,19 @@ const AuthScreen = ({ mode = "login" })=>{
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/AuthScreen.jsx",
-                        lineNumber: 208,
+                        lineNumber: 206,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/AuthScreen.jsx",
-                lineNumber: 113,
+                lineNumber: 111,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/AuthScreen.jsx",
-        lineNumber: 108,
+        lineNumber: 106,
         columnNumber: 5
     }, this);
 };

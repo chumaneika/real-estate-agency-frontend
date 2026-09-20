@@ -31,8 +31,23 @@
 
 [data-theme="dark"] .Auth-module__MYxf_a__field input {
   color: #edf4ef;
-  background: #0c1814b8;
+  caret-color: #edf4ef;
+  background: #0c1814d9;
   border-color: #d8eadf1f;
+}
+
+[data-theme="dark"] .Auth-module__MYxf_a__field input:focus {
+  background: #10241d;
+  border-color: #6b9f88;
+  box-shadow: 0 0 0 3px #70a98f2e;
+}
+
+[data-theme="dark"] .Auth-module__MYxf_a__field input:-webkit-autofill, [data-theme="dark"] .Auth-module__MYxf_a__field input:-webkit-autofill:hover, [data-theme="dark"] .Auth-module__MYxf_a__field input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #edf4ef;
+  caret-color: #edf4ef;
+  border-color: #6b9f88;
+  transition: background-color 9999s ease-out;
+  box-shadow: inset 0 0 0 1000px #10241d, 0 0 0 3px #70a98f2e;
 }
 
 .Auth-module__MYxf_a__backdrop, .Auth-module__MYxf_a__tint {

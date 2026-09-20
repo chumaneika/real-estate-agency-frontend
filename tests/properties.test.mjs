@@ -5,6 +5,8 @@ import { parseFavoriteIds, toggleFavoriteId } from "../src/lib/favorites.js";
 import { localDateValue, validateViewing, VIEWING_TIMES } from "../src/lib/viewings.js";
 import { propertyImages } from "../src/lib/propertyImages.js";
 import { catalogParams, catalogStateFromParams, DEFAULT_CATALOG_FILTERS } from "../src/lib/catalogFilters.js";
+import { cloudinaryUploadEndpoint, uploadPropertyImage } from "../src/lib/cloudinary.js";
+import { createPropertyWithImages } from "../src/lib/propertyAdmin.js";
 
 const filters = { search: "", type: "", rooms: "", minPrice: "", maxPrice: "", sort: "newest" };
 const data = [
@@ -80,4 +82,49 @@ test("catalog URL omits defaults and rejects invalid values", () => {
   assert.equal(catalogParams(DEFAULT_CATALOG_FILTERS, 1), "");
   assert.deepEqual(catalogStateFromParams(new URLSearchParams("type=OTHER&rooms=9&min=-2&sort=random&page=-4")), { filters: DEFAULT_CATALOG_FILTERS, page: 1 });
   assert.equal(catalogParams({ ...DEFAULT_CATALOG_FILTERS, search: " city ", rooms: "2" }, 3), "q=city&rooms=2&page=3");
+});
+
+test("Cloudinary upload uses the configured unsigned preset and returns secure_url", async () => {
+  const image = new Blob(["photo"], { type: "image/jpeg" });
+  const secureUrl = "https://res.cloudinary.com/ngbsgwu8/image/upload/v1/properties/home.jpg";
+  const fetcher = async (url, options) => {
+    assert.equal(url, cloudinaryUploadEndpoint("ngbsgwu8"));
+    assert.equal(options.method, "POST");
+    assert.equal(options.body.get("upload_preset"), "primekey_unsigned");
+    assert.equal(options.body.get("folder"), "properties");
+    return { ok: true, json: async () => ({ secure_url: secureUrl }) };
+  };
+
+  assert.equal(await uploadPropertyImage(image, { fetcher }), secureUrl);
+});
+
+test("property creation stores the Cloudinary URLs returned for every image", async () => {
+  const files = [
+    new Blob(["front"], { type: "image/jpeg" }),
+    new Blob(["kitchen"], { type: "image/png" }),
+  ];
+  const uploadedUrls = [
+    "https://res.cloudinary.com/ngbsgwu8/image/upload/v1/properties/front.jpg",
+    "https://res.cloudinary.com/ngbsgwu8/image/upload/v1/properties/kitchen.png",
+  ];
+  let uploadIndex = 0;
+  const fetcher = async (url, options) => {
+    if (url.includes("api.cloudinary.com")) {
+      const secureUrl = uploadedUrls[uploadIndex++];
+      return { ok: true, json: async () => ({ secure_url: secureUrl }) };
+    }
+    const request = JSON.parse(options.body);
+    assert.equal(url, "http://localhost:8080/api/v1/properties/create");
+    assert.deepEqual(request.imageUrls, uploadedUrls);
+    return { ok: true, json: async () => ({ id: 7, ...request }) };
+  };
+
+  const created = await createPropertyWithImages(
+    { title: "City apartment", address: "Main street" },
+    files,
+    { fetcher, apiUrl: "http://localhost:8080" },
+  );
+
+  assert.equal(created.id, 7);
+  assert.deepEqual(created.imageUrls, uploadedUrls);
 });

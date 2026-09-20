@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Building2, CalendarClock, Handshake, RefreshCw, ShieldAlert, Users } from "lucide-react";
+import { ArrowRight, Building2, CalendarClock, CircleDollarSign, Handshake, RefreshCw, ShieldAlert, TrendingUp, Users } from "lucide-react";
 import { usePreferences } from "@/components/AppProviders";
 import styles from "@/styles/pages/Admin.module.css";
 
@@ -53,6 +53,7 @@ export default function AdminDashboard() {
 
   const dateFormatter = useMemo(() => new Intl.DateTimeFormat(locale === "ru" ? "ru-RU" : "en-US", { day: "numeric", month: "short" }), [locale]);
   const dateTimeFormatter = useMemo(() => new Intl.DateTimeFormat(locale === "ru" ? "ru-RU" : "en-US", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }), [locale]);
+  const moneyFormatter = useMemo(() => new Intl.NumberFormat(locale === "ru" ? "ru-RU" : "en-US", { style: "currency", currency: "USD", notation: "compact", maximumFractionDigits: 1 }), [locale]);
 
   if (state.status === "forbidden") return <main className={styles.page}><div className={styles.container}><section className={styles.message}><ShieldAlert size={38} aria-hidden="true" /><h1>{t("admin.forbidden")}</h1><p>{t("admin.forbiddenText")}</p><Link href="/home" className={styles.primary}>{t("error.home")}</Link></section></div></main>;
 
@@ -62,6 +63,11 @@ export default function AdminDashboard() {
 
   const data = state.data;
   const maxActivity = Math.max(1, ...data.activity.flatMap(point => [point.requests, point.deals]));
+  const requestTotal = data.requestBreakdown.reduce((sum, item) => sum + item.count, 0);
+  const propertyTotal = Math.max(1, data.propertyBreakdown.reduce((sum, item) => sum + item.count, 0));
+  const requestPercent = key => requestTotal ? (data.requestBreakdown.find(item => item.key === key)?.count ?? 0) / requestTotal * 100 : 0;
+  const confirmedEnd = requestPercent("CONFIRMED");
+  const pendingEnd = confirmedEnd + requestPercent("PENDING");
   const stats = [
     { label: t("admin.properties"), value: data.propertyCount, icon: Building2 },
     { label: t("admin.users"), value: data.userCount, icon: Users },
@@ -93,6 +99,36 @@ export default function AdminDashboard() {
           <Link href="/profile" className={styles.quickLink}><Users size={18} aria-hidden="true" /><span><strong>{t("admin.account")}</strong><small>{t("admin.accountText")}</small></span><ArrowRight size={17} aria-hidden="true" /></Link>
         </aside>
       </div>
+
+      <section className={styles.analyticsGrid} aria-label={t("admin.analytics")}>
+        <article className={`${styles.panel} ${styles.performance}`}>
+          <div className={styles.panelHeading}><div><p className={styles.eyebrow}>{t("admin.performance")}</p><h2>{t("admin.keyMetrics")}</h2></div><TrendingUp size={20} aria-hidden="true" /></div>
+          <div className={styles.metricList}>
+            <div><span>{t("admin.averagePrice")}</span><strong>{moneyFormatter.format(data.averagePropertyPrice)}</strong></div>
+            <div><span>{t("admin.dealVolume")}</span><strong>{moneyFormatter.format(data.totalDealVolume)}</strong></div>
+            <div><span>{t("admin.confirmationRate")}</span><strong>{Math.round(data.requestConfirmationRate)}%</strong></div>
+          </div>
+        </article>
+
+        <article className={styles.panel}>
+          <div className={styles.panelHeading}><div><p className={styles.eyebrow}>{t("admin.requests")}</p><h2>{t("admin.requestHealth")}</h2></div><CalendarClock size={20} aria-hidden="true" /></div>
+          <div className={styles.donutLayout}>
+            <div className={styles.donut} style={{ "--confirmed-end": `${confirmedEnd}%`, "--pending-end": `${pendingEnd}%` }} role="img" aria-label={t("admin.requestChartLabel", { total: requestTotal })}><span><strong>{requestTotal}</strong><small>{t("admin.total")}</small></span></div>
+            <div className={styles.breakdownLegend}>{data.requestBreakdown.map(item => <div key={item.key}><span><i className={styles[`dot${item.key}`]} />{t(`admin.status.${item.key}`)}</span><strong>{item.count}</strong></div>)}</div>
+          </div>
+        </article>
+
+        <article className={styles.panel}>
+          <div className={styles.panelHeading}><div><p className={styles.eyebrow}>{t("admin.inventory")}</p><h2>{t("admin.portfolioMix")}</h2></div><CircleDollarSign size={20} aria-hidden="true" /></div>
+          <div className={styles.typeChart}>{data.propertyBreakdown.map(item => {
+            const percentage = item.count / propertyTotal * 100;
+            return <div key={item.key} className={styles.typeRow}>
+              <div><span>{t(`property.${item.key}`)}</span><strong>{item.count}</strong></div>
+              <div className={styles.track}><span style={{ "--progress": `${percentage}%` }} /></div>
+            </div>;
+          })}</div>
+        </article>
+      </section>
 
       <section id="requests" className={styles.panel} aria-labelledby="requests-title">
         <div className={styles.panelHeading}><div><p className={styles.eyebrow}>{t("admin.inbox")}</p><h2 id="requests-title">{t("admin.recent")}</h2></div><span className={styles.requestCount}>{data.recentRequests.length}</span></div>

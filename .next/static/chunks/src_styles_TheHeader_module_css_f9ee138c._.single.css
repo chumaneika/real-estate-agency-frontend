@@ -366,7 +366,7 @@
   }
 }
 
-@media (width <= 760px) {
+@media (width <= 920px) {
   .TheHeader-module__qrsTIG__header {
     padding: 0 1rem;
   }
@@ -508,6 +508,11 @@
 
 [data-theme="dark"] .TheHeader-module__qrsTIG__signIn:hover, [data-theme="dark"] .TheHeader-module__qrsTIG__retry:hover, [data-theme="dark"] .TheHeader-module__qrsTIG__panelLink:hover {
   background: #d9eee010;
+}
+
+[data-theme="dark"] .TheHeader-module__qrsTIG__mobileToggle:hover, [data-theme="dark"] .TheHeader-module__qrsTIG__mobileToggle[aria-expanded="true"], [data-theme="dark"] .TheHeader-module__qrsTIG__accountControl:hover, [data-theme="dark"] .TheHeader-module__qrsTIG__accountActive {
+  background: #d9eee012;
+  border-color: #d8eadf17;
 }
 
 [data-theme="dark"] .TheHeader-module__qrsTIG__divider {

@@ -1,13 +1,13 @@
 {
   "/_not-found/page": "/_not-found",
   "/page": "/",
-  "/register/page": "/register",
   "/login/page": "/login",
+  "/register/page": "/register",
   "/home/page": "/home",
   "/properties/buy/page": "/properties/buy",
-  "/profile/page": "/profile",
   "/admin/page": "/admin",
-  "/properties/[id]/page": "/properties/[id]",
   "/properties/page": "/properties",
-  "/favorites/page": "/favorites"
+  "/favorites/page": "/favorites",
+  "/properties/[id]/page": "/properties/[id]",
+  "/profile/page": "/profile"
 }

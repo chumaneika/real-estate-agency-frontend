@@ -12,7 +12,21 @@
 :global([data-theme="dark"]) .card h1 { color: #edf4ef; }
 :global([data-theme="dark"]) .cardHeader p, :global([data-theme="dark"]) .eyebrow, :global([data-theme="dark"]) .remember, :global([data-theme="dark"]) .switchMode { color: #a9bbb2; }
 :global([data-theme="dark"]) .field { color: #c5d7ce; }
-:global([data-theme="dark"]) .field input { border-color: #d8eadf1f; background: #0c1814b8; color: #edf4ef; }
+:global([data-theme="dark"]) .field input { border-color: #d8eadf1f; background: #0c1814d9; color: #edf4ef; caret-color: #edf4ef; }
+:global([data-theme="dark"]) .field input:focus {
+  border-color: #6b9f88;
+  background: #10241d;
+  box-shadow: 0 0 0 3px rgba(112, 169, 143, 0.18);
+}
+:global([data-theme="dark"]) .field input:-webkit-autofill,
+:global([data-theme="dark"]) .field input:-webkit-autofill:hover,
+:global([data-theme="dark"]) .field input:-webkit-autofill:focus {
+  border-color: #6b9f88;
+  -webkit-text-fill-color: #edf4ef;
+  caret-color: #edf4ef;
+  box-shadow: 0 0 0 1000px #10241d inset, 0 0 0 3px rgba(112, 169, 143, 0.18);
+  transition: background-color 9999s ease-out 0s;
+}
 
 .backdrop,
 .tint {

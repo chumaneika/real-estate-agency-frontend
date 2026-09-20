@@ -11,19 +11,21 @@
 }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   font-family: var(--font-geist-sans);
   color: #1a1a1a;
-  background-color: #f9f9f9;
+  background-color: #f6f7f2;
   line-height: 1.6;
 }
 
 html {
   color-scheme: light;
+  overscroll-behavior-y: none;
 }
 
 html[data-theme="dark"] {
   color-scheme: dark;
+  background-color: #0d1814;
 }
 
 html[data-theme="dark"] body {
@@ -37,8 +39,13 @@ body, header, footer, main {
 
 body {
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
+  overflow-x: clip;
+}
+
+img, svg {
+  max-width: 100%;
 }
 
 main {
@@ -64,6 +71,23 @@ footer {
   border-top: 1px solid #e0e0e0;
   padding: 1rem 2rem;
   font-size: .9rem;
+}
+
+@media (width <= 760px) {
+  main {
+    padding: 1.25rem;
+  }
+
+  header, footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (width <= 380px) {
+  main {
+    padding: 1rem;
+  }
 }
 
 /*# sourceMappingURL=src_styles_global_css_f9ee138c._.single.css.map*/
