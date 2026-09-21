@@ -8,6 +8,7 @@
   "/admin/page": "/admin",
   "/properties/page": "/properties",
   "/favorites/page": "/favorites",
+  "/profile/page": "/profile",
   "/properties/[id]/page": "/properties/[id]",
-  "/profile/page": "/profile"
+  "/agent/page": "/agent"
 }

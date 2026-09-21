@@ -36,8 +36,8 @@ export default function ViewingRequestForm({ property }) {
           return;
         }
         if (!response.ok) throw new Error("Account request failed");
-        await response.json();
-        if (!controller.signal.aborted) setAccountStatus("ready");
+        const account = await response.json();
+        if (!controller.signal.aborted) setAccountStatus(account.role === "CLIENT" ? "ready" : "ineligible");
       } catch (requestError) {
         if (requestError.name !== "AbortError") setAccountStatus("error");
       }
@@ -105,6 +105,7 @@ export default function ViewingRequestForm({ property }) {
       {accountStatus === "loading" ? <p className={styles.viewingStatus} role="status">{t("viewing.checking")}</p>
         : accountStatus === "error" ? <div className={styles.viewingStatus}><p role="alert">{t("viewing.accountError")}</p><button type="button" className={styles.textButton} onClick={() => setAccountAttempt(value => value + 1)}>{t("catalog.tryAgain")}</button></div>
         : accountStatus === "guest" ? <div className={styles.viewingGuest}><p>{t("viewing.guest")}</p><Link href="/login" className={styles.button}>{t("viewing.signIn")}</Link>{error && <p className={styles.formError} role="alert">{error}</p>}</div>
+        : accountStatus === "ineligible" ? <div className={styles.viewingStatus}><p>{t("viewing.clientOnly")}</p></div>
         : submitStatus === "success" && confirmation ? <div className={styles.confirmation} role="status" aria-live="polite">
           <span className={styles.confirmationIcon}><Check size={24} aria-hidden="true" /></span>
           <p className={styles.eyebrow}>{t("viewing.received")}</p>

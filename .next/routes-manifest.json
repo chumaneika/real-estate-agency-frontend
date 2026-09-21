@@ -43,6 +43,12 @@
       "namedRegex": "^/admin(?:/)?$"
     },
     {
+      "page": "/agent",
+      "regex": "^/agent(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/agent(?:/)?$"
+    },
+    {
       "page": "/favorites",
       "regex": "^/favorites(?:/)?$",
       "routeKeys": {},

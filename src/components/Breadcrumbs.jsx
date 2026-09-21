@@ -19,6 +19,7 @@ export default function Breadcrumbs() {
   } else if (parts[0] === "profile") items.push({ label: t("breadcrumbs.profile") });
   else if (parts[0] === "favorites") items.push({ label: t("breadcrumbs.favorites") });
   else if (parts[0] === "admin") items.push({ label: t("breadcrumbs.admin") });
+  else if (parts[0] === "agent") items.push({ label: t("breadcrumbs.agent") });
 
   return <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
     <ol>{items.map((item, index) => <li key={`${item.href || "current"}-${item.label}`}>

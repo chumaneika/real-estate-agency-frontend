@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Heart, Home, LayoutDashboard, Menu, UserRound, X } from "lucide-react";
+import { BriefcaseBusiness, ChevronDown, Heart, Home, LayoutDashboard, Menu, UserRound, X } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import PreferencesControls from "@/components/PreferencesControls";
 import { usePreferences } from "@/components/AppProviders";
@@ -124,15 +124,18 @@ export default function TheHeader() {
     items[next].focus();
   }
 
-  const role = user?.roles?.split(",").some(value => value.trim() === "ROLE_ADMIN") ? t("account.admin") : t("account.member");
+  const role = user?.role === "ADMIN" ? t("account.admin") : user?.role === "AGENT" ? t("account.agent") : t("account.member");
   const initials = user?.username?.slice(0, 2).toUpperCase() || "PK";
   const accountDetails = user && <div className={styles.accountDetails}>
     <span className={styles.avatar} aria-hidden="true">{initials}</span>
     <div><p className={styles.accountName}>{user.username}</p><p className={styles.role}>{role}</p></div>
   </div>;
   const accountActions = user && <>
-    {role === t("account.admin") && <Link href="/admin" className={styles.panelLink} aria-current={pathname === "/admin" ? "page" : undefined} onClick={() => setMenu(null)}>
+    {user.role === "ADMIN" && <Link href="/admin" className={styles.panelLink} aria-current={pathname === "/admin" ? "page" : undefined} onClick={() => setMenu(null)}>
       <LayoutDashboard size={17} aria-hidden="true" />{t("nav.admin")}
+    </Link>}
+    {user.role === "AGENT" && <Link href="/agent" className={styles.panelLink} aria-current={pathname === "/agent" ? "page" : undefined} onClick={() => setMenu(null)}>
+      <BriefcaseBusiness size={17} aria-hidden="true" />{t("nav.agentWorkspace")}
     </Link>}
     <Link href="/profile" className={styles.panelLink} aria-current={pathname === "/profile" ? "page" : undefined} onClick={() => setMenu(null)}>
       <UserRound size={17} aria-hidden="true" />{t("nav.profile")}

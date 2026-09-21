@@ -41,7 +41,7 @@ export default function ProfileScreen() {
     return () => controller.abort();
   }, [router, attempt]);
 
-  const isAdmin = user?.roles?.split(",").some(role => role.trim() === "ROLE_ADMIN");
+  const roleLabel = user?.role === "ADMIN" ? "account.admin" : user?.role === "AGENT" ? "account.agent" : "account.member";
 
   return (
     <main className={styles.page}>
@@ -66,7 +66,7 @@ export default function ProfileScreen() {
               <div className={styles.avatar} aria-hidden="true">{user.username.slice(0, 2).toUpperCase()}</div>
               <h2>{user.username}</h2>
               <p className={styles.email}>{user.email}</p>
-              <span className={styles.badge}><ShieldCheck size={15} aria-hidden="true" />{t(isAdmin ? "account.admin" : "account.member")}</span>
+              <span className={styles.badge}><ShieldCheck size={15} aria-hidden="true" />{t(roleLabel)}</span>
               <p className={styles.caption}>{t("profile.caption")}</p>
             </section>
 

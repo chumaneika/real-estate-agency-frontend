@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Building2, CalendarClock, CircleDollarSign, Handshake, RefreshCw, ShieldAlert, TrendingUp, Users } from "lucide-react";
 import { usePreferences } from "@/components/AppProviders";
+import AdminManagement from "@/components/AdminManagement";
 import styles from "@/styles/pages/Admin.module.css";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 function hasAdminRole(user) {
-  return user?.roles?.split(",").some(role => role.trim() === "ROLE_ADMIN");
+  return user?.role === "ADMIN";
 }
 
 export default function AdminDashboard() {
@@ -139,6 +140,7 @@ export default function AdminDashboard() {
             <span className={`${styles.status} ${styles[`status${request.status}`]}`}>{t(`admin.status.${request.status}`)}</span>
           </article>)}</div>}
       </section>
+      <AdminManagement />
     </div>
   </main>;
 }

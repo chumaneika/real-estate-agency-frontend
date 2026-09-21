@@ -1,10 +1,14 @@
 {
-  "/admin/page": "app/admin/page.js",
-  "/favorites/page": "app/favorites/page.js",
-  "/home/page": "app/home/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
   "/login/page": "app/login/page.js",
+  "/register/page": "app/register/page.js",
+  "/home/page": "app/home/page.js",
+  "/properties/buy/page": "app/properties/buy/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/properties/page": "app/properties/page.js",
+  "/favorites/page": "app/favorites/page.js",
   "/profile/page": "app/profile/page.js",
   "/properties/[id]/page": "app/properties/[id]/page.js",
-  "/properties/page": "app/properties/page.js",
-  "/register/page": "app/register/page.js"
+  "/agent/page": "app/agent/page.js"
 }
