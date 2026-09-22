@@ -11,11 +11,12 @@ import useFavorites from "@/hooks/useFavorites";
 import styles from "@/styles/TheHeader.module.css";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
-const upcomingSections = ["agents", "contact"];
+const upcomingSections = ["agents"];
 
 function UpcomingSections({ t }) {
   return <ul className={styles.upcoming}>
     {upcomingSections.map(section => <li key={section}><span>{t(`nav.${section}`)}</span><span className={styles.soon}>{t("nav.soon")}</span></li>)}
+    <li><Link href="/sell" className={styles.exploreLink}>{t("nav.contact")}</Link></li>
   </ul>;
 }
 

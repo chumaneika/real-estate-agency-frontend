@@ -1,0 +1,29 @@
+.page { min-height: calc(100svh - 150px); padding: clamp(2rem, 6vw, 4.5rem) 1.25rem; background: radial-gradient(ellipse at top left, #e1ece5, transparent 48%), #f6f7f2; color: #17352d; }
+.intro, .contactSection, .actions { width: min(980px, 100%); margin-inline: auto; }
+.intro { max-width: 760px; margin-bottom: 2rem; text-align: center; }
+.eyebrow { color: #527267; font-size: .7rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+.intro h1 { margin: .45rem 0 .8rem; font-size: clamp(2.2rem, 7vw, 4.2rem); line-height: 1.04; letter-spacing: -.055em; }
+.lead { color: #61766d; font-size: clamp(.95rem, 2vw, 1.1rem); }
+.guestBadge { display: inline-flex; margin-top: 1.15rem; padding: .45rem .75rem; border: 1px solid #52726724; border-radius: 2rem; background: #fffffba6; color: #45675b; font-size: .76rem; }
+.contactSection { padding: clamp(1.25rem, 4vw, 2rem); border: 1px solid #fff; border-radius: 1.4rem; background: #fffffbe8; box-shadow: 0 18px 50px #153d320c; }
+.sectionHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.35rem; }
+.sectionHeading h2 { margin-top: .3rem; font-size: clamp(1.35rem, 3vw, 1.8rem); }
+.hours { display: inline-flex; align-items: center; gap: .5rem; color: #61766d; font-size: .78rem; }
+.contactGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+.contactCard { min-width: 0; display: flex; align-items: center; gap: .85rem; min-height: 88px; padding: 1rem; border: 1px solid #153d3214; border-radius: 1rem; background: #f7faf6; color: inherit; text-decoration: none; transition: transform .2s, border-color .2s, box-shadow .2s; }
+.contactCard:hover { transform: translateY(-2px); border-color: #527b6548; box-shadow: 0 10px 25px #153d320d; }
+.icon { flex: 0 0 auto; width: 44px; height: 44px; display: grid; place-items: center; border-radius: .8rem; background: #e2eee7; color: #315743; }
+.contactCard > span:last-child { min-width: 0; display: grid; }
+.contactCard small { color: #75877f; font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; }
+.contactCard strong { overflow: hidden; text-overflow: ellipsis; font-size: .88rem; }
+.placeholder { margin-top: 1rem; color: #75877f; font-size: .72rem; text-align: center; }
+.actions { display: flex; justify-content: center; gap: .75rem; margin-top: 1.5rem; }
+.primary, .secondary { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: .7rem 1rem; border-radius: .75rem; font-size: .82rem; font-weight: 650; text-decoration: none; }
+.primary { background: #153d32; color: white; }.secondary { border: 1px solid #153d3222; color: #315743; background: #fffffba8; }
+@media (max-width: 640px) { .contactGrid { grid-template-columns: 1fr; } .sectionHeading { align-items: flex-start; flex-direction: column; } .actions { flex-direction: column; } }
+:global([data-theme="dark"]) .page { background: radial-gradient(ellipse at top left, #1b342a, transparent 48%), #0d1814; color: #edf4ef; }
+:global([data-theme="dark"]) .lead, :global([data-theme="dark"]) .hours, :global([data-theme="dark"]) .placeholder { color: #9bb0a6; }
+:global([data-theme="dark"]) .eyebrow { color: #8bbba3; }
+:global([data-theme="dark"]) .guestBadge, :global([data-theme="dark"]) .contactSection, :global([data-theme="dark"]) .secondary { border-color: #d8eadf14; background: #15251fe8; color: #dce9e1; }
+:global([data-theme="dark"]) .contactCard { border-color: #d8eadf12; background: #1a2c25; }
+:global([data-theme="dark"]) .icon { background: #244036; color: #b8d6c6; }

@@ -1,0 +1,205 @@
+/* [project]/src/styles/sections/ActiveDeals.module.css [app-client] (css) */
+.ActiveDeals-module__pshG5a__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(2.75rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2rem);
+}
+
+.ActiveDeals-module__pshG5a__heading {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.ActiveDeals-module__pshG5a__eyebrow {
+  color: #527267;
+  letter-spacing: .14em;
+  margin-bottom: .45rem;
+  font-size: .67rem;
+  font-weight: 750;
+}
+
+.ActiveDeals-module__pshG5a__title {
+  letter-spacing: -.035em;
+  font-size: clamp(1.75rem, 5vw, 2.35rem);
+  line-height: 1.15;
+}
+
+.ActiveDeals-module__pshG5a__subtitle {
+  color: #61766d;
+  margin-top: .65rem;
+  font-size: .88rem;
+}
+
+.ActiveDeals-module__pshG5a__dealsList {
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: clamp(1rem, 3vw, 1.4rem);
+  display: grid;
+}
+
+.ActiveDeals-module__pshG5a__card {
+  background: #fffffbe8;
+  border: 1px solid #fff;
+  border-radius: 1.15rem;
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 1.6rem);
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 10px 30px #153d3209;
+}
+
+.ActiveDeals-module__pshG5a__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 38px #153d3212;
+}
+
+.ActiveDeals-module__pshG5a__cardHeader {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .65rem;
+  margin-bottom: 1.15rem;
+  display: flex;
+}
+
+.ActiveDeals-module__pshG5a__reference {
+  color: #75877f;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: .67rem;
+  font-weight: 650;
+}
+
+.ActiveDeals-module__pshG5a__property {
+  letter-spacing: -.015em;
+  overflow-wrap: anywhere;
+  min-height: 2.8em;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-weight: 680;
+  line-height: 1.4;
+}
+
+.ActiveDeals-module__pshG5a__status {
+  white-space: nowrap;
+  border-radius: 2rem;
+  align-items: center;
+  gap: .4rem;
+  min-height: 28px;
+  padding: .3rem .6rem;
+  font-size: .65rem;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+.ActiveDeals-module__pshG5a__status i {
+  opacity: .65;
+  background: currentColor;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  box-shadow: 0 0 0 3px;
+}
+
+.ActiveDeals-module__pshG5a__progress {
+  color: #2c6749;
+  background: #e2efe6;
+}
+
+.ActiveDeals-module__pshG5a__finalizing {
+  color: #765b1f;
+  background: #f2ead7;
+}
+
+.ActiveDeals-module__pshG5a__people {
+  border-top: 1px solid #153d3210;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  display: grid;
+}
+
+.ActiveDeals-module__pshG5a__people > div {
+  min-width: 0;
+}
+
+.ActiveDeals-module__pshG5a__people dt {
+  color: #75877f;
+  align-items: center;
+  gap: .4rem;
+  margin-bottom: .25rem;
+  font-size: .67rem;
+  display: flex;
+}
+
+.ActiveDeals-module__pshG5a__people dd {
+  color: #315247;
+  overflow-wrap: anywhere;
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .ActiveDeals-module__pshG5a__eyebrow {
+  color: #86a595;
+}
+
+[data-theme="dark"] .ActiveDeals-module__pshG5a__subtitle, [data-theme="dark"] .ActiveDeals-module__pshG5a__reference, [data-theme="dark"] .ActiveDeals-module__pshG5a__people dt {
+  color: #91a79c;
+}
+
+[data-theme="dark"] .ActiveDeals-module__pshG5a__card {
+  background: #15251fe8;
+  border-color: #d8eadf14;
+  box-shadow: 0 10px 30px #0003;
+}
+
+[data-theme="dark"] .ActiveDeals-module__pshG5a__card:hover {
+  box-shadow: 0 16px 42px #0005;
+}
+
+[data-theme="dark"] .ActiveDeals-module__pshG5a__people {
+  border-top-color: #d8eadf12;
+}
+
+[data-theme="dark"] .ActiveDeals-module__pshG5a__people dd {
+  color: #dce9e1;
+}
+
+[data-theme="dark"] .ActiveDeals-module__pshG5a__progress {
+  color: #a9d8bd;
+  background: #244638;
+}
+
+[data-theme="dark"] .ActiveDeals-module__pshG5a__finalizing {
+  color: #e6cb88;
+  background: #493f28;
+}
+
+@media (width <= 540px) {
+  .ActiveDeals-module__pshG5a__dealsList {
+    gap: 1rem;
+  }
+
+  .ActiveDeals-module__pshG5a__card {
+    padding: 1.2rem;
+  }
+
+  .ActiveDeals-module__pshG5a__property {
+    min-height: 0;
+  }
+
+  .ActiveDeals-module__pshG5a__people {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ActiveDeals-module__pshG5a__card {
+    transition: none;
+  }
+
+  .ActiveDeals-module__pshG5a__card:hover {
+    transform: none;
+  }
+}
+
+/*# sourceMappingURL=src_styles_sections_ActiveDeals_module_css_f9ee138c._.single.css.map*/

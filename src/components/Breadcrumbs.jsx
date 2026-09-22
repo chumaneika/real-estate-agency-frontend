@@ -17,6 +17,7 @@ export default function Breadcrumbs() {
     items.push({ href: "/properties", label: t("breadcrumbs.properties") });
     if (parts[1] && parts[1] !== "buy") items.push({ label: t("breadcrumbs.property") });
   } else if (parts[0] === "profile") items.push({ label: t("breadcrumbs.profile") });
+  else if (parts[0] === "sell") items.push({ label: t("breadcrumbs.sell") });
   else if (parts[0] === "favorites") items.push({ label: t("breadcrumbs.favorites") });
   else if (parts[0] === "admin") items.push({ label: t("breadcrumbs.admin") });
   else if (parts[0] === "agent") items.push({ label: t("breadcrumbs.agent") });

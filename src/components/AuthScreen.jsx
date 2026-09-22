@@ -25,22 +25,19 @@ const AuthScreen = ({ mode = "login" }) => {
 
   useEffect(() => {
     if (!isRegistration) {
-      const rememberedUsername = window.localStorage.getItem("primekey-username");
-      if (rememberedUsername) {
-        setUsername(rememberedUsername);
+      const rememberedEmail = window.localStorage.getItem("primekey-email");
+      if (rememberedEmail) {
+        setEmail(rememberedEmail);
         setRememberMe(true);
       }
     }
   }, [isRegistration]);
 
   const validate = () => {
-    if (!isRegistration && username.trim().length < 3) {
-      return "Username must contain at least 3 characters.";
-    }
     if (isRegistration && username.trim() && username.trim().length < 3) {
       return "Username must contain at least 3 characters.";
     }
-    if (isRegistration && !/^\S+@\S+\.\S+$/.test(email)) {
+    if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
       return "Enter a valid email address.";
     }
     if (password.length < 6) {
@@ -61,7 +58,7 @@ const AuthScreen = ({ mode = "login" }) => {
     }
 
     setIsLoading(true);
-    const loginIdentifier = username.trim();
+    const loginEmail = email.trim().toLowerCase();
 
     try {
       const response = await fetch(`${API_URL}/api/v1/auth/${isRegistration ? "register" : "login"}`, {
@@ -71,24 +68,25 @@ const AuthScreen = ({ mode = "login" }) => {
         body: JSON.stringify(
           isRegistration
             ? { username: username.trim(), email: email.trim(), password }
-            : { username: loginIdentifier, password }
+            : { email: loginEmail, password }
         ),
       });
       const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
         const loginHint = response.status === 401 && !isRegistration
-          ? "Incorrect username or password. Check your password and try again."
+          ? "Incorrect email or password. Check your password and try again."
           : "";
         throw new Error(loginHint || payload.message || "We could not complete your request. Please try again.");
       }
 
       if (!isRegistration) {
         if (rememberMe) {
-          window.localStorage.setItem("primekey-username", loginIdentifier);
+          window.localStorage.setItem("primekey-email", loginEmail);
         } else {
-          window.localStorage.removeItem("primekey-username");
+          window.localStorage.removeItem("primekey-email");
         }
+        window.localStorage.removeItem("primekey-username");
         setSuccess(`Welcome back, ${payload.username}. You are signed in.`);
         router.replace("/home");
       } else {
@@ -123,30 +121,29 @@ const AuthScreen = ({ mode = "login" }) => {
           </div>
 
           <form className={styles.form} onSubmit={handleSubmit} noValidate>
-            <label className={styles.field}>
-              <span>{t(isRegistration ? "auth.usernameOptional" : "auth.username")}</span>
+            {isRegistration && <label className={styles.field}>
+              <span>{t("auth.usernameOptional")}</span>
               <input
                 autoComplete="username"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
-                placeholder={isRegistration ? "Created from your email if blank" : t("auth.usernamePlaceholder")}
+                placeholder="Created from your email if blank"
+                aria-invalid={Boolean(error)}
+              />
+            </label>}
+
+            <label className={styles.field}>
+              <span>{t("auth.email")}</span>
+              <input
+                autoComplete="email"
+                inputMode="email"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="you@example.com"
                 aria-invalid={Boolean(error)}
               />
             </label>
-
-            {isRegistration && (
-              <label className={styles.field}>
-                <span>{t("auth.email")}</span>
-                <input
-                  autoComplete="email"
-                  inputMode="email"
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  placeholder="you@example.com"
-                />
-              </label>
-            )}
 
             <label className={styles.field}>
               <span>{t("auth.password")}</span>

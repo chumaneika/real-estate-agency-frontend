@@ -89,6 +89,12 @@
       "regex": "^/register(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/register(?:/)?$"
+    },
+    {
+      "page": "/sell",
+      "regex": "^/sell(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sell(?:/)?$"
     }
   ],
   "dataRoutes": [],

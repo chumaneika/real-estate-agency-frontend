@@ -9,6 +9,15 @@
   text-align: center;
 }
 
+.eyebrow {
+  margin-bottom: .5rem;
+  color: #527267;
+  font-size: .7rem;
+  font-weight: 750;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
 .title {
   font-size: clamp(1.8rem, 6vw, 2.4rem);
   font-weight: bold;
@@ -30,6 +39,7 @@
 }
 
 .card {
+  position: relative;
   flex: 1;
   background-color: white;
   padding: 2rem;
@@ -38,6 +48,21 @@
   text-decoration: none;
   color: #1f2937;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: #153d32;
+  color: white;
+  font-size: .75rem;
+  font-weight: 750;
 }
 
 @media (max-width: 639px) {
@@ -62,9 +87,9 @@
   color: #4b5563;
 }
 
-.unavailable { opacity: .65; }
-.unavailable:hover { transform: none; box-shadow: 0 4px 8px rgba(0, 0, 0, .05); }
 :global([data-theme="dark"]) .hero { background: #0d1814; }
 :global([data-theme="dark"]) .title { color: #edf4ef; }
 :global([data-theme="dark"]) .card { background: #15251f; color: #edf4ef; box-shadow: 0 4px 14px #0004; }
 :global([data-theme="dark"]) .card p { color: #9bb0a6; }
+:global([data-theme="dark"]) .eyebrow { color: #8bbba3; }
+:global([data-theme="dark"]) .step { background: #315f4e; }

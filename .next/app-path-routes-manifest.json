@@ -4,11 +4,12 @@
   "/login/page": "/login",
   "/register/page": "/register",
   "/home/page": "/home",
-  "/properties/buy/page": "/properties/buy",
   "/admin/page": "/admin",
-  "/properties/page": "/properties",
+  "/properties/buy/page": "/properties/buy",
   "/favorites/page": "/favorites",
   "/profile/page": "/profile",
-  "/properties/[id]/page": "/properties/[id]",
-  "/agent/page": "/agent"
+  "/agent/page": "/agent",
+  "/sell/page": "/sell",
+  "/properties/page": "/properties",
+  "/properties/[id]/page": "/properties/[id]"
 }
