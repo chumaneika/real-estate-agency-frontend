@@ -14,6 +14,7 @@ export default function PropertyDetails({ id }) {
   const validId = /^\d+$/.test(id) && Number(id) > 0;
   const { t } = usePreferences();
   const { status, data: property, retry } = usePropertyData(validId ? id : "0");
+  const yesNo = value => value == null ? t("property.notProvided") : t(value ? "property.yes" : "property.no");
   return (
     <main className={styles.page}>
       <div className={styles.container}>
@@ -33,8 +34,15 @@ export default function PropertyDetails({ id }) {
                 <p className={styles.eyebrow}>{t("property.price")}</p><p className={styles.detailPrice}>{formatPrice(property.price)}</p>
                 <dl className={styles.specifications}>
                   <div><dt><Ruler size={16} aria-hidden="true" />{t("property.area")}</dt><dd>{property.area == null ? t("property.notProvided") : `${property.area} m²`}</dd></div>
+                  <div><dt>{t("property.pricePerMeter")}</dt><dd>{property.price == null || !property.area ? t("property.notProvided") : `${Math.round(property.price / property.area).toLocaleString()} $/m²`}</dd></div>
                   <div><dt><DoorOpen size={16} aria-hidden="true" />{t("property.rooms")}</dt><dd>{property.rooms ?? t("property.notProvided")}</dd></div>
                   <div><dt><Building2 size={16} aria-hidden="true" />{t("property.type")}</dt><dd>{propertyTypes[property.type] ? t(`property.${property.type}`) : t("property.notProvided")}</dd></div>
+                  <div><dt>{t("property.floor")}</dt><dd>{property.floor == null ? t("property.notProvided") : property.totalFloors == null ? property.floor : `${property.floor} / ${property.totalFloors}`}</dd></div>
+                  <div><dt>{t("property.constructionYear")}</dt><dd>{property.constructionYear ?? t("property.notProvided")}</dd></div>
+                  <div><dt>{t("property.renovation")}</dt><dd>{property.renovation ? t(`renovation.${property.renovation}`) : t("property.notProvided")}</dd></div>
+                  <div><dt>{t("property.balcony")}</dt><dd>{yesNo(property.hasBalcony)}</dd></div>
+                  <div><dt>{t("property.parking")}</dt><dd>{yesNo(property.hasParking)}</dd></div>
+                  <div><dt>{t("property.metroDistance")}</dt><dd>{property.metroDistanceMinutes == null ? t("property.notProvided") : t("property.minutes", { value: property.metroDistanceMinutes })}</dd></div>
                 </dl>
                 <p className={styles.filterNote}>{t("property.reference", { id: property.id })}</p>
                 <FavoriteButton propertyId={property.id} propertyName={propertyTitle(property)} variant="detail" />

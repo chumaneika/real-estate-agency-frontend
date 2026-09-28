@@ -8,10 +8,10 @@ import { catalogParams, catalogStateFromParams, DEFAULT_CATALOG_FILTERS } from "
 import { cloudinaryUploadEndpoint, uploadPropertyImage } from "../src/lib/cloudinary.js";
 import { createPropertyWithImages } from "../src/lib/propertyAdmin.js";
 
-const filters = { search: "", type: "", rooms: "", minPrice: "", maxPrice: "", sort: "newest" };
+const filters = { ...DEFAULT_CATALOG_FILTERS };
 const data = [
-  { id: 1, title: "Garden home", address: "City Center", price: 200000, area: 90, rooms: 3, type: "RESIDENTIAL" },
-  { id: 2, title: "Office", address: "North Street", price: 100000, rooms: 2, type: "COMMERCIAL" },
+  { id: 1, title: "Garden home", address: "City Center", price: 200000, area: 90, rooms: 3, type: "RESIDENTIAL", floor: 4, constructionYear: 2020, renovation: "DESIGNER", hasBalcony: true, hasParking: true, metroDistanceMinutes: 8 },
+  { id: 2, title: "Office", address: "North Street", price: 100000, area: 100, rooms: 2, type: "COMMERCIAL", floor: 1, constructionYear: 1995, renovation: "COSMETIC", hasBalcony: false, hasParking: true, metroDistanceMinutes: 20 },
   { id: 3, address: "South Street", price: null, rooms: null, type: "RESIDENTIAL" },
 ];
 
@@ -25,6 +25,11 @@ test("type, price range and rooms combine", () => {
 test("prices sort correctly and missing prices stay last", () => {
   assert.deepEqual(filterProperties(data, { ...filters, sort: "priceAsc" }).map(p => p.id), [2, 1, 3]);
   assert.deepEqual(filterProperties(data, { ...filters, sort: "priceDesc" }).map(p => p.id), [1, 2, 3]);
+});
+test("advanced property characteristics combine", () => {
+  const advanced = { ...filters, minPricePerMeter: "2000", minFloor: "3", minConstructionYear: "2010", renovation: "DESIGNER", balcony: true, parking: true, maxMetroDistance: "10" };
+  assert.deepEqual(filterProperties(data, advanced).map(p => p.id), [1]);
+  assert.deepEqual(filterProperties(data, { ...filters, maxPricePerMeter: "1500", maxFloor: "2" }).map(p => p.id), [2]);
 });
 test("default order is newest first without mutating data", () => {
   assert.deepEqual(filterProperties(data, filters).map(p => p.id), [3, 2, 1]);
@@ -75,8 +80,8 @@ test("property gallery accepts object images and handles missing data", () => {
   assert.deepEqual(propertyImages({}), []);
 });
 test("catalog state is restored from safe URL parameters", () => {
-  const state = catalogStateFromParams(new URLSearchParams("q=garden&type=RESIDENTIAL&rooms=3&min=100&max=500&sort=priceAsc&page=2"));
-  assert.deepEqual(state, { filters: { search: "garden", type: "RESIDENTIAL", rooms: "3", minPrice: "100", maxPrice: "500", sort: "priceAsc" }, page: 2 });
+  const state = catalogStateFromParams(new URLSearchParams("q=garden&type=RESIDENTIAL&rooms=3&min=100&max=500&ppmMin=20&floorMin=2&yearFrom=2010&renovation=EURO&balcony=1&parking=1&metroMax=15&sort=priceAsc&page=2"));
+  assert.deepEqual(state, { filters: { ...DEFAULT_CATALOG_FILTERS, search: "garden", type: "RESIDENTIAL", rooms: "3", minPrice: "100", maxPrice: "500", minPricePerMeter: "20", minFloor: "2", minConstructionYear: "2010", renovation: "EURO", balcony: true, parking: true, maxMetroDistance: "15", sort: "priceAsc" }, page: 2 });
 });
 test("catalog URL omits defaults and rejects invalid values", () => {
   assert.equal(catalogParams(DEFAULT_CATALOG_FILTERS, 1), "");

@@ -1,15 +1,15 @@
 {
-  "/_not-found/page": "/_not-found",
   "/page": "/",
+  "/_not-found/page": "/_not-found",
   "/login/page": "/login",
   "/register/page": "/register",
   "/home/page": "/home",
-  "/admin/page": "/admin",
   "/properties/buy/page": "/properties/buy",
-  "/favorites/page": "/favorites",
-  "/profile/page": "/profile",
   "/agent/page": "/agent",
+  "/admin/page": "/admin",
+  "/profile/page": "/profile",
+  "/properties/[id]/page": "/properties/[id]",
   "/sell/page": "/sell",
   "/properties/page": "/properties",
-  "/properties/[id]/page": "/properties/[id]"
+  "/favorites/page": "/favorites"
 }

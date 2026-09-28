@@ -33,7 +33,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$sections$2f
 ;
 ;
 ;
-const API_URL = ("TURBOPACK compile-time value", "http://localhost:8080") ?? "";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 const HeroSection = ()=>{
     const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$AppProviders$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePreferences"])();
     const [account, setAccount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
@@ -208,6 +208,16 @@ function filterProperties(properties, filters) {
         if (filters.rooms && (property.rooms == null || property.rooms < Number(filters.rooms))) return false;
         if (filters.minPrice !== "" && (property.price == null || property.price < Number(filters.minPrice))) return false;
         if (filters.maxPrice !== "" && (property.price == null || property.price > Number(filters.maxPrice))) return false;
+        const pricePerMeter = property.price != null && property.area > 0 ? property.price / property.area : null;
+        if ((filters.minPricePerMeter ?? "") !== "" && (pricePerMeter == null || pricePerMeter < Number(filters.minPricePerMeter))) return false;
+        if ((filters.maxPricePerMeter ?? "") !== "" && (pricePerMeter == null || pricePerMeter > Number(filters.maxPricePerMeter))) return false;
+        if ((filters.minFloor ?? "") !== "" && (property.floor == null || property.floor < Number(filters.minFloor))) return false;
+        if ((filters.maxFloor ?? "") !== "" && (property.floor == null || property.floor > Number(filters.maxFloor))) return false;
+        if ((filters.minConstructionYear ?? "") !== "" && (property.constructionYear == null || property.constructionYear < Number(filters.minConstructionYear))) return false;
+        if (filters.renovation && property.renovation !== filters.renovation) return false;
+        if (filters.balcony && property.hasBalcony !== true) return false;
+        if (filters.parking && property.hasParking !== true) return false;
+        if ((filters.maxMetroDistance ?? "") !== "" && (property.metroDistanceMinutes == null || property.metroDistanceMinutes > Number(filters.maxMetroDistance))) return false;
         return true;
     });
     return filtered.sort((a, b)=>{
@@ -247,6 +257,8 @@ var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.v({
   "address": "Properties-module__QaNtRq__address",
+  "advanced": "Properties-module__QaNtRq__advanced",
+  "advancedFields": "Properties-module__QaNtRq__advancedFields",
   "back": "Properties-module__QaNtRq__back",
   "button": "Properties-module__QaNtRq__button",
   "cardArrow": "Properties-module__QaNtRq__cardArrow",
@@ -258,6 +270,7 @@ __turbopack_context__.v({
   "cardSkeleton": "Properties-module__QaNtRq__cardSkeleton",
   "cards": "Properties-module__QaNtRq__cards",
   "catalogLayout": "Properties-module__QaNtRq__catalogLayout",
+  "checks": "Properties-module__QaNtRq__checks",
   "commentControl": "Properties-module__QaNtRq__commentControl",
   "confirmation": "Properties-module__QaNtRq__confirmation",
   "confirmationIcon": "Properties-module__QaNtRq__confirmationIcon",
@@ -626,7 +639,7 @@ __turbopack_context__.s({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 "use client";
 ;
-const API_URL = ("TURBOPACK compile-time value", "http://localhost:8080") ?? "";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 function usePropertyData(path) {
     const [state, setState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         status: "loading",

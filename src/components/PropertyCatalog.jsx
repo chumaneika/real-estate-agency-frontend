@@ -30,6 +30,9 @@ export default function PropertyCatalog() {
   }, [query]);
   const negativePrice = Number(filters.minPrice) < 0 || Number(filters.maxPrice) < 0;
   const invalidRange = negativePrice || (filters.minPrice !== "" && filters.maxPrice !== "" && Number(filters.minPrice) > Number(filters.maxPrice));
+  const invalidPricePerMeter = filters.minPricePerMeter !== "" && filters.maxPricePerMeter !== "" && Number(filters.minPricePerMeter) > Number(filters.maxPricePerMeter);
+  const invalidFloor = filters.minFloor !== "" && filters.maxFloor !== "" && Number(filters.minFloor) > Number(filters.maxFloor);
+  const hasInvalidRange = invalidRange || invalidPricePerMeter || invalidFloor;
   const properties = data ? filterProperties(data, filters) : [];
   const pages = Math.max(1, Math.ceil(properties.length / PAGE_SIZE));
   const currentPage = Math.min(page, pages);
@@ -66,6 +69,28 @@ export default function PropertyCatalog() {
             </div>
             {invalidRange && <p id="price-error" className={styles.error} role="alert">{negativePrice ? t("catalog.negative") : t("catalog.invalidRange")}</p>}
             <label className={styles.field}>{t("catalog.rooms")}<select value={filters.rooms} onChange={event => changeFilter("rooms", event.target.value)}><option value="">{t("catalog.anyRooms")}</option>{[1, 2, 3, 4, 5].map(value => <option key={value} value={value}>{t("catalog.roomOption", { value })}</option>)}</select></label>
+            <details className={styles.advanced} open>
+              <summary>{t("catalog.advanced")}</summary>
+              <div className={styles.advancedFields}>
+                <div className={styles.priceFields}>
+                  <label className={styles.field}>{t("catalog.pricePerMeterMin")}<input type="number" min="0" value={filters.minPricePerMeter} onChange={event => changeFilter("minPricePerMeter", event.target.value)} placeholder={t("catalog.any")} aria-invalid={invalidPricePerMeter} /></label>
+                  <label className={styles.field}>{t("catalog.pricePerMeterMax")}<input type="number" min="0" value={filters.maxPricePerMeter} onChange={event => changeFilter("maxPricePerMeter", event.target.value)} placeholder={t("catalog.any")} aria-invalid={invalidPricePerMeter} /></label>
+                </div>
+                {invalidPricePerMeter && <p className={styles.error} role="alert">{t("catalog.invalidPricePerMeter")}</p>}
+                <div className={styles.priceFields}>
+                  <label className={styles.field}>{t("catalog.floorFrom")}<input type="number" min="0" value={filters.minFloor} onChange={event => changeFilter("minFloor", event.target.value)} placeholder={t("catalog.any")} aria-invalid={invalidFloor} /></label>
+                  <label className={styles.field}>{t("catalog.floorTo")}<input type="number" min="0" value={filters.maxFloor} onChange={event => changeFilter("maxFloor", event.target.value)} placeholder={t("catalog.any")} aria-invalid={invalidFloor} /></label>
+                </div>
+                {invalidFloor && <p className={styles.error} role="alert">{t("catalog.invalidFloor")}</p>}
+                <label className={styles.field}>{t("catalog.yearFrom")}<input type="number" min="1800" max="2031" value={filters.minConstructionYear} onChange={event => changeFilter("minConstructionYear", event.target.value)} placeholder={t("catalog.any")} /></label>
+                <label className={styles.field}>{t("catalog.renovation")}<select value={filters.renovation} onChange={event => changeFilter("renovation", event.target.value)}><option value="">{t("catalog.anyRenovation")}</option>{["NONE", "COSMETIC", "EURO", "DESIGNER"].map(value => <option key={value} value={value}>{t(`renovation.${value}`)}</option>)}</select></label>
+                <label className={styles.field}>{t("catalog.metroMax")}<input type="number" min="0" value={filters.maxMetroDistance} onChange={event => changeFilter("maxMetroDistance", event.target.value)} placeholder={t("catalog.any")} /></label>
+                <div className={styles.checks}>
+                  <label><input type="checkbox" checked={filters.balcony} onChange={event => changeFilter("balcony", event.target.checked)} />{t("catalog.balcony")}</label>
+                  <label><input type="checkbox" checked={filters.parking} onChange={event => changeFilter("parking", event.target.checked)} />{t("catalog.parking")}</label>
+                </div>
+              </div>
+            </details>
             <p className={styles.filterNote}>{t("catalog.note")}</p>
           </aside>
 
@@ -76,7 +101,7 @@ export default function PropertyCatalog() {
             </div>
             {status === "loading" ? <div className={styles.cards} role="status" aria-label="Loading properties">{[1, 2, 3].map(value => <div key={value} className={styles.cardSkeleton} aria-hidden="true"><div /><span /><span /></div>)}</div>
               : status === "error" ? <div className={styles.state}><Building2 size={36} aria-hidden="true" /><h2>{t("catalog.unavailable")}</h2><p role="alert">{t("catalog.loadError")}</p><button className={styles.button} onClick={retry}>{t("catalog.tryAgain")}</button></div>
-              : invalidRange ? <div className={styles.state}><h2>{t("catalog.rangeTitle")}</h2><p>{t("catalog.rangeText")}</p></div>
+              : hasInvalidRange ? <div className={styles.state}><h2>{t("catalog.rangeTitle")}</h2><p>{t("catalog.rangeText")}</p></div>
               : properties.length === 0 ? <div className={styles.state}><Building2 size={40} strokeWidth={1.2} aria-hidden="true" /><h2>{data?.length ? t("catalog.noMatch") : t("catalog.empty")}</h2><p>{data?.length ? t("catalog.noMatchText") : t("catalog.emptyText")}</p>{data?.length > 0 && <button className={styles.button} onClick={resetFilters}>{t("catalog.resetFilters")}</button>}</div>
               : <><div className={styles.cards}>{properties.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map(property => <PropertyCard key={property.id} property={property} />)}</div>{pages > 1 && <nav className={styles.pagination} aria-label="Catalog pagination"><button onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} aria-label={t("catalog.previous")}><ArrowLeft size={17} /></button><span>{t("catalog.page", { current: currentPage, total: pages })}</span><button onClick={() => changePage(currentPage + 1)} disabled={currentPage === pages} aria-label={t("catalog.next")}><ArrowRight size={17} /></button></nav>}</>}
           </section>

@@ -86,6 +86,9 @@
 .managementForm textarea { resize: vertical; }
 .managementForm input:focus, .managementForm select:focus, .managementForm textarea:focus { outline: 3px solid #9fc4b430; border-color: #6e9c87; }
 .formRow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; }
+.booleanFields { min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; align-self: end; }
+.booleanFields label { display: flex; grid-template-columns: auto 1fr; align-items: center; gap: .4rem; color: #61766d; font-size: .68rem; font-weight: 650; cursor: pointer; }
+.booleanFields input { width: 17px; min-height: 17px; padding: 0; accent-color: #315743; }
 .formActions { display: flex; flex-wrap: wrap; gap: .65rem; align-items: center; }
 .secondary { min-height: 44px; padding: .65rem 1rem; border: 1px solid #cfdcd3; border-radius: .7rem; background: transparent; color: #315743; font: inherit; font-size: .78rem; cursor: pointer; }
 .managementList { max-height: 310px; overflow: auto; display: grid; border-top: 1px solid #153d3210; }

@@ -276,10 +276,13 @@
 }
 
 .Properties-module__QaNtRq__filters {
+  scrollbar-width: thin;
   gap: 1.2rem;
+  max-height: calc(100vh - 116px);
   display: grid;
   position: sticky;
   top: 96px;
+  overflow-y: auto;
 }
 
 .Properties-module__QaNtRq__filterHeading {
@@ -357,6 +360,46 @@
   color: #61766d;
   font-size: .72rem;
   line-height: 1.6;
+}
+
+.Properties-module__QaNtRq__advanced {
+  border-top: 1px solid #153d3210;
+  padding-top: 1rem;
+}
+
+.Properties-module__QaNtRq__advanced summary {
+  color: #315743;
+  cursor: pointer;
+  min-height: 36px;
+  font-size: .76rem;
+  font-weight: 700;
+}
+
+.Properties-module__QaNtRq__advancedFields {
+  gap: 1rem;
+  padding-top: .75rem;
+  display: grid;
+}
+
+.Properties-module__QaNtRq__checks {
+  gap: .7rem;
+  display: grid;
+}
+
+.Properties-module__QaNtRq__checks label {
+  color: #527267;
+  cursor: pointer;
+  align-items: center;
+  gap: .55rem;
+  font-size: .76rem;
+  font-weight: 600;
+  display: flex;
+}
+
+.Properties-module__QaNtRq__checks input {
+  accent-color: #315743;
+  width: 17px;
+  height: 17px;
 }
 
 .Properties-module__QaNtRq__toolbar {
@@ -1249,9 +1292,10 @@
 
   .Properties-module__QaNtRq__filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: none;
   }
 
-  .Properties-module__QaNtRq__filterHeading, .Properties-module__QaNtRq__priceFields, .Properties-module__QaNtRq__filterNote, .Properties-module__QaNtRq__filters > .Properties-module__QaNtRq__error {
+  .Properties-module__QaNtRq__filterHeading, .Properties-module__QaNtRq__priceFields, .Properties-module__QaNtRq__advanced, .Properties-module__QaNtRq__filterNote, .Properties-module__QaNtRq__filters > .Properties-module__QaNtRq__error {
     grid-column: 1 / -1;
   }
 

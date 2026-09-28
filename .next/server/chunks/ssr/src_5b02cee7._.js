@@ -35,6 +35,16 @@ function filterProperties(properties, filters) {
         if (filters.rooms && (property.rooms == null || property.rooms < Number(filters.rooms))) return false;
         if (filters.minPrice !== "" && (property.price == null || property.price < Number(filters.minPrice))) return false;
         if (filters.maxPrice !== "" && (property.price == null || property.price > Number(filters.maxPrice))) return false;
+        const pricePerMeter = property.price != null && property.area > 0 ? property.price / property.area : null;
+        if ((filters.minPricePerMeter ?? "") !== "" && (pricePerMeter == null || pricePerMeter < Number(filters.minPricePerMeter))) return false;
+        if ((filters.maxPricePerMeter ?? "") !== "" && (pricePerMeter == null || pricePerMeter > Number(filters.maxPricePerMeter))) return false;
+        if ((filters.minFloor ?? "") !== "" && (property.floor == null || property.floor < Number(filters.minFloor))) return false;
+        if ((filters.maxFloor ?? "") !== "" && (property.floor == null || property.floor > Number(filters.maxFloor))) return false;
+        if ((filters.minConstructionYear ?? "") !== "" && (property.constructionYear == null || property.constructionYear < Number(filters.minConstructionYear))) return false;
+        if (filters.renovation && property.renovation !== filters.renovation) return false;
+        if (filters.balcony && property.hasBalcony !== true) return false;
+        if (filters.parking && property.hasParking !== true) return false;
+        if ((filters.maxMetroDistance ?? "") !== "" && (property.metroDistanceMinutes == null || property.metroDistanceMinutes > Number(filters.maxMetroDistance))) return false;
         return true;
     });
     return filtered.sort((a, b)=>{
@@ -74,6 +84,8 @@ var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.v({
   "address": "Properties-module__QaNtRq__address",
+  "advanced": "Properties-module__QaNtRq__advanced",
+  "advancedFields": "Properties-module__QaNtRq__advancedFields",
   "back": "Properties-module__QaNtRq__back",
   "button": "Properties-module__QaNtRq__button",
   "cardArrow": "Properties-module__QaNtRq__cardArrow",
@@ -85,6 +97,7 @@ __turbopack_context__.v({
   "cardSkeleton": "Properties-module__QaNtRq__cardSkeleton",
   "cards": "Properties-module__QaNtRq__cards",
   "catalogLayout": "Properties-module__QaNtRq__catalogLayout",
+  "checks": "Properties-module__QaNtRq__checks",
   "commentControl": "Properties-module__QaNtRq__commentControl",
   "confirmation": "Properties-module__QaNtRq__confirmation",
   "confirmationIcon": "Properties-module__QaNtRq__confirmationIcon",
@@ -453,7 +466,7 @@ __turbopack_context__.s({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 "use client";
 ;
-const API_URL = ("TURBOPACK compile-time value", "http://localhost:8080") ?? "";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 function usePropertyData(path) {
     const [state, setState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         status: "loading",
@@ -522,6 +535,15 @@ const DEFAULT_CATALOG_FILTERS = {
     rooms: "",
     minPrice: "",
     maxPrice: "",
+    minPricePerMeter: "",
+    maxPricePerMeter: "",
+    minFloor: "",
+    maxFloor: "",
+    minConstructionYear: "",
+    renovation: "",
+    balcony: false,
+    parking: false,
+    maxMetroDistance: "",
     sort: "newest"
 };
 const SORTS = new Set([
@@ -533,6 +555,12 @@ const TYPES = new Set([
     "RESIDENTIAL",
     "NONRESIDENTIAL",
     "COMMERCIAL"
+]);
+const RENOVATIONS = new Set([
+    "NONE",
+    "COSMETIC",
+    "EURO",
+    "DESIGNER"
 ]);
 function nonNegativeNumber(value) {
     return value !== null && value !== "" && Number.isFinite(Number(value)) && Number(value) >= 0 ? value : "";
@@ -549,6 +577,15 @@ function catalogStateFromParams(params) {
             rooms: /^[1-5]$/.test(rooms) ? rooms : "",
             minPrice: nonNegativeNumber(params.get("min")),
             maxPrice: nonNegativeNumber(params.get("max")),
+            minPricePerMeter: nonNegativeNumber(params.get("ppmMin")),
+            maxPricePerMeter: nonNegativeNumber(params.get("ppmMax")),
+            minFloor: nonNegativeNumber(params.get("floorMin")),
+            maxFloor: nonNegativeNumber(params.get("floorMax")),
+            minConstructionYear: nonNegativeNumber(params.get("yearFrom")),
+            renovation: RENOVATIONS.has(params.get("renovation")) ? params.get("renovation") : "",
+            balcony: params.get("balcony") === "1",
+            parking: params.get("parking") === "1",
+            maxMetroDistance: nonNegativeNumber(params.get("metroMax")),
             sort: SORTS.has(sort) ? sort : "newest"
         },
         page: Number.isFinite(page) && page > 0 ? page : 1
@@ -561,6 +598,15 @@ function catalogParams(filters, page = 1) {
     if (filters.rooms) params.set("rooms", filters.rooms);
     if (filters.minPrice !== "") params.set("min", filters.minPrice);
     if (filters.maxPrice !== "") params.set("max", filters.maxPrice);
+    if (filters.minPricePerMeter !== "") params.set("ppmMin", filters.minPricePerMeter);
+    if (filters.maxPricePerMeter !== "") params.set("ppmMax", filters.maxPricePerMeter);
+    if (filters.minFloor !== "") params.set("floorMin", filters.minFloor);
+    if (filters.maxFloor !== "") params.set("floorMax", filters.maxFloor);
+    if (filters.minConstructionYear !== "") params.set("yearFrom", filters.minConstructionYear);
+    if (filters.renovation) params.set("renovation", filters.renovation);
+    if (filters.balcony) params.set("balcony", "1");
+    if (filters.parking) params.set("parking", "1");
+    if (filters.maxMetroDistance !== "") params.set("metroMax", filters.maxMetroDistance);
     if (filters.sort !== "newest") params.set("sort", filters.sort);
     if (page > 1) params.set("page", String(page));
     return params.toString();
@@ -619,6 +665,9 @@ function PropertyCatalog() {
     ]);
     const negativePrice = Number(filters.minPrice) < 0 || Number(filters.maxPrice) < 0;
     const invalidRange = negativePrice || filters.minPrice !== "" && filters.maxPrice !== "" && Number(filters.minPrice) > Number(filters.maxPrice);
+    const invalidPricePerMeter = filters.minPricePerMeter !== "" && filters.maxPricePerMeter !== "" && Number(filters.minPricePerMeter) > Number(filters.maxPricePerMeter);
+    const invalidFloor = filters.minFloor !== "" && filters.maxFloor !== "" && Number(filters.minFloor) > Number(filters.maxFloor);
+    const hasInvalidRange = invalidRange || invalidPricePerMeter || invalidFloor;
     const properties = data ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$properties$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["filterProperties"])(data, filters) : [];
     const pages = Math.max(1, Math.ceil(properties.length / PAGE_SIZE));
     const currentPage = Math.min(page, pages);
@@ -659,27 +708,27 @@ function PropertyCatalog() {
                             children: t("catalog.eyebrow")
                         }, void 0, false, {
                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                            lineNumber: 54,
+                            lineNumber: 57,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                             children: t("catalog.title")
                         }, void 0, false, {
                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                            lineNumber: 55,
+                            lineNumber: 58,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: t("catalog.subtitle")
                         }, void 0, false, {
                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                            lineNumber: 56,
+                            lineNumber: 59,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                    lineNumber: 53,
+                    lineNumber: 56,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -700,14 +749,14 @@ function PropertyCatalog() {
                                                     "aria-hidden": "true"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 60,
+                                                    lineNumber: 63,
                                                     columnNumber: 73
                                                 }, this),
                                                 t("catalog.filters")
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 60,
+                                            lineNumber: 63,
                                             columnNumber: 51
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -716,13 +765,13 @@ function PropertyCatalog() {
                                             children: t("catalog.reset")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 60,
+                                            lineNumber: 63,
                                             columnNumber: 150
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 60,
+                                    lineNumber: 63,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -737,7 +786,7 @@ function PropertyCatalog() {
                                                     "aria-hidden": "true"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 61,
+                                                    lineNumber: 64,
                                                     columnNumber: 105
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -747,19 +796,19 @@ function PropertyCatalog() {
                                                     placeholder: t("catalog.searchPlaceholder")
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 61,
+                                                    lineNumber: 64,
                                                     columnNumber: 144
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 61,
+                                            lineNumber: 64,
                                             columnNumber: 66
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 61,
+                                    lineNumber: 64,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -775,7 +824,7 @@ function PropertyCatalog() {
                                                     children: t("catalog.allTypes")
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 62,
+                                                    lineNumber: 65,
                                                     columnNumber: 154
                                                 }, this),
                                                 Object.keys(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$properties$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["propertyTypes"]).map((value)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -783,19 +832,19 @@ function PropertyCatalog() {
                                                         children: t(`property.${value}`)
                                                     }, value, false, {
                                                         fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                        lineNumber: 62,
+                                                        lineNumber: 65,
                                                         columnNumber: 244
                                                     }, this))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 62,
+                                            lineNumber: 65,
                                             columnNumber: 64
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 62,
+                                    lineNumber: 65,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -815,13 +864,13 @@ function PropertyCatalog() {
                                                     "aria-describedby": invalidRange ? "price-error" : undefined
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 64,
+                                                    lineNumber: 67,
                                                     columnNumber: 65
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 64,
+                                            lineNumber: 67,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -838,19 +887,19 @@ function PropertyCatalog() {
                                                     "aria-describedby": invalidRange ? "price-error" : undefined
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 65,
+                                                    lineNumber: 68,
                                                     columnNumber: 65
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 65,
+                                            lineNumber: 68,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 63,
+                                    lineNumber: 66,
                                     columnNumber: 13
                                 }, this),
                                 invalidRange && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -860,7 +909,7 @@ function PropertyCatalog() {
                                     children: negativePrice ? t("catalog.negative") : t("catalog.invalidRange")
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 67,
+                                    lineNumber: 70,
                                     columnNumber: 30
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -876,7 +925,7 @@ function PropertyCatalog() {
                                                     children: t("catalog.anyRooms")
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 68,
+                                                    lineNumber: 71,
                                                     columnNumber: 157
                                                 }, this),
                                                 [
@@ -892,19 +941,298 @@ function PropertyCatalog() {
                                                         })
                                                     }, value, false, {
                                                         fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                        lineNumber: 68,
+                                                        lineNumber: 71,
                                                         columnNumber: 236
                                                     }, this))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 68,
+                                            lineNumber: 71,
                                             columnNumber: 65
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 68,
+                                    lineNumber: 71,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("details", {
+                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].advanced,
+                                    open: true,
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("summary", {
+                                            children: t("catalog.advanced")
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                            lineNumber: 73,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].advancedFields,
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].priceFields,
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].field,
+                                                            children: [
+                                                                t("catalog.pricePerMeterMin"),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                    type: "number",
+                                                                    min: "0",
+                                                                    value: filters.minPricePerMeter,
+                                                                    onChange: (event)=>changeFilter("minPricePerMeter", event.target.value),
+                                                                    placeholder: t("catalog.any"),
+                                                                    "aria-invalid": invalidPricePerMeter
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                                    lineNumber: 76,
+                                                                    columnNumber: 82
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 76,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].field,
+                                                            children: [
+                                                                t("catalog.pricePerMeterMax"),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                    type: "number",
+                                                                    min: "0",
+                                                                    value: filters.maxPricePerMeter,
+                                                                    onChange: (event)=>changeFilter("maxPricePerMeter", event.target.value),
+                                                                    placeholder: t("catalog.any"),
+                                                                    "aria-invalid": invalidPricePerMeter
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                                    lineNumber: 77,
+                                                                    columnNumber: 82
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 77,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                    lineNumber: 75,
+                                                    columnNumber: 17
+                                                }, this),
+                                                invalidPricePerMeter && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].error,
+                                                    role: "alert",
+                                                    children: t("catalog.invalidPricePerMeter")
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                    lineNumber: 79,
+                                                    columnNumber: 42
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].priceFields,
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].field,
+                                                            children: [
+                                                                t("catalog.floorFrom"),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                    type: "number",
+                                                                    min: "0",
+                                                                    value: filters.minFloor,
+                                                                    onChange: (event)=>changeFilter("minFloor", event.target.value),
+                                                                    placeholder: t("catalog.any"),
+                                                                    "aria-invalid": invalidFloor
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                                    lineNumber: 81,
+                                                                    columnNumber: 75
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 81,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].field,
+                                                            children: [
+                                                                t("catalog.floorTo"),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                    type: "number",
+                                                                    min: "0",
+                                                                    value: filters.maxFloor,
+                                                                    onChange: (event)=>changeFilter("maxFloor", event.target.value),
+                                                                    placeholder: t("catalog.any"),
+                                                                    "aria-invalid": invalidFloor
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                                    lineNumber: 82,
+                                                                    columnNumber: 73
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 82,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                    lineNumber: 80,
+                                                    columnNumber: 17
+                                                }, this),
+                                                invalidFloor && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].error,
+                                                    role: "alert",
+                                                    children: t("catalog.invalidFloor")
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                    lineNumber: 84,
+                                                    columnNumber: 34
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].field,
+                                                    children: [
+                                                        t("catalog.yearFrom"),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                            type: "number",
+                                                            min: "1800",
+                                                            max: "2031",
+                                                            value: filters.minConstructionYear,
+                                                            onChange: (event)=>changeFilter("minConstructionYear", event.target.value),
+                                                            placeholder: t("catalog.any")
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 85,
+                                                            columnNumber: 72
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                    lineNumber: 85,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].field,
+                                                    children: [
+                                                        t("catalog.renovation"),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                            value: filters.renovation,
+                                                            onChange: (event)=>changeFilter("renovation", event.target.value),
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                    value: "",
+                                                                    children: t("catalog.anyRenovation")
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                                    lineNumber: 86,
+                                                                    columnNumber: 176
+                                                                }, this),
+                                                                [
+                                                                    "NONE",
+                                                                    "COSMETIC",
+                                                                    "EURO",
+                                                                    "DESIGNER"
+                                                                ].map((value)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                        value: value,
+                                                                        children: t(`renovation.${value}`)
+                                                                    }, value, false, {
+                                                                        fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                                        lineNumber: 86,
+                                                                        columnNumber: 285
+                                                                    }, this))
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 86,
+                                                            columnNumber: 74
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                    lineNumber: 86,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].field,
+                                                    children: [
+                                                        t("catalog.metroMax"),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                            type: "number",
+                                                            min: "0",
+                                                            value: filters.maxMetroDistance,
+                                                            onChange: (event)=>changeFilter("maxMetroDistance", event.target.value),
+                                                            placeholder: t("catalog.any")
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 87,
+                                                            columnNumber: 72
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                    lineNumber: 87,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].checks,
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                    type: "checkbox",
+                                                                    checked: filters.balcony,
+                                                                    onChange: (event)=>changeFilter("balcony", event.target.checked)
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                                    lineNumber: 89,
+                                                                    columnNumber: 26
+                                                                }, this),
+                                                                t("catalog.balcony")
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 89,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                    type: "checkbox",
+                                                                    checked: filters.parking,
+                                                                    onChange: (event)=>changeFilter("parking", event.target.checked)
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                                    lineNumber: 90,
+                                                                    columnNumber: 26
+                                                                }, this),
+                                                                t("catalog.parking")
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                            lineNumber: 90,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                                    lineNumber: 88,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                            lineNumber: 74,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/PropertyCatalog.jsx",
+                                    lineNumber: 72,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -912,13 +1240,13 @@ function PropertyCatalog() {
                                     children: t("catalog.note")
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 69,
+                                    lineNumber: 94,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                            lineNumber: 59,
+                            lineNumber: 62,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -934,7 +1262,7 @@ function PropertyCatalog() {
                                             children: status === "ready" ? `${properties.length} ${t(properties.length === 1 ? "catalog.one" : "catalog.many")}` : t("catalog.collection")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 74,
+                                            lineNumber: 99,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -950,7 +1278,7 @@ function PropertyCatalog() {
                                                             children: t("catalog.newest")
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                            lineNumber: 75,
+                                                            lineNumber: 100,
                                                             columnNumber: 155
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -958,7 +1286,7 @@ function PropertyCatalog() {
                                                             children: t("catalog.lowHigh")
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                            lineNumber: 75,
+                                                            lineNumber: 100,
                                                             columnNumber: 208
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -966,25 +1294,25 @@ function PropertyCatalog() {
                                                             children: t("catalog.highLow")
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                            lineNumber: 75,
+                                                            lineNumber: 100,
                                                             columnNumber: 264
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 75,
+                                                    lineNumber: 100,
                                                     columnNumber: 65
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 75,
+                                            lineNumber: 100,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 73,
+                                    lineNumber: 98,
                                     columnNumber: 13
                                 }, this),
                                 status === "loading" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1001,28 +1329,28 @@ function PropertyCatalog() {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {}, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 77,
+                                                    lineNumber: 102,
                                                     columnNumber: 205
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {}, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 77,
+                                                    lineNumber: 102,
                                                     columnNumber: 212
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {}, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 77,
+                                                    lineNumber: 102,
                                                     columnNumber: 220
                                                 }, this)
                                             ]
                                         }, value, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 77,
+                                            lineNumber: 102,
                                             columnNumber: 137
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 77,
+                                    lineNumber: 102,
                                     columnNumber: 37
                                 }, this) : status === "error" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].state,
@@ -1032,14 +1360,14 @@ function PropertyCatalog() {
                                             "aria-hidden": "true"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 78,
+                                            lineNumber: 103,
                                             columnNumber: 68
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                             children: t("catalog.unavailable")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 78,
+                                            lineNumber: 103,
                                             columnNumber: 110
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1047,7 +1375,7 @@ function PropertyCatalog() {
                                             children: t("catalog.loadError")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 78,
+                                            lineNumber: 103,
                                             columnNumber: 145
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1056,36 +1384,36 @@ function PropertyCatalog() {
                                             children: t("catalog.tryAgain")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 78,
+                                            lineNumber: 103,
                                             columnNumber: 189
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 78,
+                                    lineNumber: 103,
                                     columnNumber: 38
-                                }, this) : invalidRange ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                }, this) : hasInvalidRange ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].state,
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                             children: t("catalog.rangeTitle")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 79,
-                                            columnNumber: 62
+                                            lineNumber: 104,
+                                            columnNumber: 65
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: t("catalog.rangeText")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 79,
-                                            columnNumber: 96
+                                            lineNumber: 104,
+                                            columnNumber: 99
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 79,
-                                    columnNumber: 32
+                                    lineNumber: 104,
+                                    columnNumber: 35
                                 }, this) : properties.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$styles$2f$pages$2f$Properties$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].state,
                                     children: [
@@ -1095,21 +1423,21 @@ function PropertyCatalog() {
                                             "aria-hidden": "true"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 80,
+                                            lineNumber: 105,
                                             columnNumber: 73
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                             children: data?.length ? t("catalog.noMatch") : t("catalog.empty")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 80,
+                                            lineNumber: 105,
                                             columnNumber: 133
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: data?.length ? t("catalog.noMatchText") : t("catalog.emptyText")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 80,
+                                            lineNumber: 105,
                                             columnNumber: 200
                                         }, this),
                                         data?.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1118,13 +1446,13 @@ function PropertyCatalog() {
                                             children: t("catalog.resetFilters")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 80,
+                                            lineNumber: 105,
                                             columnNumber: 294
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                    lineNumber: 80,
+                                    lineNumber: 105,
                                     columnNumber: 43
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                                     children: [
@@ -1134,12 +1462,12 @@ function PropertyCatalog() {
                                                     property: property
                                                 }, property.id, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 81,
+                                                    lineNumber: 106,
                                                     columnNumber: 139
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 81,
+                                            lineNumber: 106,
                                             columnNumber: 19
                                         }, this),
                                         pages > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -1154,12 +1482,12 @@ function PropertyCatalog() {
                                                         size: 17
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                        lineNumber: 81,
+                                                        lineNumber: 106,
                                                         columnNumber: 398
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 81,
+                                                    lineNumber: 106,
                                                     columnNumber: 282
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1169,7 +1497,7 @@ function PropertyCatalog() {
                                                     })
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 81,
+                                                    lineNumber: 106,
                                                     columnNumber: 430
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1180,18 +1508,18 @@ function PropertyCatalog() {
                                                         size: 17
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                        lineNumber: 81,
+                                                        lineNumber: 106,
                                                         columnNumber: 618
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                                    lineNumber: 81,
+                                                    lineNumber: 106,
                                                     columnNumber: 502
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                                            lineNumber: 81,
+                                            lineNumber: 106,
                                             columnNumber: 215
                                         }, this)
                                     ]
@@ -1199,24 +1527,24 @@ function PropertyCatalog() {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/PropertyCatalog.jsx",
-                            lineNumber: 72,
+                            lineNumber: 97,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/PropertyCatalog.jsx",
-                    lineNumber: 58,
+                    lineNumber: 61,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/PropertyCatalog.jsx",
-            lineNumber: 52,
+            lineNumber: 55,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/PropertyCatalog.jsx",
-        lineNumber: 51,
+        lineNumber: 54,
         columnNumber: 5
     }, this);
 }

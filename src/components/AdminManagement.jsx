@@ -7,7 +7,11 @@ import styles from "@/styles/pages/Admin.module.css";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 const emptyOwner = { ownerType: "INDIVIDUAL", phone: "", email: "", firstName: "", lastName: "", middleName: "", companyName: "", taxId: "", registrationNumber: "" };
-const emptyProperty = { title: "", description: "", address: "", area: "", rooms: "", price: "", type: "RESIDENTIAL", ownerId: "", agentId: "", imageUrls: [] };
+const emptyProperty = {
+  title: "", description: "", address: "", area: "", rooms: "", price: "", type: "RESIDENTIAL",
+  ownerId: "", agentId: "", imageUrls: [], floor: "", totalFloors: "", constructionYear: "",
+  renovation: "", hasBalcony: false, hasParking: false, metroDistanceMinutes: "",
+};
 
 async function api(path, options = {}) {
   const response = await fetch(`${API_URL}${path}`, {
@@ -83,6 +87,11 @@ export default function AdminManagement() {
       area: propertyForm.area === "" ? null : Number(propertyForm.area),
       rooms: propertyForm.rooms === "" ? null : Number(propertyForm.rooms),
       price: propertyForm.price === "" ? null : Number(propertyForm.price),
+      floor: propertyForm.floor === "" ? null : Number(propertyForm.floor),
+      totalFloors: propertyForm.totalFloors === "" ? null : Number(propertyForm.totalFloors),
+      constructionYear: propertyForm.constructionYear === "" ? null : Number(propertyForm.constructionYear),
+      renovation: propertyForm.renovation || null,
+      metroDistanceMinutes: propertyForm.metroDistanceMinutes === "" ? null : Number(propertyForm.metroDistanceMinutes),
     };
     try {
       await api(`/api/v1/properties${editingProperty ? `/${editingProperty}` : ""}`, {
@@ -110,7 +119,10 @@ export default function AdminManagement() {
       ...emptyProperty, ...property,
       title: property.title || "", description: property.description || "", area: property.area ?? "",
       rooms: property.rooms ?? "", price: property.price ?? "", ownerId: String(property.owner?.id || ""),
-      agentId: String(property.agent?.id || ""), imageUrls: property.imageUrls || [],
+      agentId: String(property.agent?.id || ""), imageUrls: property.imageUrls || [], floor: property.floor ?? "",
+      totalFloors: property.totalFloors ?? "", constructionYear: property.constructionYear ?? "",
+      renovation: property.renovation || "", hasBalcony: property.hasBalcony === true,
+      hasParking: property.hasParking === true, metroDistanceMinutes: property.metroDistanceMinutes ?? "",
     });
     setFormState({ busy: "", error: "", notice: "" });
   }
@@ -161,6 +173,8 @@ export default function AdminManagement() {
             <div className={styles.formRow}><label><span>{t("admin.propertyTitle")}</span><input value={propertyForm.title} onChange={event => updateProperty("title", event.target.value)} /></label><label><span>{t("admin.address")}</span><input value={propertyForm.address} onChange={event => updateProperty("address", event.target.value)} required /></label></div>
             <div className={styles.formRow}><label><span>{t("property.type")}</span><select value={propertyForm.type} onChange={event => updateProperty("type", event.target.value)}><option value="RESIDENTIAL">{t("property.RESIDENTIAL")}</option><option value="NONRESIDENTIAL">{t("property.NONRESIDENTIAL")}</option><option value="COMMERCIAL">{t("property.COMMERCIAL")}</option></select></label><label><span>{t("admin.owner")}</span><select value={propertyForm.ownerId} onChange={event => updateProperty("ownerId", event.target.value)} required><option value="">{t("admin.chooseOwner")}</option>{resources.owners.map(owner => <option key={owner.id} value={owner.id}>{ownerName(owner)}</option>)}</select></label><label><span>{t("admin.agent")}</span><select value={propertyForm.agentId} onChange={event => updateProperty("agentId", event.target.value)}><option value="">{t("admin.unassigned")}</option>{resources.agents.map(agent => <option key={agent.id} value={agent.id}>{agent.username}</option>)}</select></label></div>
             <div className={styles.formRow}><label><span>{t("property.area")}</span><input type="number" min="0" step="0.1" value={propertyForm.area} onChange={event => updateProperty("area", event.target.value)} /></label><label><span>{t("property.rooms")}</span><input type="number" min="0" value={propertyForm.rooms} onChange={event => updateProperty("rooms", event.target.value)} /></label><label><span>{t("property.price")}</span><input type="number" min="0" step="0.01" value={propertyForm.price} onChange={event => updateProperty("price", event.target.value)} /></label></div>
+            <div className={styles.formRow}><label><span>{t("property.floor")}</span><input type="number" min="0" value={propertyForm.floor} onChange={event => updateProperty("floor", event.target.value)} /></label><label><span>{t("admin.totalFloors")}</span><input type="number" min="1" value={propertyForm.totalFloors} onChange={event => updateProperty("totalFloors", event.target.value)} /></label><label><span>{t("property.constructionYear")}</span><input type="number" min="1800" max="2031" value={propertyForm.constructionYear} onChange={event => updateProperty("constructionYear", event.target.value)} /></label></div>
+            <div className={styles.formRow}><label><span>{t("property.renovation")}</span><select value={propertyForm.renovation} onChange={event => updateProperty("renovation", event.target.value)}><option value="">{t("property.notProvided")}</option>{["NONE", "COSMETIC", "EURO", "DESIGNER"].map(value => <option key={value} value={value}>{t(`renovation.${value}`)}</option>)}</select></label><label><span>{t("property.metroDistance")}</span><input type="number" min="0" value={propertyForm.metroDistanceMinutes} onChange={event => updateProperty("metroDistanceMinutes", event.target.value)} /></label><span className={styles.booleanFields}><label><input type="checkbox" checked={propertyForm.hasBalcony} onChange={event => updateProperty("hasBalcony", event.target.checked)} />{t("property.balcony")}</label><label><input type="checkbox" checked={propertyForm.hasParking} onChange={event => updateProperty("hasParking", event.target.checked)} />{t("property.parking")}</label></span></div>
             <label><span>{t("property.about")}</span><textarea rows="3" value={propertyForm.description} onChange={event => updateProperty("description", event.target.value)} /></label>
             <div className={styles.formActions}><button className={styles.primary} disabled={formState.busy === "property" || resources.owners.length === 0}>{editingProperty ? <Save size={16} /> : <Plus size={16} />}{editingProperty ? t("admin.updateProperty") : t("admin.addProperty")}</button>{editingProperty && <button type="button" className={styles.secondary} onClick={resetProperty}>{t("catalog.reset")}</button>}</div>
           </form>

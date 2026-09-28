@@ -22,6 +22,16 @@ export function filterProperties(properties, filters) {
     if (filters.rooms && (property.rooms == null || property.rooms < Number(filters.rooms))) return false;
     if (filters.minPrice !== "" && (property.price == null || property.price < Number(filters.minPrice))) return false;
     if (filters.maxPrice !== "" && (property.price == null || property.price > Number(filters.maxPrice))) return false;
+    const pricePerMeter = property.price != null && property.area > 0 ? property.price / property.area : null;
+    if ((filters.minPricePerMeter ?? "") !== "" && (pricePerMeter == null || pricePerMeter < Number(filters.minPricePerMeter))) return false;
+    if ((filters.maxPricePerMeter ?? "") !== "" && (pricePerMeter == null || pricePerMeter > Number(filters.maxPricePerMeter))) return false;
+    if ((filters.minFloor ?? "") !== "" && (property.floor == null || property.floor < Number(filters.minFloor))) return false;
+    if ((filters.maxFloor ?? "") !== "" && (property.floor == null || property.floor > Number(filters.maxFloor))) return false;
+    if ((filters.minConstructionYear ?? "") !== "" && (property.constructionYear == null || property.constructionYear < Number(filters.minConstructionYear))) return false;
+    if (filters.renovation && property.renovation !== filters.renovation) return false;
+    if (filters.balcony && property.hasBalcony !== true) return false;
+    if (filters.parking && property.hasParking !== true) return false;
+    if ((filters.maxMetroDistance ?? "") !== "" && (property.metroDistanceMinutes == null || property.metroDistanceMinutes > Number(filters.maxMetroDistance))) return false;
     return true;
   });
   return filtered.sort((a, b) => {
